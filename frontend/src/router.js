@@ -28,12 +28,6 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
-      path: '/texts/:textId/markup',
-      name: 'markup',
-      component: () => import(/* webpackChunkName: "editor" */ './views/Editor.vue'),
-      beforeEnter: ifAuthenticated
-    },
-    {
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('./views/SignUp.vue')
