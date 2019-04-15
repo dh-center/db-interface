@@ -29,29 +29,6 @@ app.use(function (req, res, next) {
 });
 
 /**
- * Auth routes
- */
-const signUpRoute = require('./routes/auth/sign-up');
-const loginRoute = require('./routes/auth/login');
-
-app.use(signUpRoute);
-app.use(loginRoute);
-
-/**
- * Text routes
- */
-const textsRoute = require('./routes/texts');
-
-app.use(textsRoute);
-
-/**
- * Entity routes
- */
-const entityRoute = require('./routes/entity');
-
-app.use(entityRoute);
-
-/**
  * Start server
  */
 app.listen(process.env.PORT, process.env.HOST, () => {
