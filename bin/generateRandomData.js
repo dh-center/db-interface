@@ -1,3 +1,8 @@
+/**
+ * Generates random person names and insert them to DB
+ * Usage: node generateRandomData.js
+ */
+
 const path = require('path');
 
 /**
