@@ -29,6 +29,12 @@ app.use(function (req, res, next) {
 });
 
 /**
+ * Persons routes
+ */
+const personsRoutes = require('./routes/persons');
+
+app.use(personsRoutes);
+/**
  * Start server
  */
 app.listen(process.env.PORT, process.env.HOST, () => {
