@@ -9,6 +9,7 @@
           source="http://127.0.0.1:3000/persons?name="
           results-property="data"
           results-display="name"
+          id="person"
         >
         </autocomplete>
       </div>
@@ -19,6 +20,7 @@
           source="http://127.0.0.1:3000/locations?name="
           results-property="data"
           results-display="name"
+          id="location"
         >
         </autocomplete>
       </div>
@@ -39,15 +41,13 @@
   import Autocomplete from 'vuejs-auto-complete';
 
   export default {
-    name: 'Catalog',
+    name: 'Form',
     data() {
-      return {
-      };
+
     },
+
     components: {
       Autocomplete
-    },
-    methods: {
     }
   };
 
