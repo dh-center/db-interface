@@ -12,18 +12,25 @@
         >
         </autocomplete>
       </div>
-      <!--<div class="form__field">
+      <div class="form__field">
         <label for="location">Место: </label>
-        <input id="location">
+        <autocomplete
+          placeholder="Search Locations"
+          source="http://127.0.0.1:3000/locations?name="
+          results-property="data"
+          results-display="name"
+        >
+        </autocomplete>
       </div>
       <div class="form__field">
         <label for="relation">Связь: </label>
-        <input id="relation">
+        <select id="relation">
+        </select>
       </div>
       <div class="form__field">
         <label for="quote">Цитата и ссылка на издание: </label>
         <textarea id="quote"></textarea>
-      </div>-->
+      </div>
     </form>
   </div>
 </template>
@@ -33,8 +40,22 @@
 
   export default {
     name: 'Catalog',
+    data() {
+      return {
+      };
+    },
     components: {
       Autocomplete
+    },
+    methods: {
     }
   };
+
 </script>
+
+<style>
+  .form{
+    width: 600px;
+    margin-left: calc(50vw - 313px);
+  }
+</style>
