@@ -42,10 +42,6 @@
 
   export default {
     name: 'Form',
-    data() {
-
-    },
-
     components: {
       Autocomplete
     }

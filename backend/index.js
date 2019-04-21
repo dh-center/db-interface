@@ -34,6 +34,14 @@ app.use(function (req, res, next) {
 const personsRoutes = require('./routes/persons');
 
 app.use(personsRoutes);
+
+/**
+ * Locations routes
+ */
+const locationsRoutes = require('./routes/locations');
+
+app.use(locationsRoutes);
+
 /**
  * Start server
  */
