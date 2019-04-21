@@ -5,8 +5,8 @@ import axios from 'axios';
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = process.env.SERVER_URL || 'http://localhost:3000';
-console.log(process.env);
+axios.defaults.baseURL = process.env.API_ENDPOINT || 'http://localhost:3000';
+
 new Vue({
   router,
   render: h => h(App)
