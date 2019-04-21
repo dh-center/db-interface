@@ -6,7 +6,7 @@
         <label for="person">Персона: </label>
         <autocomplete
           placeholder="Search Person"
-          source="http://127.0.0.1:3000/persons?name="
+          :source="personLink"
           results-property="data"
           results-display="name"
           id="person"
@@ -17,7 +17,7 @@
         <label for="location">Место: </label>
         <autocomplete
           placeholder="Search Locations"
-          source="http://127.0.0.1:3000/locations?name="
+          :source="locationLink"
           results-property="data"
           results-display="name"
           id="location"
@@ -39,11 +39,20 @@
 
 <script>
   import Autocomplete from 'vuejs-auto-complete';
+  import axios from 'axios';
 
   export default {
     name: 'Form',
     components: {
       Autocomplete
+    },
+    computed: {
+      locationLink: function (input) {
+        return axios.defaults.baseURL + '/locations?name=' + input;
+      },
+      personLink: function (input) {
+        return axios.defaults.baseURL + '/persons?name=' + input;
+      }
     }
   };
 
