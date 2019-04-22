@@ -43,6 +43,13 @@ const locationsRoutes = require('./routes/locations');
 app.use(locationsRoutes);
 
 /**
+ * Relations routes
+ */
+const relationsRoutes = require('./routes/relations');
+
+app.use(relationsRoutes);
+
+/**
  * Start server
  */
 app.listen(process.env.PORT, process.env.HOST, () => {

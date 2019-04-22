@@ -24,7 +24,11 @@
       </div>
       <div class="form__field">
         <label for="relation">Связь: </label>
-        <select id="relation">
+        <select id="relation" name="relation">
+          <option selected disabled hidden>Выбрать связь</option>
+          <option v-for="relation in relations" :value="relation['id']">
+            {{relation['name']}}
+          </option>
         </select>
       </div>
       <div class="form__field">
@@ -41,6 +45,11 @@
 
   export default {
     name: 'Form',
+    data() {
+      return {
+        relations: null
+      };
+    },
     components: {
       Autocomplete
     },
@@ -51,6 +60,11 @@
       personLink(input) {
         return axios.defaults.baseURL + '/persons?name=' + input;
       }
+    },
+    mounted() {
+      axios
+        .get(axios.defaults.baseURL + '/relations')
+        .then(response => (this.relations = response.data['relations']));
     }
   };
 
