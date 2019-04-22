@@ -3,24 +3,22 @@
     <h1>Форма</h1>
     <form>
       <div class="form__field">
-        <label for="person">Персона: </label>
+        <label>Персона: </label>
         <autocomplete
           placeholder="Search Person"
           :source="personLink"
           results-property="data"
           results-display="name"
-          id="person"
         >
         </autocomplete>
       </div>
       <div class="form__field">
-        <label for="location">Место: </label>
+        <label>Место: </label>
         <autocomplete
           placeholder="Search Locations"
           :source="locationLink"
           results-property="data"
           results-display="name"
-          id="location"
         >
         </autocomplete>
       </div>
@@ -47,10 +45,10 @@
       Autocomplete
     },
     computed: {
-      locationLink: function (input) {
+      locationLink(input) {
         return axios.defaults.baseURL + '/locations?name=' + input;
       },
-      personLink: function (input) {
+      personLink(input) {
         return axios.defaults.baseURL + '/persons?name=' + input;
       }
     }
@@ -62,5 +60,15 @@
   .form{
     width: 600px;
     margin-left: calc(50vw - 313px);
+  }
+  .form__field {
+    margin-bottom: 10px;
+  }
+  .form__field select {
+    width: 25%;
+  }
+  .form__field textarea{
+    width: 100%;
+    height: 200px;
   }
 </style>
