@@ -21,14 +21,11 @@ const Location = require('../backend/models/location');
  * Read data
  */
 const locations = require('./data/streets.json');
+const promises = [];
 
-locations.forEach(async (item) => {
-  const promises = [];
-
+locations.forEach(async function (item) {
   promises.push(new Location({
     name: item.name
   }).save());
-
-  await Promise.all(promises);
-  process.exit();
 });
+Promise.all(promises).then(() => process.exit());
