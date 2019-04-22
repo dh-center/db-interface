@@ -26,8 +26,8 @@
         <label for="relation">Связь: </label>
         <select id="relation" name="relation">
           <option selected disabled hidden>Выбрать связь</option>
-          <option v-for="relation in relations" :value="relation['id']">
-            {{relation['name']}}
+          <option v-for="relation in relations" :value="relation.id" :key="relation.id">
+            {{relation.name}}
           </option>
         </select>
       </div>
@@ -42,12 +42,13 @@
 <script>
   import Autocomplete from 'vuejs-auto-complete';
   import axios from 'axios';
+  import relations from '../../../backend/models/relationId.json';
 
   export default {
     name: 'Form',
     data() {
       return {
-        relations: null
+        relations
       };
     },
     components: {
@@ -60,11 +61,6 @@
       personLink(input) {
         return axios.defaults.baseURL + '/persons?name=' + input;
       }
-    },
-    mounted() {
-      axios
-        .get(axios.defaults.baseURL + '/relations')
-        .then(response => (this.relations = response.data['relations']));
     }
   };
 
