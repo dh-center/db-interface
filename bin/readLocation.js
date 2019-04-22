@@ -1,5 +1,5 @@
 /**
- * reading json file with streets and insert them to DB
+ * Read json file (data/streets.json) with streets and insert them to DB
  * Usage: node readLocation.js
  */
 
@@ -20,25 +20,15 @@ const Location = require('../backend/models/location');
 /**
  * Read data
  */
-const fs = require('fs');
-const data = 'bin/data/streets.json';
-const str = fs.readFileSync(data, 'utf8');
-const locations = JSON.parse(str);
-const streets = [];
+const locations = require('./data/streets.json');
 
-locations.forEach((item) => {
-  streets[streets.length] = item.name;
-});
-
-(async function main() {
+locations.forEach(async (item) => {
   const promises = [];
 
-  for (let i = 0; i < streets.length; i++) {
-    promises.push(new Location({
-      name: streets[i]
-    }).save());
-  }
+  promises.push(new Location({
+    name: item.name
+  }).save());
 
   await Promise.all(promises);
   process.exit();
-})();
+});
