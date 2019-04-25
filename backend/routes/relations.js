@@ -5,10 +5,10 @@ const Relation = require('../models/relation');
 router.post('/relations', async (req, res) => {
   try {
     const newRelation = new Relation({
-      locationId: req.body.loc,
-      relationId: req.body.rel,
-      personId: req.body.per,
-      quote: req.body.quo
+      locationId: req.body.locationId,
+      relationId: req.body.relationId,
+      personId: req.body.personId,
+      quote: req.body.quote
     });
 
     await newRelation.save();

@@ -28,7 +28,7 @@
       </div>
       <div class="form__field">
         <label for="relation">Связь: </label>
-        <select id="relation" name="relation" v-model="selRelation">
+        <select id="relation" name="relation" v-model="selectedRelation">
           <option v-for="relation in relations" :value="relation.id" :key="relation.id">
             {{relation.name}}
           </option>
@@ -53,10 +53,10 @@
     data() {
       return {
         relations,
-        selRelation: null,
+        selectedRelation: null,
         quote: null,
-        selPerson: null,
-        selLocation: null
+        selectedPerson: null,
+        selectedLocation: null
       };
     },
     components: {
@@ -73,17 +73,17 @@
     methods: {
       saveRelation() {
         axios.post('/relations', {
-          rel: this.selRelation,
-          quo: this.quote,
-          per: this.selPerson,
-          loc: this.selLocation
+          relationId: this.selectedRelation,
+          quote: this.quote,
+          personId: this.selectedPerson,
+          locationId: this.selectedLocation
         });
       },
       personSelect(input) {
-        this.selPerson = input.value;
+        this.selectedPerson = input.value;
       },
       locationSelect(input) {
-        this.selLocation = input.value;
+        this.selectedLocation = input.value;
       }
     }
   };
