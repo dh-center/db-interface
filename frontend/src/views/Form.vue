@@ -1,7 +1,7 @@
 <template>
   <div class="form">
     <h1>Форма</h1>
-    <form>
+    <form @submit.prevent="saveRelation">
       <div class="form__field">
         <label>Персона: </label>
         <autocomplete
@@ -9,6 +9,8 @@
           :source="personLink"
           results-property="data"
           results-display="name"
+          results-value="_id"
+          @selected="personSelect"
         >
         </autocomplete>
       </div>
@@ -19,13 +21,14 @@
           :source="locationLink"
           results-property="data"
           results-display="name"
+          results-value="_id"
+          @selected="locationSelect"
         >
         </autocomplete>
       </div>
       <div class="form__field">
         <label for="relation">Связь: </label>
-        <select id="relation" name="relation">
-          <option selected disabled hidden>Выбрать связь</option>
+        <select id="relation" name="relation" v-model="selectedRelation">
           <option v-for="relation in relations" :value="relation.id" :key="relation.id">
             {{relation.name}}
           </option>
@@ -33,8 +36,9 @@
       </div>
       <div class="form__field">
         <label for="quote">Цитата и ссылка на издание: </label>
-        <textarea id="quote"></textarea>
+        <textarea id="quote" v-model="quote"></textarea>
       </div>
+      <button type="submit">Сохранить</button>
     </form>
   </div>
 </template>
@@ -48,7 +52,11 @@
     name: 'Form',
     data() {
       return {
-        relations
+        relations,
+        selectedRelation: null,
+        quote: null,
+        selectedPerson: null,
+        selectedLocation: null
       };
     },
     components: {
@@ -60,6 +68,22 @@
       },
       personLink(input) {
         return axios.defaults.baseURL + '/persons?name=' + input;
+      }
+    },
+    methods: {
+      saveRelation() {
+        axios.post('/relations', {
+          relationId: this.selectedRelation,
+          quote: this.quote,
+          personId: this.selectedPerson,
+          locationId: this.selectedLocation
+        });
+      },
+      personSelect(input) {
+        this.selectedPerson = input.value;
+      },
+      locationSelect(input) {
+        this.selectedLocation = input.value;
       }
     }
   };
