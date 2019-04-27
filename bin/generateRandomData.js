@@ -118,12 +118,20 @@ const randomNames = ['Куваева Алиса Никитевна',
   'Язвецова Мария Юлиевна',
   'Дукачёва Вера Ефимовна '];
 
+const dateBirth = new Date(2000, 9, 10);
+const dateDeath = new Date(2156, 0, 1);
+
 (async function main() {
   const promises = [];
 
   for (let i = 0; i < 100; i++) {
     promises.push(new Person({
-      name: randomNames[i]
+      name: randomNames[i],
+      pseudonym: 'Псевдоним',
+      birthDate: dateBirth,
+      deathDate: dateDeath,
+      profession: 'Профессия',
+      description: 'Описание'
     }).save());
   }
 

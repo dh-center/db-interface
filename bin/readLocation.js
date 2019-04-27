@@ -23,9 +23,17 @@ const Location = require('../backend/models/location');
 const locations = require('./data/streets.json');
 const promises = [];
 
+const dateConstruction = new Date(2000, 9, 10);
+const dateDemolition = new Date(2156, 0, 1);
+
 locations.forEach(async function (item) {
   promises.push(new Location({
-    name: item.name
+    name: item.name,
+    address: 'Адрес',
+    constructionDate: dateConstruction,
+    demolitionDate: dateDemolition,
+    buildingType: 'Тип постройки',
+    description: 'Описание'
   }).save());
 });
 Promise.all(promises).then(() => process.exit());
