@@ -5,11 +5,12 @@
       <div class="form__field">
         <label>Персона: </label>
         <autocomplete
+          ref="personAutocomplete"
           placeholder="Search Person"
           :source="personLink"
           results-property="data"
-          results-display="name"
           results-value="_id"
+          :results-display="formattedDisplayPerson"
           @selected="personSelect"
         >
         </autocomplete>
@@ -17,11 +18,12 @@
       <div class="form__field">
         <label>Место: </label>
         <autocomplete
+          ref="locationAutocomplete"
           placeholder="Search Locations"
           :source="locationLink"
           results-property="data"
-          results-display="name"
           results-value="_id"
+          :results-display="formattedDisplayLocation"
           @selected="locationSelect"
         >
         </autocomplete>
@@ -47,7 +49,6 @@
   import Autocomplete from 'vuejs-auto-complete';
   import axios from 'axios';
   import relations from '../../../backend/models/relationId.json';
-
   export default {
     name: 'Form',
     data() {
@@ -71,6 +72,22 @@
       }
     },
     methods: {
+      formattedDisplayPerson(result) {
+        const birthDate = new Date(result.birthDate);
+        const deathDate = new Date(result.deathDate);
+
+        return result.name +
+          '<br><span class="autocomplete__description">' + birthDate.getFullYear() + ' - ' + deathDate.getFullYear() +
+          '<br>' + result.profession + '</span>';
+      },
+      formattedDisplayLocation(result) {
+        const constructionDate = new Date(result.constructionDate);
+        const demolitionDate = new Date(result.demolitionDate);
+
+        return result.name +
+          '<br><span class="autocomplete__description">' + constructionDate.getFullYear() + ' - ' + demolitionDate.getFullYear() +
+          '<br>' + result.buildingType + '</span>';
+      },
       saveRelation() {
         axios.post('/relations', {
           relationId: this.selectedRelation,
@@ -81,9 +98,11 @@
       },
       personSelect(input) {
         this.selectedPerson = input.value;
+        this.$refs.personAutocomplete.selectedDisplay = input.selectedObject.name;
       },
       locationSelect(input) {
         this.selectedLocation = input.value;
+        this.$refs.locationAutocomplete.selectedDisplay = input.selectedObject.name;
       }
     }
   };
@@ -104,5 +123,10 @@
   .form__field textarea{
     width: 100%;
     height: 200px;
+  }
+  .autocomplete__description{
+    color: dimgray;
+    font-size: 80%;
+    font-style: italic;
   }
 </style>
