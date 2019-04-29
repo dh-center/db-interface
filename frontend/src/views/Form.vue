@@ -7,7 +7,7 @@
         <autocomplete
           ref="personAutocomplete"
           placeholder="Search Person"
-          :source="personLink"
+          :source="`${$API_ENDPOINT}/persons?name=`"
           results-property="data"
           results-value="_id"
           :results-display="formattedDisplayPerson"
@@ -20,7 +20,7 @@
         <autocomplete
           ref="locationAutocomplete"
           placeholder="Search Locations"
-          :source="locationLink"
+          :source="`${$API_ENDPOINT}/locations?name=`"
           results-property="data"
           results-value="_id"
           :results-display="formattedDisplayLocation"
@@ -49,6 +49,7 @@
   import Autocomplete from 'vuejs-auto-complete';
   import axios from 'axios';
   import relations from '../../../backend/models/relationId.json';
+
   export default {
     name: 'Form',
     data() {
@@ -59,17 +60,6 @@
         selectedPerson: null,
         selectedLocation: null
       };
-    },
-    components: {
-      Autocomplete
-    },
-    computed: {
-      locationLink(input) {
-        return axios.defaults.baseURL + '/locations?name=' + input;
-      },
-      personLink(input) {
-        return axios.defaults.baseURL + '/persons?name=' + input;
-      }
     },
     methods: {
       formattedDisplayPerson(result) {
@@ -104,27 +94,34 @@
         this.selectedLocation = input.value;
         this.$refs.locationAutocomplete.selectedDisplay = input.selectedObject.name;
       }
+    },
+    components: {
+      Autocomplete
     }
   };
 
 </script>
 
 <style>
-  .form{
+  .form {
     width: 600px;
     margin-left: calc(50vw - 313px);
   }
+
   .form__field {
     margin-bottom: 10px;
   }
+
   .form__field select {
     width: 25%;
   }
-  .form__field textarea{
+
+  .form__field textarea {
     width: 100%;
     height: 200px;
   }
-  .autocomplete__description{
+
+  .autocomplete__description {
     color: dimgray;
     font-size: 80%;
     font-style: italic;
