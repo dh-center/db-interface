@@ -7,6 +7,8 @@ Vue.config.productionTip = false;
 
 axios.defaults.baseURL = process.env.API_ENDPOINT || 'http://localhost:3000';
 
+Vue.prototype.$API_ENDPOINT = axios.defaults.baseURL;
+
 new Vue({
   router,
   render: h => h(App)
