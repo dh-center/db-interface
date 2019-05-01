@@ -9,10 +9,4 @@ const relationSchema = new Schema({
   quote: [ String ]
 });
 
-relationSchema.pre('update', function (next) {
-  this.update({},
-    { $inc: { __v: 1 } },
-    next);
-});
-
 module.exports = mongoose.model('relations', relationSchema);
