@@ -1,10 +1,10 @@
 {
-  "name": "markup-tool",
+  "name": "db-interface",
   "version": "1.0.0",
   "scripts": {
     "lint": "eslint . --ext .js --ext .vue --fix"
   },
-  "repository": "git@github.com:dh-lab/markup-tool.git",
+  "repository": "git@github.com:dh-lab/db-interface.git",
   "author": "DH lab <dh@corp.ifmo.ru>",
   "license": "MIT",
   "private": true,
