@@ -6,7 +6,7 @@ const relationSchema = new Schema({
   locationId: ObjectId,
   relationId: Number,
   personId: ObjectId,
-  quote: String
+  quote: [ String ]
 });
 
 module.exports = mongoose.model('relations', relationSchema);

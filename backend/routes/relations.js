@@ -4,14 +4,19 @@ const Relation = require('../models/relation');
 
 router.post('/relations', async (req, res) => {
   try {
-    const newRelation = new Relation({
+    const conditions = {
       locationId: req.body.locationId,
       relationId: req.body.relationId,
-      personId: req.body.personId,
-      quote: req.body.quote
-    });
+      personId: req.body.personId
+    };
+    const doc = {
+      $push: { quote: req.body.quote },
+      $inc: { __v: 1 }
+    };
+    const options = { upsert: true };
 
-    await newRelation.save();
+    await Relation.updateOne(conditions, doc, options);
+
     res.sendStatus(200);
   } catch (error) {
     res.json({ error });
