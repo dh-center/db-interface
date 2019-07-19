@@ -6,7 +6,7 @@ router.get('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.query.username });
 
-    if (!user) return res.json({ error: 'No user with such email' });
+    if (!user) return res.json({ error: 'No user with such username' });
 
     const compareResult = await user.comparePassword(req.query.password);
 
