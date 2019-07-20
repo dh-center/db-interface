@@ -18,7 +18,7 @@ import axios from 'axios';
  */
 function initialState() {
   return {
-    accessToken: localStorage.getItem('user-token') || ''
+    accessToken: ''
   };
 }
 
@@ -73,7 +73,6 @@ const mutations = {
   [SET_TOKEN](state, accessToken) {
     state.accessToken = accessToken;
     axios.defaults.headers.common['Authorization'] = accessToken;
-    localStorage.setItem('user-token', accessToken);
   },
 
   /**
@@ -82,7 +81,6 @@ const mutations = {
    */
   [RESET_STORE](state) {
     delete axios.defaults.headers.common['Authorization'];
-    localStorage.removeItem('user-token');
     Object.assign(state, initialState());
   }
 };
