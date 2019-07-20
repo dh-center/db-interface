@@ -9,7 +9,7 @@ const ifNotAuthenticated = (to, from, next) => {
     next();
     return;
   }
-  next('/form');
+  next('/');
 };
 
 const ifAuthenticated = (to, from, next) => {
@@ -25,7 +25,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/form',
+      path: '/',
       name: 'form',
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue'),
       beforeEnter: ifAuthenticated

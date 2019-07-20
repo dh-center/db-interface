@@ -3,14 +3,44 @@
     <form @submit.prevent="signUp">
       <h2>Регистрация</h2>
       <label for="username">Имя пользователя:</label>
-      <input required type="text" id="username" v-model="username" placeholder="Username">
+      <input
+        id="username"
+        v-model="username"
+        class="auth-form_input"
+        required
+        type="text"
+        placeholder="Username"
+      >
       <label for="password">Пароль:</label>
-      <input required type="password" id="password" v-model="password">
+      <input
+        id="password"
+        v-model="password"
+        class="auth-form_input"
+        required
+        type="password"
+      >
       <label for="passwordRepeat">Повторите пароль:</label>
-      <input required type="password" id="passwordRepeat" v-model="passwordRepeat">
-      <div class="errorMessage">{{errorMessage}}</div>
-      <button type="submit">Зарегистрироваться</button>
+      <input
+        id="passwordRepeat"
+        v-model="passwordRepeat"
+        class="auth-form_input"
+        required
+        type="password"
+      >
+      <div class="auth-form_errmsg">
+        {{ errorMessage }}
+      </div>
+      <button
+        class="auth-form_button"
+        type="submit"
+      >
+        Зарегистрироваться
+      </button>
     </form>
+    <a
+      href="/login"
+      class="auth-form_link"
+    >Войти со своим логином</a>
   </div>
 </template>
 
@@ -43,7 +73,7 @@
             const { username, password } = this;
 
             await this.$store.dispatch(LOGIN, { username, password });
-            this.$router.push('/form');
+            this.$router.push('/');
           }
         } else {
           this.errorMessage = 'Пароли не совпадают!';
@@ -53,6 +83,4 @@
   };
 </script>
 
-<style scoped>
-  @import url("../../styles/auth-form.css");
-</style>
+<style src="../../styles/auth-form.css"></style>

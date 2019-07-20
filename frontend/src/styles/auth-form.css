@@ -3,18 +3,23 @@
   margin: 0 auto;
 }
 
-input {
+.auth-form_input {
   width: 100%;
   margin-top: 3px;
   margin-bottom: 10px;
 }
 
-.errorMessage {
+.auth-form_errmsg {
   width: 100%;
   text-align: center;
   color: red;
 }
 
-button {
+.auth-form_button {
   margin-top: 3px;
+}
+
+.auth-form_link {
+  display: inline-block;
+  margin-top: 5px;
 }

@@ -10,7 +10,6 @@ import axios from 'axios';
  * Module state
  * @typedef {object} AuthModuleState
  * @property {string} accessToken - user's access token
- * @property {string} refreshToken - user's refresh token for getting new tokens pair
  */
 
 /**

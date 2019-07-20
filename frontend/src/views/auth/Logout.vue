@@ -2,9 +2,14 @@
   <div class="auth-form">
     <form @submit.prevent="logout">
       <h2>Выйти из системы</h2>
-      <button type="submit">Выйти</button>
-    </form></div>
-
+      <button
+        class="auth-form_button"
+        type="submit"
+      >
+        Выйти
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -21,6 +26,4 @@
   };
 </script>
 
-<style scoped>
-  @import url("../../styles/auth-form.css");
-</style>
+<style scr="../../styles/auth-form.css"></style>
