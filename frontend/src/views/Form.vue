@@ -12,8 +12,7 @@
           results-value="_id"
           :results-display="formattedDisplayPerson"
           @selected="personSelect"
-        >
-        </autocomplete>
+        />
       </div>
       <div class="form__field">
         <label>Место: </label>
@@ -25,23 +24,39 @@
           results-value="_id"
           :results-display="formattedDisplayLocation"
           @selected="locationSelect"
-        >
-        </autocomplete>
+        />
       </div>
       <div class="form__field">
         <label for="relation">Связь: </label>
-        <select id="relation" name="relation" v-model="selectedRelation">
-          <option v-for="relation in relations" :value="relation.id" :key="relation.id">
-            {{relation.name}}
+        <select
+          id="relation"
+          v-model="selectedRelation"
+          name="relation"
+        >
+          <option
+            v-for="relation in relations"
+            :key="relation.id"
+            :value="relation.id"
+          >
+            {{ relation.name }}
           </option>
         </select>
       </div>
       <div class="form__field">
         <label for="quote">Цитата и ссылка на издание: </label>
-        <textarea id="quote" v-model="quote"></textarea>
+        <textarea
+          id="quote"
+          v-model="quote"
+        />
       </div>
-      <button type="submit">Сохранить</button>
+      <button type="submit">
+        Сохранить
+      </button>
     </form>
+    <a
+      class="form_link"
+      href="/logout"
+    >Выйти из системы</a>
   </div>
 </template>
 
@@ -52,6 +67,9 @@
 
   export default {
     name: 'Form',
+    components: {
+      Autocomplete
+    },
     data() {
       return {
         relations,
@@ -94,9 +112,6 @@
         this.selectedLocation = input.value;
         this.$refs.locationAutocomplete.selectedDisplay = input.selectedObject.name;
       }
-    },
-    components: {
-      Autocomplete
     }
   };
 
@@ -125,5 +140,10 @@
     color: dimgray;
     font-size: 80%;
     font-style: italic;
+  }
+
+  .form_link {
+    display: inline-block;
+    margin-top: 5px;
   }
 </style>
