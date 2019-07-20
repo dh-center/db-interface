@@ -16,7 +16,7 @@ router.get('/login', async (req, res) => {
       res.json({ error: 'Wrong password' });
     }
   } catch (error) {
-    res.json({ error });
+    res.json({ error: error.toString() });
   }
 });
 
