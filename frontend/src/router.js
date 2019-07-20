@@ -8,9 +8,14 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/form',
       name: 'form',
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
+    },
+    {
+      path: '/sign-up',
+      name: 'sign-up',
+      component: () => import('./views/auth/SignUp.vue')
     }
   ]
 });
