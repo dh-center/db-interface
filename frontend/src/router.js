@@ -4,49 +4,46 @@ import store from './store';
 
 Vue.use(Router);
 
-const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters.isAuthenticated) {
-    next();
-    return;
-  }
-  next('/');
-};
-
-const ifAuthenticated = (to, from, next) => {
-  if (store.getters.isAuthenticated) {
-    next();
-    return;
-  }
-  next('/login');
-};
-
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       name: 'form',
-      component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue'),
-      beforeEnter: ifAuthenticated
+      component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
     },
     {
       path: '/sign-up',
       name: 'sign-up',
-      component: () => import('./views/auth/SignUp.vue'),
-      beforeEnter: ifNotAuthenticated
+      component: () => import('./views/auth/SignUp.vue')
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('./views/auth/Login.vue'),
-      beforeEnter: ifNotAuthenticated
+      component: () => import('./views/auth/Login.vue')
     },
     {
       path: '/logout',
       name: 'logout',
-      component: () => import('./views/auth/Logout.vue'),
-      beforeEnter: ifAuthenticated
+      component: () => import('./views/auth/Logout.vue')
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const authRoutes = /^\/(login|sign-up)/;
+
+  if (store.getters.isAuthenticated) {
+    if (authRoutes.test(to.fullPath)) {
+      next('/');
+    }
+  } else {
+    if (!authRoutes.test(to.fullPath)) {
+      next('/login');
+    }
+  }
+  next();
+});
+
+export default router;
