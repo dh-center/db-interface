@@ -50,6 +50,15 @@ const relationsRoutes = require('./routes/relations');
 app.use(relationsRoutes);
 
 /**
+ * Auth routes
+ */
+const signUpRoute = require('./routes/auth/sign-up');
+const loginRoute = require('./routes/auth/login');
+
+app.use(signUpRoute);
+app.use(loginRoute);
+
+/**
  * Start server
  */
 app.listen(process.env.PORT, process.env.HOST, () => {
