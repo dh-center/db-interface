@@ -1,5 +1,5 @@
 <template>
-  <div class="signUpForm">
+  <div class="auth-form">
     <form @submit.prevent="signUp">
       <h2>Регистрация</h2>
       <label for="username">Имя пользователя:</label>
@@ -16,6 +16,7 @@
 
 <script>
   import axios from 'axios';
+  import { LOGIN } from '../../store/actions/auth';
 
   export default {
     name: 'SignUp',
@@ -36,9 +37,13 @@
             password: this.password
           });
 
-          console.log(response);
           if (response.data.error) {
             this.errorMessage = 'Пользователь с таким именем уже существует!';
+          } else {
+            const { username, password } = this;
+
+            await this.$store.dispatch(LOGIN, { username, password });
+            this.$router.push('/form');
           }
         } else {
           this.errorMessage = 'Пароли не совпадают!';
@@ -49,24 +54,5 @@
 </script>
 
 <style scoped>
-  .signUpForm {
-    width: 270px;
-    margin: 0 auto;
-
-    input {
-      width: 100%;
-      margin-top: 3px;
-      margin-bottom: 10px;
-    }
-
-    .errorMessage {
-      width: 100%;
-      text-align: center;
-      color: red;
-    }
-
-    button {
-      margin-top: 3px;
-    }
-  }
+  @import url("../../styles/auth-form.css");
 </style>
