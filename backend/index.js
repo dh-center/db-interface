@@ -18,6 +18,10 @@ require('./modules/db');
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(function (req, res, next) {
+  console.log(req.headers);
+  next();
+});
 
 /**
  * Add headers for allow CORS
