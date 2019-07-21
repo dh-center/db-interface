@@ -72,7 +72,7 @@ const mutations = {
    */
   [SET_TOKEN](state, accessToken) {
     state.accessToken = accessToken;
-    axios.defaults.headers.common['Authorization'] = accessToken;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
   },
 
   /**

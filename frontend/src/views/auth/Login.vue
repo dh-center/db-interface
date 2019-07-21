@@ -55,7 +55,6 @@
 
           const result = await this.$store.dispatch(LOGIN, { username, password });
 
-          console.log(result);
           if (!result.data.error) {
             this.$router.push('/');
           } else {
