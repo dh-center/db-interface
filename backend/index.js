@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const jwt = require('jsonwebtoken');
+const User = require('./models/user');
 
 /**
  * Read environment settings
@@ -18,8 +20,26 @@ require('./modules/db');
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(function (req, res, next) {
-  console.log(req.headers);
+app.use(async function (req, res, next) {
+  let accessToken = req.headers['authorization'];
+
+  if (accessToken && /^Bearer [a-z0-9-_+/=]+\.[a-z0-9-_+/=]+\.[a-z0-9-_+/=]+$/i.test(accessToken)) {
+    accessToken = accessToken.slice(7);
+    try {
+      const data = await jwt.verify(accessToken, process.env.JWT_SECRET_STRING);
+      const user = await User.findOne({ _id: data.id });
+
+      if (!user) {
+        const error = 'User not found!';
+
+        throw error;
+      } else {
+        console.log(user);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
   next();
 });
 
