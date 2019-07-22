@@ -29,12 +29,12 @@ app.use(async function (req, res, next) {
       const data = await jwt.verify(accessToken, process.env.JWT_SECRET_STRING);
       const user = await User.findOne({ _id: data.id });
 
-      if (!user) {
+      if (user) {
+        req.locals['user'] = user;
+      } else {
         const error = 'User not found!';
 
         throw error;
-      } else {
-        console.log(user);
       }
     } catch (err) {
       console.error(err);
