@@ -30,7 +30,7 @@ app.use(async function (req, res, next) {
       const user = await User.findOne({ _id: data.id });
 
       if (user) {
-        req.locals['user'] = user;
+        req.locals.user = user;
       } else {
         const error = 'User not found!';
 
