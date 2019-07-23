@@ -29,7 +29,7 @@ app.use(async function (req, res, next) {
 
   let accessToken = req.headers['authorization'];
 
-  if (accessToken && /^Bearer [a-z0-9-_+/=]+\.[a-z0-9-_+/=]+\.[a-z0-9-_+/=]+$/i.test(accessToken) && !authRoutes.test(reqUrl)) {
+  if (/^Bearer [a-z0-9-_+/=]+\.[a-z0-9-_+/=]+\.[a-z0-9-_+/=]+$/i.test(accessToken)) {
     accessToken = accessToken.slice(7);
     try {
       const data = await jwt.verify(accessToken, process.env.JWT_SECRET_STRING);
@@ -43,7 +43,7 @@ app.use(async function (req, res, next) {
         return res;
       }
     } catch (err) {
-      return res.status(401).json({ error: err });
+      return res.status(401).json({ error: err.toString() });
     }
   } else if (!authRoutes.test(reqUrl)) {
     res.sendStatus(403);
