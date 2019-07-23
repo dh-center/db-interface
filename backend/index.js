@@ -22,35 +22,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(async function (req, res, next) {
   if (req.method === 'OPTIONS') {
-    next();
-  } else {
-    const authRoutes = /^\/(login|sign-up).*/;
-    const reqUrl = req.originalUrl;
+    return next();
+  }
+  const authRoutes = /^\/(login|sign-up).*/;
+  const reqUrl = req.originalUrl;
 
-    let accessToken = req.headers['authorization'];
+  let accessToken = req.headers['authorization'];
 
-    if (accessToken && /^Bearer [a-z0-9-_+/=]+\.[a-z0-9-_+/=]+\.[a-z0-9-_+/=]+$/i.test(accessToken) && !authRoutes.test(reqUrl)) {
-      accessToken = accessToken.slice(7);
-      try {
-        const data = await jwt.verify(accessToken, process.env.JWT_SECRET_STRING);
-        const user = await User.findOne({ _id: data.id });
+  if (accessToken && /^Bearer [a-z0-9-_+/=]+\.[a-z0-9-_+/=]+\.[a-z0-9-_+/=]+$/i.test(accessToken) && !authRoutes.test(reqUrl)) {
+    accessToken = accessToken.slice(7);
+    try {
+      const data = await jwt.verify(accessToken, process.env.JWT_SECRET_STRING);
+      const user = await User.findOne({ _id: data.id });
 
-        if (user) {
-          res.locals.user = user;
-          next();
-        } else {
-          res.sendStatus(403);
-          return res;
-        }
-      } catch (err) {
-        console.error(err);
+      if (user) {
+        res.locals.user = user;
+        return next();
+      } else {
+        res.sendStatus(403);
+        return res;
       }
-    } else if (!authRoutes.test(reqUrl)) {
-      res.sendStatus(403);
-      return res;
-    } else {
-      next();
+    } catch (err) {
+      console.error(err);
     }
+  } else if (!authRoutes.test(reqUrl)) {
+    res.sendStatus(403);
+    return res;
+  } else {
+    return next();
   }
 });
 
