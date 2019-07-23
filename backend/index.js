@@ -43,7 +43,7 @@ app.use(async function (req, res, next) {
         return res;
       }
     } catch (err) {
-      console.error(err);
+      return res.status(401).json({ error: err });
     }
   } else if (!authRoutes.test(reqUrl)) {
     res.sendStatus(403);
