@@ -24,7 +24,7 @@ app.use(async function (req, res, next) {
   if (req.method === 'OPTIONS') {
     return next();
   }
-  const authRoutes = /^\/(login|sign-up).*/;
+  const authRoutes = /^\/(login|sign-up)/;
   const reqUrl = req.originalUrl;
 
   let accessToken = req.headers['authorization'];
