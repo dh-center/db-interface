@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new Schema({
   username: {
@@ -35,6 +36,19 @@ userSchema.statics.create = async function (username, password, cb) {
  */
 userSchema.methods.comparePassword = function (password) {
   return argon2.verify(this.hashedPassword, password);
+};
+
+/**
+ * Generate JSON web token
+ * @param {Function} [cb] - callback (if not specified, Promises are used)
+ * @returns {String} - generated JWT
+ */
+userSchema.methods.generateJWT = function (cb) {
+  return jwt.sign({
+    id: this.id
+  },
+  process.env.JWT_SECRET_STRING,
+  cb);
 };
 
 module.exports = mongoose.model('users', userSchema);
