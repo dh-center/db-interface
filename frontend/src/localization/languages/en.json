@@ -13,6 +13,16 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "form": {
+    "header": "Form",
+    "person": "Person",
+    "personSearch": "Search person",
+    "location": "Location",
+    "locationSearch": "Search location",
+    "relation": "Relation",
+    "quotes": "Quote and reference to the publication",
+    "save": "Save"
+  },
   "error": {
     "unspecific": "Something went wrong",
     "401": "Failed to log in",
