@@ -6,17 +6,17 @@ router.get('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.query.username });
 
-    if (!user) return res.json({ error: 'No user with such username' });
+    if (!user) return res.sendStatus(401);
 
     const compareResult = await user.comparePassword(req.query.password);
 
     if (compareResult) {
       res.json({ accessToken: user.generateJWT() });
     } else {
-      res.json({ error: 'Wrong password' });
+      res.sendStatus(401);
     }
   } catch (error) {
-    res.json({ error: error.toString() });
+    res.status(401).json({ error: error.toString() });
   }
 });
 

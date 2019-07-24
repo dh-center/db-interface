@@ -9,7 +9,7 @@
         class="auth-form_input"
         required
         type="text"
-        placeholder="Username"
+        :placeholder="$t('auth.username')"
       >
       <label for="password">{{ $t('auth.password') }}:</label>
       <input
@@ -18,6 +18,7 @@
         class="auth-form_input"
         required
         type="password"
+        :placeholder="$t('auth.password')"
       >
       <div class="auth-form_errmsg">
         {{ errorMessage }}
@@ -40,6 +41,7 @@
 
 <script>
   import { LOGIN } from '../../store/actions/auth';
+  import i18n from '../../localization/i18next';
 
   export default {
     name: 'SignIn',
@@ -57,19 +59,13 @@
 
           const result = await this.$store.dispatch(LOGIN, { username, password });
 
-          if (!result.data.error) {
+          if (result.status === 200) {
             this.$router.push('/');
           } else {
-            throw result.data.error;
+            throw result;
           }
         } catch (error) {
-          if (error === 'Wrong password') {
-            this.errorMessage = 'Неправильный пароль';
-          } else if (error === 'No user with such username') {
-            this.errorMessage = 'Пользователя с таким именем не существует';
-          } else {
-            this.errorMessage = error;
-          }
+          this.errorMessage = i18n.t([`error.${error.response.status}`, 'error.unspecific']);
         }
       }
     }

@@ -8,7 +8,7 @@ router.post('/sign-up', async (req, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    res.json({ error: error.toString() });
+    res.status(409).json({ error: error.toString() });
   }
 });
 

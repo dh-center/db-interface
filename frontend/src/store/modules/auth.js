@@ -46,12 +46,14 @@ const actions = {
         }
       });
 
-      if (!response.data.error) {
+      console.log(response);
+
+      if (response.status === 200) {
         commit(SET_TOKEN, response.data.accessToken);
       }
       return response;
     } catch (error) {
-      console.error(error);
+      return error;
     }
   },
 

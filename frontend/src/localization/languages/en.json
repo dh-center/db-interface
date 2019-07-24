@@ -12,5 +12,10 @@
     "registration": "Sign up",
     "login": "Log in",
     "logout": "Log out"
+  },
+  "error": {
+    "unspecific": "Something went wrong",
+    "401": "Failed to log in",
+    "409": "User with the same username already exists"
   }
 }

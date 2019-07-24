@@ -51,6 +51,7 @@
 <script>
   import axios from 'axios';
   import { LOGIN } from '../../store/actions/auth';
+  import i18n from '../../localization/i18next';
 
   export default {
     name: 'SignUp',
@@ -64,23 +65,25 @@
     },
     methods: {
       async signUp() {
-        if (this.password === this.passwordRepeat) {
-          this.errorMessage = '';
-          const response = await axios.post('/sign-up', {
-            username: this.username,
-            password: this.password
-          });
+        try {
+          if (this.password === this.passwordRepeat) {
+            this.errorMessage = '';
+            const response = await axios.post('/sign-up', {
+              username: this.username,
+              password: this.password
+            });
 
-          if (response.data.error) {
-            this.errorMessage = 'Пользователь с таким именем уже существует!';
+            if (response.status === 200) {
+              const { username, password } = this;
+
+              await this.$store.dispatch(LOGIN, { username, password });
+              this.$router.push('/');
+            }
           } else {
-            const { username, password } = this;
-
-            await this.$store.dispatch(LOGIN, { username, password });
-            this.$router.push('/');
+            this.errorMessage = 'Пароли не совпадают!';
           }
-        } else {
-          this.errorMessage = 'Пароли не совпадают!';
+        } catch (error) {
+          this.errorMessage = i18n.t([`error.${error.response.status}`, 'error.unspecific']);
         }
       }
     }
