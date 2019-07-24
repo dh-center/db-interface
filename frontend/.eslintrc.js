@@ -8,11 +8,11 @@ module.exports = {
   },
   overrides: [
     {
-      'files': [ '*.vue' ],
-      'rules': {
-        'indent': 'off',
+      files: [ '*.vue' ],
+      rules: {
+        indent: 'off',
         'vue/script-indent': [
-          'warn', 2, { 'baseIndent': 1 }
+          'warn', 2, { baseIndent: 1 }
         ]
       }
     }
