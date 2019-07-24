@@ -1,12 +1,12 @@
 <template>
   <div class="auth-form">
     <form @submit.prevent="logout">
-      <h2>Выйти из системы</h2>
+      <h2>{{ $t('auth.headers.logout') }}</h2>
       <button
         class="auth-form_button"
         type="submit"
       >
-        Выйти
+        {{ $t('auth.logout') }}
       </button>
     </form>
   </div>

@@ -57,7 +57,7 @@
       class="form_link"
       to="/logout"
     >
-      Выйти из системы
+      {{ $t('auth.headers.logout') }}
     </router-link>
   </div>
 </template>

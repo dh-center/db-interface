@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "headers": {
+      "login": "Log in",
+      "registration": "Sign up",
+      "logout": "Sign out"
+    },
+    "username": "Username",
+    "password": "Password",
+    "passwordRepeat": "Repeat password",
+    "loginLink": "Sign in with username",
+    "registration": "Sign up",
+    "login": "Log in",
+    "logout": "Log out"
+  }
+}

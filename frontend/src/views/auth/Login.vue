@@ -1,8 +1,8 @@
 <template>
   <div class="auth-form">
     <form @submit.prevent="signIn">
-      <h2>Вход в систему</h2>
-      <label for="username">Имя пользователя:</label>
+      <h2>{{ $t('auth.headers.login') }}</h2>
+      <label for="username">{{ $t('auth.username') }}:</label>
       <input
         id="username"
         v-model="username"
@@ -11,7 +11,7 @@
         type="text"
         placeholder="Username"
       >
-      <label for="password">Пароль:</label>
+      <label for="password">{{ $t('auth.password') }}:</label>
       <input
         id="password"
         v-model="password"
@@ -26,14 +26,14 @@
         class="auth-form_button"
         type="submit"
       >
-        Войти
+        {{ $t('auth.login') }}
       </button>
     </form>
     <router-link
       to="/sign-up"
       class="auth-form_link"
     >
-      Зарегистрироваться
+      {{ $t('auth.registration') }}
     </router-link>
   </div>
 </template>
