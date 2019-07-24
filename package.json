@@ -2,7 +2,9 @@
   "name": "db-interface",
   "version": "1.0.0",
   "scripts": {
-    "lint": "eslint . --ext .js --ext .vue --fix"
+    "lint": "eslint . --ext .js --ext .vue --fix",
+    "dev:up": "docker-compose -f docker-compose.dev.yml up -d",
+    "dev:down": "docker-compose -f docker-compose.dev.yml down"
   },
   "repository": "git@github.com:dh-lab/db-interface.git",
   "author": "DH lab <dh@corp.ifmo.ru>",
