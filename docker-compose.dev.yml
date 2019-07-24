@@ -1,30 +1,27 @@
 version: "3.2"
 services:
-  api:
+  api-dev:
     build:
       dockerfile: "backend/docker/Dockerfile.dev"
       context: .
     user: "node"
+    env_file:
+      - .env.dev
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
-    environment:
-      - NODE_ENV=development
-      - API_PORT=3000
-      - FRONTEND_PORT=8080
-      - API_ENDPOINT=http://api:3000
-      - JWT_SECRET_STRING=secret_string
-      - MONGO_URL=mongodb://mongodb:27017/db-interface
     ports:
-      - "3000:3000"
+      - 3000:${API_PORT}
     depends_on:
       - mongodb
     stdin_open: true
     tty: true
-  frontend:
+  frontend-dev:
     build:
       dockerfile: "frontend/docker/Dockerfile.dev"
       context: .
+    env_file:
+      - .env.dev
     ports:
       - 8080:8080
     volumes:
