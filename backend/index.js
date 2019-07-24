@@ -95,6 +95,6 @@ app.use(loginRoute);
 /**
  * Start server
  */
-app.listen(process.env.PORT, () => {
+app.listen(process.env.API_PORT, () => {
   console.log(`Server running at localhost:${process.env.PORT}/`);
 });
