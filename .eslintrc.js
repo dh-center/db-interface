@@ -8,8 +8,8 @@ module.exports = {
   ],
   rules: {
     'prefer-const': ['error', {
-      'destructuring': 'all',
-      'ignoreReadBeforeAssign': false
+      destructuring: 'all',
+      ignoreReadBeforeAssign: false
     } ]
   }
 };
