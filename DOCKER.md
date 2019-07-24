@@ -4,7 +4,8 @@
 
 Development docker image supports live reload
 
-env variables located right in compose file `docker-compose.dev.yml`
+Environment variables must be located in the `.env.dev` file.
+Port forwarding must be controlled manually in the `docker-compose.dev.yml` file.
 
 Run to get started:
 
