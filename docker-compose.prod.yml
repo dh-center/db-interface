@@ -1,6 +1,6 @@
 version: "3.2"
 services:
-  api:
+  api-prod:
     build:
       dockerfile: "backend/docker/Dockerfile.prod"
       context: .
@@ -10,14 +10,14 @@ services:
       - .env
     depends_on:
       - mongodb
-  frontend:
+  frontend-prod:
     build:
       dockerfile: "frontend/docker/Dockerfile.prod"
       context: .
     env_file:
       - .env
     ports:
-      - 8080:8080
+      - ${FRONTEND_PORT}:8080
   mongodb:
     image: mongo
     volumes:
