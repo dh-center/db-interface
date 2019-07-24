@@ -29,10 +29,12 @@
         Войти
       </button>
     </form>
-    <a
-      href="/sign-up"
+    <router-link
+      to="/sign-up"
       class="auth-form_link"
-    >Зарегистрироваться</a>
+    >
+      Зарегистрироваться
+    </router-link>
   </div>
 </template>
 

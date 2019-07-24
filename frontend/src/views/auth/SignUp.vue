@@ -37,10 +37,12 @@
         Зарегистрироваться
       </button>
     </form>
-    <a
-      href="/login"
+    <router-link
+      to="/login"
       class="auth-form_link"
-    >Войти со своим логином</a>
+    >
+      Войти со своим логином
+    </router-link>
   </div>
 </template>
 

@@ -53,10 +53,12 @@
         Сохранить
       </button>
     </form>
-    <a
+    <router-link
       class="form_link"
-      href="/logout"
-    >Выйти из системы</a>
+      to="/logout"
+    >
+      Выйти из системы
+    </router-link>
   </div>
 </template>
 
