@@ -11,11 +11,12 @@ const enLang = require('./languages/en');
 i18next.use(LanguageDetector);
 
 i18next.init({
-  lng: 'ru',
   resources: {
     ru: { translation: ruLang },
     en: { translation: enLang }
-  }
+  },
+  detection: { order: [ 'navigator' ] },
+  fallbackLng: 'en'
 });
 
 export default new VueI18Next(i18next);
