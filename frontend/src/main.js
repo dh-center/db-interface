@@ -7,7 +7,7 @@ import i18n from './localization/i18next';
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = process.env.API_ENDPOINT || 'http://localhost:3000';
+axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:3000';
 
 Vue.prototype.$API_ENDPOINT = axios.defaults.baseURL;
 
