@@ -1,12 +1,12 @@
 <template>
   <div class="form">
-    <h1>Форма</h1>
+    <h1>{{ $t('form.header') }}</h1>
     <form @submit.prevent="saveRelation">
       <div class="form__field">
-        <label>Персона: </label>
+        <label>{{ $t('form.person') }}: </label>
         <autocomplete
           ref="personAutocomplete"
-          placeholder="Search Person"
+          :placeholder="$t('form.personSearch')"
           :source="`${$API_ENDPOINT}/persons?name=`"
           results-property="data"
           results-value="_id"
@@ -15,10 +15,10 @@
         />
       </div>
       <div class="form__field">
-        <label>Место: </label>
+        <label>{{ $t('form.location') }}: </label>
         <autocomplete
           ref="locationAutocomplete"
-          placeholder="Search Locations"
+          :placeholder="$t('form.locationSearch')"
           :source="`${$API_ENDPOINT}/locations?name=`"
           results-property="data"
           results-value="_id"
@@ -27,7 +27,7 @@
         />
       </div>
       <div class="form__field">
-        <label for="relation">Связь: </label>
+        <label for="relation">{{ $t('form.relation') }}: </label>
         <select
           id="relation"
           v-model="selectedRelation"
@@ -43,21 +43,21 @@
         </select>
       </div>
       <div class="form__field">
-        <label for="quote">Цитата и ссылка на издание: </label>
+        <label for="quote">{{ $t('form.quotes') }}: </label>
         <textarea
           id="quote"
           v-model="quote"
         />
       </div>
       <button type="submit">
-        Сохранить
+        {{ $t('form.save') }}
       </button>
     </form>
     <router-link
       class="form_link"
       to="/logout"
     >
-      Выйти из системы
+      {{ $t('auth.headers.logout') }}
     </router-link>
   </div>
 </template>

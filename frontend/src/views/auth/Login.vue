@@ -1,23 +1,24 @@
 <template>
   <div class="auth-form">
     <form @submit.prevent="signIn">
-      <h2>Вход в систему</h2>
-      <label for="username">Имя пользователя:</label>
+      <h2>{{ $t('auth.headers.login') }}</h2>
+      <label for="username">{{ $t('auth.username') }}:</label>
       <input
         id="username"
         v-model="username"
         class="auth-form_input"
         required
         type="text"
-        placeholder="Username"
+        :placeholder="$t('auth.username')"
       >
-      <label for="password">Пароль:</label>
+      <label for="password">{{ $t('auth.password') }}:</label>
       <input
         id="password"
         v-model="password"
         class="auth-form_input"
         required
         type="password"
+        :placeholder="$t('auth.password')"
       >
       <div class="auth-form_errmsg">
         {{ errorMessage }}
@@ -26,20 +27,21 @@
         class="auth-form_button"
         type="submit"
       >
-        Войти
+        {{ $t('auth.login') }}
       </button>
     </form>
     <router-link
       to="/sign-up"
       class="auth-form_link"
     >
-      Зарегистрироваться
+      {{ $t('auth.registration') }}
     </router-link>
   </div>
 </template>
 
 <script>
   import { LOGIN } from '../../store/actions/auth';
+  import i18n from '../../localization/i18next';
 
   export default {
     name: 'SignIn',
@@ -57,19 +59,13 @@
 
           const result = await this.$store.dispatch(LOGIN, { username, password });
 
-          if (!result.data.error) {
+          if (result.status === 200) {
             this.$router.push('/');
           } else {
-            throw result.data.error;
+            throw result;
           }
         } catch (error) {
-          if (error === 'Wrong password') {
-            this.errorMessage = 'Неправильный пароль';
-          } else if (error === 'No user with such username') {
-            this.errorMessage = 'Пользователя с таким именем не существует';
-          } else {
-            this.errorMessage = error;
-          }
+          this.errorMessage = i18n.t([`error.${error.response.status}`, 'error.unspecific']);
         }
       }
     }

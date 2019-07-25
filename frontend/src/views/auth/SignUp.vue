@@ -1,31 +1,33 @@
 <template>
   <div class="auth-form">
     <form @submit.prevent="signUp">
-      <h2>Регистрация</h2>
-      <label for="username">Имя пользователя:</label>
+      <h2>{{ $t('auth.headers.registration') }}</h2>
+      <label for="username">{{ $t('auth.username') }}:</label>
       <input
         id="username"
         v-model="username"
         class="auth-form_input"
         required
         type="text"
-        placeholder="Username"
+        :placeholder="$t('auth.username')"
       >
-      <label for="password">Пароль:</label>
+      <label for="password">{{ $t('auth.password') }}:</label>
       <input
         id="password"
         v-model="password"
         class="auth-form_input"
         required
         type="password"
+        :placeholder="$t('auth.password')"
       >
-      <label for="passwordRepeat">Повторите пароль:</label>
+      <label for="passwordRepeat">{{ $t('auth.passwordRepeat') }}:</label>
       <input
         id="passwordRepeat"
         v-model="passwordRepeat"
         class="auth-form_input"
         required
         type="password"
+        :placeholder="$t('auth.passwordRepeat')"
       >
       <div class="auth-form_errmsg">
         {{ errorMessage }}
@@ -34,14 +36,14 @@
         class="auth-form_button"
         type="submit"
       >
-        Зарегистрироваться
+        {{ $t('auth.registration') }}
       </button>
     </form>
     <router-link
       to="/login"
       class="auth-form_link"
     >
-      Войти со своим логином
+      {{ $t('auth.loginLink') }}
     </router-link>
   </div>
 </template>
@@ -49,6 +51,7 @@
 <script>
   import axios from 'axios';
   import { LOGIN } from '../../store/actions/auth';
+  import i18n from '../../localization/i18next';
 
   export default {
     name: 'SignUp',
@@ -62,23 +65,25 @@
     },
     methods: {
       async signUp() {
-        if (this.password === this.passwordRepeat) {
-          this.errorMessage = '';
-          const response = await axios.post('/sign-up', {
-            username: this.username,
-            password: this.password
-          });
+        try {
+          if (this.password === this.passwordRepeat) {
+            this.errorMessage = '';
+            const response = await axios.post('/sign-up', {
+              username: this.username,
+              password: this.password
+            });
 
-          if (response.data.error) {
-            this.errorMessage = 'Пользователь с таким именем уже существует!';
+            if (response.status === 200) {
+              const { username, password } = this;
+
+              await this.$store.dispatch(LOGIN, { username, password });
+              this.$router.push('/');
+            }
           } else {
-            const { username, password } = this;
-
-            await this.$store.dispatch(LOGIN, { username, password });
-            this.$router.push('/');
+            this.errorMessage = 'Пароли не совпадают!';
           }
-        } else {
-          this.errorMessage = 'Пароли не совпадают!';
+        } catch (error) {
+          this.errorMessage = i18n.t([`error.${error.response.status}`, 'error.unspecific']);
         }
       }
     }
