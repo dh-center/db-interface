@@ -2,8 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const jwt = require('jsonwebtoken');
-const User = require('./models/user');
+
+require('express-async-errors');
 
 /**
  * Read environment settings
@@ -20,38 +20,7 @@ require('./modules/db');
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(async function (req, res, next) {
-  if (req.method === 'OPTIONS') {
-    return next();
-  }
-  const authRoutes = /^\/(login|sign-up)/;
-  const reqUrl = req.originalUrl;
-
-  let accessToken = req.headers['authorization'];
-
-  if (/^Bearer [a-z0-9-_+/=]+\.[a-z0-9-_+/=]+\.[a-z0-9-_+/=]+$/i.test(accessToken)) {
-    accessToken = accessToken.slice(7);
-    try {
-      const data = await jwt.verify(accessToken, process.env.JWT_SECRET_STRING);
-      const user = await User.findOne({ _id: data.id });
-
-      if (user) {
-        res.locals.user = user;
-        return next();
-      } else {
-        res.sendStatus(403);
-        return res;
-      }
-    } catch (err) {
-      return res.status(401).json({ error: err.toString() });
-    }
-  } else if (!authRoutes.test(reqUrl)) {
-    res.sendStatus(403);
-    return res;
-  } else {
-    return next();
-  }
-});
+app.use(require('./middlewares/auth'));
 
 /**
  * Add headers for allow CORS
@@ -63,34 +32,14 @@ app.use(function (req, res, next) {
 });
 
 /**
- * Persons routes
+ * Setup routes
  */
-const personsRoutes = require('./routes/persons');
-
-app.use(personsRoutes);
+app.use(require('./router'));
 
 /**
- * Locations routes
+ * Setup error handler
  */
-const locationsRoutes = require('./routes/locations');
-
-app.use(locationsRoutes);
-
-/**
- * Relations routes
- */
-const relationsRoutes = require('./routes/relations');
-
-app.use(relationsRoutes);
-
-/**
- * Auth routes
- */
-const signUpRoute = require('./routes/auth/sign-up');
-const loginRoute = require('./routes/auth/login');
-
-app.use(signUpRoute);
-app.use(loginRoute);
+app.use(require('./middlewares/errorHandler'));
 
 /**
  * Start server
