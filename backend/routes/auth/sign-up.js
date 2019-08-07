@@ -1,14 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user');
+const { UsernameDuplicationError } = require('../../errorTypes');
+const { MongoError } = require('mongodb');
 
 router.post('/sign-up', async (req, res) => {
   try {
-    const newUser = await User.create(req.body.username, req.body.password);
+    await User.create(req.body.username, req.body.password);
 
     res.sendStatus(200);
   } catch (error) {
-    res.status(409).json({ error: error.toString() });
+    // Catch MongoDB duplication error
+    if (error instanceof MongoError && error.code === 11000) {
+      throw new UsernameDuplicationError();
+    }
+    throw error;
   }
 });
 

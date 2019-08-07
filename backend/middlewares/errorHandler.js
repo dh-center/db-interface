@@ -5,8 +5,9 @@ const { ApiError } = require('../errorTypes');
  * @param {Error} error - occurred error
  * @param {Request} req  -express request object
  * @param {Response} res - express response object
+ * @param {Function} next - next express middleware
  */
-module.exports = function (error, req, res) {
+module.exports = function (error, req, res, next) {
   if (error instanceof ApiError) {
     return res.status(error.httpCode).json({ error });
   } else {
