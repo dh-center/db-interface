@@ -53,18 +53,19 @@
         {{ $t('form.save') }}
       </button>
     </form>
-    <router-link
+    <button
       class="form_link"
-      to="/logout"
+      @click="logout"
     >
       {{ $t('auth.headers.logout') }}
-    </router-link>
+    </button>
   </div>
 </template>
 
 <script>
   import Autocomplete from 'vuejs-auto-complete';
   import axios from 'axios';
+  import { RESET_STORE } from '../store/actions';
   import relations from '../../../backend/models/relationId.json';
 
   export default {
@@ -82,6 +83,9 @@
       };
     },
     methods: {
+      logout() {
+        this.$store.dispatch(RESET_STORE);
+      },
       formattedDisplayPerson(result) {
         const birthDate = new Date(result.birthDate);
         const deathDate = new Date(result.deathDate);
