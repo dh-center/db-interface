@@ -1,6 +1,7 @@
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 import {
-  LOGIN
+  LOGIN,
+  SIGN_UP
 } from './actionTypes';
 import { RESET_STORE } from '../../actions';
 import axios from 'axios';
@@ -53,6 +54,18 @@ const actions = {
 
     commit(mutationTypes.SET_TOKEN, response.data.accessToken);
     return response.data.accessToken;
+  },
+
+  /**
+   * Send login request to the server and performs user login
+   * @param {function} commit - standard Vuex commit function
+   * @param {User} user - user's params for auth
+   */
+  async [SIGN_UP]({ commit }, user) {
+    return axios.post('/sign-up', {
+      username: user.username,
+      password: user.password
+    });
   },
 
   /**
