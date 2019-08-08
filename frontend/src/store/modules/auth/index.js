@@ -1,10 +1,16 @@
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 import {
-  LOGIN,
-  SET_TOKEN
-} from '../actions/auth';
-import { RESET_STORE } from '../actions';
+  LOGIN
+} from './actionTypes';
+import { RESET_STORE } from '../../actions';
 import axios from 'axios';
+
+/**
+ * Mutations enum for this module
+ */
+const mutationTypes = {
+  SET_TOKEN: 'SET_TOKENS' // Sets user's access token (for example, after authentication)
+};
 
 /**
  * Module state
@@ -38,23 +44,15 @@ const actions = {
    * @param {User} user - user's params for auth
    */
   async [LOGIN]({ commit }, user) {
-    try {
-      const response = await axios.get('/login', {
-        params: {
-          username: user.username,
-          password: user.password
-        }
-      });
-
-      console.log(response);
-
-      if (response.status === 200) {
-        commit(SET_TOKEN, response.data.accessToken);
+    const response = await axios.get('/login', {
+      params: {
+        username: user.username,
+        password: user.password
       }
-      return response;
-    } catch (error) {
-      return error;
-    }
+    });
+
+    commit(mutationTypes.SET_TOKEN, response.data.accessToken);
+    return response.data.accessToken;
   },
 
   /**
@@ -72,7 +70,7 @@ const mutations = {
    * @param {AuthModuleState} state - Vuex state
    * @param {string} accessToken - user's access token
    */
-  [SET_TOKEN](state, accessToken) {
+  [mutationTypes.SET_TOKEN](state, accessToken) {
     state.accessToken = accessToken;
   },
 
