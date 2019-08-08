@@ -5,6 +5,9 @@ import Vue from 'vue';
 axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:3000';
 Vue.prototype.$API_ENDPOINT = axios.defaults.baseURL;
 
+/**
+ * Translates error messages from API server
+ */
 axios.interceptors.response.use(
   response => response,
   async error => {

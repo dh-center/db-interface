@@ -42,13 +42,14 @@ const actions = {
   /**
    * Send login request to the server and performs user login
    * @param {function} commit - standard Vuex commit function
-   * @param {User} user - user's params for auth
+   * @param {String} username - user's username
+   * @param {String} password - user's password
    */
-  async [LOGIN]({ commit }, user) {
+  async [LOGIN]({ commit }, { username, password }) {
     const response = await axios.get('/login', {
       params: {
-        username: user.username,
-        password: user.password
+        username,
+        password
       }
     });
 
@@ -59,12 +60,13 @@ const actions = {
   /**
    * Send login request to the server and performs user login
    * @param {function} commit - standard Vuex commit function
-   * @param {User} user - user's params for auth
+   * @param {String} username - user's username
+   * @param {String} password - user's password
    */
-  async [SIGN_UP]({ commit }, user) {
+  async [SIGN_UP]({ commit }, { username, password }) {
     return axios.post('/sign-up', {
-      username: user.username,
-      password: user.password
+      username,
+      password
     });
   },
 
