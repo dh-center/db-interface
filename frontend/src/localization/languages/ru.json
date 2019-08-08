@@ -26,6 +26,7 @@
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",
     "WRONG_USER_PASSWORD": "Неверный пароль",
-    "NO_USER_WITH_SUCH_USERNAME": "Не существует пользователя с таким именем"
+    "NO_USER_WITH_SUCH_USERNAME": "Не существует пользователя с таким именем",
+    "SOMETHING_WENT_WRONG": "Что-то пошло не так"
   }
 }
