@@ -23,9 +23,9 @@
     "quotes": "Quote and reference to the publication",
     "save": "Save"
   },
-  "error": {
-    "unspecific": "Something went wrong",
-    "401": "Failed to log in",
-    "409": "User with the same username already exists"
+  "apiErrorTypes": {
+    "USERNAME_DUPLICATION": "User with that username already exists",
+    "WRONG_USER_PASSWORD": "Wrong password",
+    "NO_USER_WITH_SUCH_USERNAME": "No user with this username"
   }
 }
