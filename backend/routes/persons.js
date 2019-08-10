@@ -8,7 +8,7 @@ router.get('/persons', async (req, res) => {
   try {
     const data = await Person.find(dbQuery);
 
-    res.json({ data });
+    res.json({ payload: data });
   } catch (error) {
     res.json({ error });
   }
@@ -25,7 +25,7 @@ router.get('/persons/:id', async (req, res) => {
   try {
     const data = await Person.find({ name: { $regex: new RegExp(`${req.query.name}`, 'i') } });
 
-    res.json({ data });
+    res.json({ payload: data });
   } catch (error) {
     res.json({ error });
   }
