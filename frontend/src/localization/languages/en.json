@@ -12,6 +12,14 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "persons": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "patronymic": "Patronymic",
+    "pseudonym": "Pseudonym",
+    "profession": "Profession",
+    "description": "Description"
+  },
   "form": {
     "header": "Form",
     "person": "Person",

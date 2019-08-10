@@ -12,6 +12,14 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "persons": {
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "patronymic": "Отчество",
+    "pseudonym": "Псевдоним",
+    "profession": "Профессия",
+    "description": "Описание"
+  },
   "form": {
     "header": "Форма",
     "person": "Персона",

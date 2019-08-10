@@ -3,25 +3,36 @@
     <button @click="$router.push({name: 'persons-create'})">
       Add new person
     </button>
+    <select
+      v-model="dataLanguage"
+      name="lang"
+    >
+      <option value="ru">
+        Russian
+      </option>
+      <option value="en">
+        English
+      </option>
+    </select>
     <table border="1">
       <tr>
-        <td>Имя</td>
-        <td>Фамилия</td>
-        <td>Отчество</td>
-        <td>Псевдоним</td>
-        <td>Профессия</td>
-        <td>Описание</td>
+        <td
+          v-for="(field, name) in schema"
+          :key="name"
+        >
+          {{ $t('persons.' + name) }}
+        </td>
       </tr>
       <tr
         v-for="person in personsList"
         :key="person._id"
       >
-        <td>{{ person.firstName }}</td>
-        <td>{{ person.lastName }}</td>
-        <td>{{ person.patronymic }}</td>
-        <td>{{ person.pseudonym }}</td>
-        <td>{{ person.profession }}</td>
-        <td>{{ person.description }}</td>
+        <td
+          v-for="(field, name) in schema"
+          :key="name"
+        >
+          {{ person[name] && person[name][dataLanguage] }}
+        </td>
       </tr>
     </table>
   </div>
@@ -31,8 +42,37 @@
   import { mapState } from 'vuex';
   import { FETCH_ALL_PERSONS } from '../../store/modules/persons/actionTypes';
 
+  const schema = {
+    firstName: {
+      type: 'String',
+      intl: true
+    },
+    lastName: {
+      type: 'String',
+      intl: true
+    },
+    patronymic: {
+      type: 'String',
+      intl: true
+    },
+    description: {
+      type: 'String',
+      intl: true
+    },
+    profession: {
+      type: 'String',
+      intl: true
+    }
+  };
+
   export default {
     name: 'PersonsOverview',
+    data() {
+      return {
+        schema,
+        dataLanguage: 'ru'
+      };
+    },
     computed: mapState({
       personsList: state => state.persons.list
     }),
