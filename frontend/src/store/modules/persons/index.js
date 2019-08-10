@@ -1,7 +1,7 @@
 /**
  * Mutations enum for this module
  */
-import { FETCH_ALL } from './actionTypes';
+import { CREATE_NEW_PERSON, FETCH_ALL_PERSONS } from './actionTypes';
 import axios from 'axios';
 
 /**
@@ -37,10 +37,14 @@ const actions = {
    * @param {function} commit - standard Vuex commit function
    * @return {Promise<void>}
    */
-  async [FETCH_ALL]({ commit }) {
+  async [FETCH_ALL_PERSONS]({ commit }) {
     const response = await axios.get('/persons');
 
     commit(mutationTypes.SET_PERSONS_LIST, response);
+  },
+
+  async [CREATE_NEW_PERSON]({ commit }, personData) {
+    await axios.post('/persons', personData);
   }
 };
 

@@ -29,7 +29,7 @@
 
 <script>
   import { mapState } from 'vuex';
-  import { FETCH_ALL } from '../../store/modules/persons/actionTypes';
+  import { FETCH_ALL_PERSONS } from '../../store/modules/persons/actionTypes';
 
   export default {
     name: 'PersonsOverview',
@@ -37,7 +37,7 @@
       personsList: state => state.persons.list
     }),
     created() {
-      this.$store.dispatch(FETCH_ALL);
+      this.$store.dispatch(FETCH_ALL_PERSONS);
     }
   };
 </script>
