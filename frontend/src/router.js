@@ -22,11 +22,6 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/auth/Login.vue')
-    },
-    {
-      path: '/logout',
-      name: 'logout',
-      component: () => import('./views/auth/Logout.vue')
     }
   ]
 });

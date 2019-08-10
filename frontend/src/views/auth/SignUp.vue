@@ -20,15 +20,6 @@
         type="password"
         :placeholder="$t('auth.password')"
       >
-      <label for="passwordRepeat">{{ $t('auth.passwordRepeat') }}:</label>
-      <input
-        id="passwordRepeat"
-        v-model="passwordRepeat"
-        class="auth-form_input"
-        required
-        type="password"
-        :placeholder="$t('auth.passwordRepeat')"
-      >
       <div class="auth-form_errmsg">
         {{ errorMessage }}
       </div>
@@ -49,9 +40,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import { LOGIN } from '../../store/actions/auth';
-  import i18n from '../../localization/i18next';
+  import { SIGN_UP } from '../../store/modules/auth/actionTypes';
 
   export default {
     name: 'SignUp',
@@ -59,31 +48,19 @@
       return {
         username: '',
         password: '',
-        passwordRepeat: '',
         errorMessage: ''
       };
     },
     methods: {
       async signUp() {
         try {
-          if (this.password === this.passwordRepeat) {
-            this.errorMessage = '';
-            const response = await axios.post('/sign-up', {
-              username: this.username,
-              password: this.password
-            });
+          const { username, password } = this;
 
-            if (response.status === 200) {
-              const { username, password } = this;
+          await this.$store.dispatch(SIGN_UP, { username, password });
 
-              await this.$store.dispatch(LOGIN, { username, password });
-              this.$router.push('/');
-            }
-          } else {
-            this.errorMessage = 'Пароли не совпадают!';
-          }
+          this.$router.push('/login');
         } catch (error) {
-          this.errorMessage = i18n.t([`error.${error.response.status}`, 'error.unspecific']);
+          this.errorMessage = error.message;
         }
       }
     }

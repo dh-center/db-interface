@@ -40,8 +40,7 @@
 </template>
 
 <script>
-  import { LOGIN } from '../../store/actions/auth';
-  import i18n from '../../localization/i18next';
+  import { LOGIN } from '../../store/modules/auth/actionTypes';
 
   export default {
     name: 'SignIn',
@@ -57,15 +56,11 @@
         try {
           const { username, password } = this;
 
-          const result = await this.$store.dispatch(LOGIN, { username, password });
+          await this.$store.dispatch(LOGIN, { username, password });
 
-          if (result.status === 200) {
-            this.$router.push('/');
-          } else {
-            throw result;
-          }
+          this.$router.push('/');
         } catch (error) {
-          this.errorMessage = i18n.t([`error.${error.response.status}`, 'error.unspecific']);
+          this.errorMessage = error.message;
         }
       }
     }

@@ -17,6 +17,7 @@
         state => state.auth.accessToken,
         accessToken => {
           if (!accessToken) {
+            delete axios.defaults.headers.common['Authorization'];
             this.$router.push('/login');
           } else {
             axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;

@@ -1,10 +1,17 @@
 /* eslint no-shadow: ["error", { "allow": ["state"] }] */
 import {
   LOGIN,
-  SET_TOKEN
-} from '../actions/auth';
-import { RESET_STORE } from '../actions';
+  SIGN_UP
+} from './actionTypes';
+import { RESET_STORE } from '../../actions';
 import axios from 'axios';
+
+/**
+ * Mutations enum for this module
+ */
+const mutationTypes = {
+  SET_TOKEN: 'SET_TOKENS' // Sets user's access token (for example, after authentication)
+};
 
 /**
  * Module state
@@ -35,26 +42,32 @@ const actions = {
   /**
    * Send login request to the server and performs user login
    * @param {function} commit - standard Vuex commit function
-   * @param {User} user - user's params for auth
+   * @param {String} username - user's username
+   * @param {String} password - user's password
    */
-  async [LOGIN]({ commit }, user) {
-    try {
-      const response = await axios.get('/login', {
-        params: {
-          username: user.username,
-          password: user.password
-        }
-      });
-
-      console.log(response);
-
-      if (response.status === 200) {
-        commit(SET_TOKEN, response.data.accessToken);
+  async [LOGIN]({ commit }, { username, password }) {
+    const response = await axios.get('/login', {
+      params: {
+        username,
+        password
       }
-      return response;
-    } catch (error) {
-      return error;
-    }
+    });
+
+    commit(mutationTypes.SET_TOKEN, response.data.accessToken);
+    return response.data.accessToken;
+  },
+
+  /**
+   * Send login request to the server and performs user login
+   * @param {function} commit - standard Vuex commit function
+   * @param {String} username - user's username
+   * @param {String} password - user's password
+   */
+  async [SIGN_UP]({ commit }, { username, password }) {
+    return axios.post('/sign-up', {
+      username,
+      password
+    });
   },
 
   /**
@@ -72,7 +85,7 @@ const mutations = {
    * @param {AuthModuleState} state - Vuex state
    * @param {string} accessToken - user's access token
    */
-  [SET_TOKEN](state, accessToken) {
+  [mutationTypes.SET_TOKEN](state, accessToken) {
     state.accessToken = accessToken;
   },
 
