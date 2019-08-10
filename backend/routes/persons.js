@@ -21,14 +21,4 @@ router.post('/persons', async (req, res) => {
   res.sendStatus(201);
 });
 
-router.get('/persons/:id', async (req, res) => {
-  try {
-    const data = await Person.find({ name: { $regex: new RegExp(`${req.query.name}`, 'i') } });
-
-    res.json({ payload: data });
-  } catch (error) {
-    res.json({ error });
-  }
-});
-
 module.exports = router;
