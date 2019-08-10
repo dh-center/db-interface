@@ -14,7 +14,7 @@ router.get('/login', async (req, res) => {
   const compareResult = await user.comparePassword(req.query.password);
 
   if (compareResult) {
-    res.json({ accessToken: user.generateJWT() });
+    res.json({ payload: { accessToken: user.generateJWT() } });
   } else {
     throw new WrongUserPasswordError();
   }

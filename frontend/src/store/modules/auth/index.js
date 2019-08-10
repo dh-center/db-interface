@@ -53,8 +53,7 @@ const actions = {
       }
     });
 
-    commit(mutationTypes.SET_TOKEN, response.data.accessToken);
-    return response.data.accessToken;
+    commit(mutationTypes.SET_TOKEN, response.accessToken);
   },
 
   /**
@@ -64,7 +63,7 @@ const actions = {
    * @param {String} password - user's password
    */
   async [SIGN_UP]({ commit }, { username, password }) {
-    return axios.post('/sign-up', {
+    await axios.post('/sign-up', {
       username,
       password
     });
