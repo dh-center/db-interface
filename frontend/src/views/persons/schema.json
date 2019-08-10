@@ -1,0 +1,22 @@
+{
+  "firstName": {
+    "type": "String",
+    "intl": true
+  },
+  "lastName": {
+    "type": "String",
+    "intl": true
+  },
+  "patronymic": {
+    "type": "String",
+    "intl": true
+  },
+  "description": {
+    "type": "String",
+    "intl": true
+  },
+  "profession": {
+    "type": "String",
+    "intl": true
+  }
+}

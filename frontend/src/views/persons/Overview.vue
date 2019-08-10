@@ -41,29 +41,7 @@
 <script>
   import { mapState } from 'vuex';
   import { FETCH_ALL_PERSONS } from '../../store/modules/persons/actionTypes';
-
-  const schema = {
-    firstName: {
-      type: 'String',
-      intl: true
-    },
-    lastName: {
-      type: 'String',
-      intl: true
-    },
-    patronymic: {
-      type: 'String',
-      intl: true
-    },
-    description: {
-      type: 'String',
-      intl: true
-    },
-    profession: {
-      type: 'String',
-      intl: true
-    }
-  };
+  import schema from './schema';
 
   export default {
     name: 'PersonsOverview',
