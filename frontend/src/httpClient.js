@@ -9,7 +9,7 @@ Vue.prototype.$API_ENDPOINT = axios.defaults.baseURL;
  * Translates error messages from API server
  */
 axios.interceptors.response.use(
-  response => response,
+  response => response.data.payload,
   async error => {
     if (!error.response) throw error;
     const apiError = error.response.data.error;

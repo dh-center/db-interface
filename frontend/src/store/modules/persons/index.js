@@ -21,7 +21,7 @@ const actions = {
   async [FETCH_ALL]({ commit }) {
     const response = await axios.get('/persons');
 
-    commit(mutationTypes.SET_PERSONS_LIST, response.data.data);
+    commit(mutationTypes.SET_PERSONS_LIST, response);
   }
 };
 
