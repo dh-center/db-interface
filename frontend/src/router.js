@@ -14,6 +14,11 @@ const router = new Router({
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
     },
     {
+      path: '/persons',
+      name: 'persons-overview',
+      component: () => import('./views/persons/Overview.vue')
+    },
+    {
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('./views/auth/SignUp.vue')
