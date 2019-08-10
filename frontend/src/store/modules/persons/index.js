@@ -43,6 +43,11 @@ const actions = {
     commit(mutationTypes.SET_PERSONS_LIST, response);
   },
 
+  /**
+   * Creates new person in database
+   * @param {function} commit - standard Vuex commit function
+   * @param {Person} personData - new person's data
+   */
   async [CREATE_NEW_PERSON]({ commit }, personData) {
     await axios.post('/persons', personData);
   }
