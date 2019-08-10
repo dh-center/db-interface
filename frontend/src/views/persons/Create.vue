@@ -1,7 +1,21 @@
 <template>
   <div>
     Persons create
-    <form />
+    <form>
+      <input
+        type="text"
+        placeholder="Имя"
+      >
+      <input
+        type="text"
+        placeholder="Фамилия"
+      >
+      <input
+        type="text"
+        placeholder="Отчество"
+      >
+      <input type="submit">
+    </form>
   </div>
 </template>
 
@@ -10,7 +24,3 @@
     name: 'PersonsCreate'
   };
 </script>
-
-<style scoped>
-
-</style>

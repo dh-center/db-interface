@@ -4,11 +4,24 @@
       Add new person
     </button>
     <table border="1">
+      <tr>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Отчество</td>
+        <td>Псевдоним</td>
+        <td>Профессия</td>
+        <td>Описание</td>
+      </tr>
       <tr
         v-for="person in personsList"
         :key="person._id"
       >
         <td>{{ person.firstName }}</td>
+        <td>{{ person.lastName }}</td>
+        <td>{{ person.patronymic }}</td>
+        <td>{{ person.pseudonym }}</td>
+        <td>{{ person.profession }}</td>
+        <td>{{ person.description }}</td>
       </tr>
     </table>
   </div>
