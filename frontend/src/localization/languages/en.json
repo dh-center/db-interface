@@ -7,7 +7,6 @@
     },
     "username": "Username",
     "password": "Password",
-    "passwordRepeat": "Repeat password",
     "loginLink": "Sign in with username",
     "registration": "Sign up",
     "login": "Log in",
