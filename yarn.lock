@@ -5622,6 +5622,11 @@ mongodb@^3.3.0-beta2:
     require_optional "^1.0.1"
     safe-buffer "^5.1.2"
 
+mongoose-intl@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/mongoose-intl/-/mongoose-intl-3.1.1.tgz#a03d16d2e02f466a1aa77aaf463dd2133569a802"
+  integrity sha512-VoBPp7Kc5/UiiZ+r3s27AJXlfZd2fzJ4PiX3H/++OkdKXYlDmaoP9JIP2fRfiWqP9iNoSCFOAsr7ezwEHESdVQ==
+
 mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
