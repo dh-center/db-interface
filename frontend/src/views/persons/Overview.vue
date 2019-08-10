@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button>Add new person</button>
+    <button @click="$router.push({name: 'persons-create'})">
+      Add new person
+    </button>
     <table border="1">
       <tr
         v-for="person in personsList"
@@ -17,7 +19,7 @@
   import { FETCH_ALL } from '../../store/modules/persons/actionTypes';
 
   export default {
-    name: 'Overview',
+    name: 'PersonsOverview',
     computed: mapState({
       personsList: state => state.persons.list
     }),
