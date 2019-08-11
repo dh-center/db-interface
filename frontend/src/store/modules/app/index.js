@@ -1,4 +1,5 @@
 import { CHANGE_DATA_LANG } from './actionTypes';
+import i18n from '../../../localization/i18next';
 
 /**
  * Enum of mutation types for this module
@@ -19,7 +20,7 @@ const mutationTypes = {
  */
 function initialState() {
   return {
-    dataLanguage: 'ru'
+    dataLanguage: i18n.i18next.language
   };
 }
 
