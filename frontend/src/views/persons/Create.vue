@@ -1,17 +1,7 @@
 <template>
   <div>
     <p>Persons create</p>
-    <select
-      v-model="dataLanguage"
-      name="lang"
-    >
-      <option value="ru">
-        Russian
-      </option>
-      <option value="en">
-        English
-      </option>
-    </select>
+    <DataLanguageSelect />
     <form @submit.prevent="createPerson">
       <div
         v-for="(field, name) in schema"
@@ -36,9 +26,14 @@
 <script>
   import { CREATE_NEW_PERSON } from '../../store/modules/persons/actionTypes';
   import schema from './schema';
+  import DataLanguageSelect from '../../components/DataLanguageSelect';
+  import { mapState } from 'vuex';
 
   export default {
     name: 'PersonsCreate',
+    components: {
+      DataLanguageSelect
+    },
     data() {
       const personData = {};
 
@@ -50,10 +45,12 @@
       }
       return {
         schema,
-        dataLanguage: 'ru',
         personData
       };
     },
+    computed: mapState({
+      dataLanguage: state => state.app.dataLanguage
+    }),
     methods: {
       async createPerson() {
         await this.$store.dispatch(CREATE_NEW_PERSON, this.personData);

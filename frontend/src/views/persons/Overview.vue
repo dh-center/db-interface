@@ -3,17 +3,7 @@
     <button @click="$router.push({name: 'persons-create'})">
       Add new person
     </button>
-    <select
-      v-model="dataLanguage"
-      name="lang"
-    >
-      <option value="ru">
-        Russian
-      </option>
-      <option value="en">
-        English
-      </option>
-    </select>
+    <DataLanguageSelect />
     <table border="1">
       <tr>
         <td
@@ -42,16 +32,20 @@
   import { mapState } from 'vuex';
   import { FETCH_ALL_PERSONS } from '../../store/modules/persons/actionTypes';
   import schema from './schema';
+  import DataLanguageSelect from '../../components/DataLanguageSelect';
 
   export default {
     name: 'PersonsOverview',
+    components: {
+      DataLanguageSelect
+    },
     data() {
       return {
-        schema,
-        dataLanguage: 'ru'
+        schema
       };
     },
     computed: mapState({
+      dataLanguage: state => state.app.dataLanguage,
       personsList: state => state.persons.list
     }),
     created() {
