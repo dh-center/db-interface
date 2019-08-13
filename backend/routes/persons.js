@@ -21,4 +21,13 @@ router.post('/persons', async (req, res) => {
   res.sendStatus(201);
 });
 
+router.put('/persons/:personId/approval', async (req, res) => {
+  const person = await Person.findById(req.params.personId);
+
+  // @todo request to the api
+  person.sqlId = 1;
+  await person.save();
+  res.sendStatus(200);
+});
+
 module.exports = router;
