@@ -4,33 +4,10 @@
       Add new person
     </button>
     <DataLanguageSelect />
-    <table class="persons-overview__table">
-      <tr>
-        <td>Edit</td>
-        <td
-          v-for="(field, name) in schema"
-          :key="name"
-        >
-          {{ $t('persons.' + name) }}
-        </td>
-      </tr>
-      <tr
-        v-for="person in personsList"
-        :key="person._id"
-      >
-        <td>
-          <button @click="$router.push({name: 'persons-edit', params: {personId: person._id}})">
-            Edit
-          </button>
-        </td>
-        <td
-          v-for="(field, name) in schema"
-          :key="name"
-        >
-          {{ person[name] && person[name][dataLanguage] }}
-        </td>
-      </tr>
-    </table>
+    <router-link :to="{name: 'persons-changes'}">
+      View changes
+    </router-link>
+    <router-view />
   </div>
 </template>
 
