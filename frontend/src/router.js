@@ -24,6 +24,11 @@ const router = new Router({
       component: () => import('./views/persons/Create.vue')
     },
     {
+      path: '/persons/:personId/edit',
+      name: 'persons-edit',
+      component: () => import('./views/persons/Create.vue')
+    },
+    {
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('./views/auth/SignUp.vue')

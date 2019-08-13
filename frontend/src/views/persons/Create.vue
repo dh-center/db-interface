@@ -1,8 +1,11 @@
 <template>
   <div>
-    <p>Persons create</p>
+    <p>Edit person</p>
     <DataLanguageSelect />
-    <form @submit.prevent="createPerson">
+    <form
+      v-if="personData"
+      @submit.prevent="createPerson"
+    >
       <div
         v-for="(field, name) in schema"
         :key="name"
@@ -16,7 +19,7 @@
       <div>
         <input
           type="submit"
-          value="Create"
+          value="Save"
         >
       </div>
     </form>
@@ -24,10 +27,10 @@
 </template>
 
 <script>
-  import { CREATE_NEW_PERSON } from '../../store/modules/persons/actionTypes';
   import schema from './schema';
   import DataLanguageSelect from '../../components/DataLanguageSelect';
   import { mapState } from 'vuex';
+  import axios from 'axios';
 
   export default {
     name: 'PersonsCreate',
@@ -35,25 +38,42 @@
       DataLanguageSelect
     },
     data() {
-      const personData = {};
-
-      for (const field in schema) {
-        personData[field] = {
-          en: '',
-          ru: ''
-        };
-      }
       return {
         schema,
-        personData
+        personData: null
       };
     },
     computed: mapState({
       dataLanguage: state => state.app.dataLanguage
     }),
+    async created() {
+      await this.fetchData();
+    },
     methods: {
+      async fetchData() {
+        const personId = this.$route.params.personId;
+
+        let personData = {};
+
+        if (personId) {
+          personData = await axios.get(`/persons/${personId}`);
+        }
+        for (const field in schema) {
+          if (personData[field]) continue;
+          personData[field] = {
+            en: '',
+            ru: ''
+          };
+        }
+        this.personData = personData;
+      },
+
       async createPerson() {
-        await this.$store.dispatch(CREATE_NEW_PERSON, this.personData);
+        if (this.$route.params.personId) {
+          await axios.put(`/persons/${this.$route.params.personId}`, this.personData);
+        } else {
+          await axios.post('/persons', this.personData);
+        }
 
         this.$router.push({ name: 'persons-overview' });
       }
