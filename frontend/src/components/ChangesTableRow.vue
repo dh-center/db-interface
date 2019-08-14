@@ -34,7 +34,6 @@
         dataLanguage: state => state.app.dataLanguage
       }),
       resultingEntity() {
-        console.log('lol');
         return jsonpatch.applyPatch(this.entity, this.changes).newDocument;
       }
     }

@@ -20,11 +20,17 @@ router.post('/persons', async (req, res) => {
   const change = new Change({
     entityType: 'person',
     user: res.locals.user._id,
-    changes: req.body
+    changes: jsonpatch.compare({}, req.body)
   });
 
   await change.save();
   res.sendStatus(201);
+});
+
+router.get('/persons/changes', async (req, res) => {
+  const changes = await Change.find({ entityType: 'person' }).populate('entity');
+
+  res.json({ payload: changes });
 });
 
 router.put('/persons/:personId', async (req, res) => {
@@ -37,6 +43,7 @@ router.put('/persons/:personId', async (req, res) => {
   const change = new Change({
     entityType: 'person',
     user: res.locals.user._id,
+    entity: req.params.personId,
     changes
   });
 

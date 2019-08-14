@@ -10,7 +10,10 @@ const changeSchema = new Schema({
     required: true,
     type: Schema.Types.ObjectId
   },
-  entity: Schema.Types.ObjectId,
+  entity: {
+    type: Schema.Types.ObjectId,
+    ref: 'persons'
+  },
   changes: {
     required: true,
     type: Schema.Types.Mixed
