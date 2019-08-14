@@ -28,9 +28,29 @@ router.post('/persons', async (req, res) => {
 });
 
 router.get('/persons/changes', async (req, res) => {
-  const changes = await Change.find({ entityType: 'person' }).populate('entity');
+  const changes = await Change.find({ entityType: 'person', approved: null }).populate('entity');
 
   res.json({ payload: changes });
+});
+
+router.put('/persons/changes/:changeId/approval', async (req, res) => {
+  const change = await Change.findById(req.params.changeId).populate('entity');
+
+  if (change.entity) {
+
+  } else {
+    const person = new Person(jsonpatch.applyPatch({}, change.changes).newDocument);
+
+    change.approved = true;
+
+    await Promise.all([person.save(), change.save()]);
+  }
+
+  /*
+   * @todo request to the api
+   * await change.save();
+   */
+  res.sendStatus(200);
 });
 
 router.put('/persons/:personId', async (req, res) => {
@@ -55,15 +75,6 @@ router.get('/persons/:personId', async (req, res) => {
   const person = await Person.findById(req.params.personId);
 
   res.json({ payload: person });
-});
-
-router.put('/persons/:personId/approval', async (req, res) => {
-  const person = await Person.findById(req.params.personId);
-
-  // @todo request to the api
-  person.sqlId = 1;
-  await person.save();
-  res.sendStatus(200);
 });
 
 module.exports = router;

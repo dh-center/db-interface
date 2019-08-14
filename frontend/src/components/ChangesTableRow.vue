@@ -1,5 +1,10 @@
 <template>
   <tr>
+    <td>
+      <button @click="$emit('onApproveButtonClicked')">
+        Approve
+      </button>
+    </td>
     <td
       v-for="(field, name) in schema"
       :key="name"

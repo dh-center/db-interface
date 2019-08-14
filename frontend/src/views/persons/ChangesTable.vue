@@ -15,6 +15,7 @@
       :schema="schema"
       :entity="changeRecord.entity || {}"
       :changes="changeRecord.changes"
+      @onApproveButtonClicked="approve(changeRecord)"
     />
   </table>
 </template>
@@ -42,6 +43,11 @@
     async created() {
       this.changesList = await axios.get('/persons/changes');
       console.log(this.changesList);
+    },
+    methods: {
+      approve(changeRecord) {
+        axios.put(`/persons/changes/${changeRecord._id}/approval`);
+      }
     }
   };
 </script>

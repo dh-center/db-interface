@@ -6,6 +6,7 @@ const changeSchema = new Schema({
     required: true,
     type: String
   },
+  approved: Schema.Types.Boolean,
   user: {
     required: true,
     type: Schema.Types.ObjectId
