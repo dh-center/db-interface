@@ -3,6 +3,7 @@ const router = express.Router();
 const Person = require('../models/person');
 const jsonpatch = require('fast-json-patch');
 const Change = require('../models/change');
+const mongoose = require('mongoose');
 
 router.get('/persons', async (req, res) => {
   const dbQuery = req.query.name ? { name: { $regex: new RegExp(`${req.query.name}`, 'i') } } : {};
@@ -37,7 +38,12 @@ router.put('/persons/changes/:changeId/approval', async (req, res) => {
   const change = await Change.findById(req.params.changeId).populate('entity');
 
   if (change.entity) {
+    const updatedDocument = jsonpatch.applyPatch(JSON.parse(JSON.stringify(change.entity)), change.changes).newDocument;
 
+    await Person.updateOne({ _id: mongoose.Types.ObjectId(change.entity._id) }, updatedDocument);
+
+    change.approved = true;
+    await change.save();
   } else {
     const person = new Person(jsonpatch.applyPatch({}, change.changes).newDocument);
 
@@ -48,7 +54,6 @@ router.put('/persons/changes/:changeId/approval', async (req, res) => {
 
   /*
    * @todo request to the api
-   * await change.save();
    */
   res.sendStatus(200);
 });

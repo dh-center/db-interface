@@ -45,8 +45,9 @@
       console.log(this.changesList);
     },
     methods: {
-      approve(changeRecord) {
-        axios.put(`/persons/changes/${changeRecord._id}/approval`);
+      async approve(changeRecord) {
+        await axios.put(`/persons/changes/${changeRecord._id}/approval`);
+        this.$delete(this.changesList, this.changesList.indexOf(changeRecord));
       }
     }
   };
