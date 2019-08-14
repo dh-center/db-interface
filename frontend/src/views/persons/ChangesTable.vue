@@ -42,7 +42,6 @@
     }),
     async created() {
       this.changesList = await axios.get('/persons/changes');
-      console.log(this.changesList);
     },
     methods: {
       async approve(changeRecord) {

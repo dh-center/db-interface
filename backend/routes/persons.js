@@ -42,19 +42,18 @@ router.put('/persons/changes/:changeId/approval', async (req, res) => {
 
     await Person.updateOne({ _id: mongoose.Types.ObjectId(change.entity._id) }, updatedDocument);
 
+    // @todo make request to the api for updating item
+
     change.approved = true;
     await change.save();
   } else {
     const person = new Person(jsonpatch.applyPatch({}, change.changes).newDocument);
 
     change.approved = true;
+    // @todo make request to the api for creating item
 
     await Promise.all([person.save(), change.save()]);
   }
-
-  /*
-   * @todo request to the api
-   */
   res.sendStatus(200);
 });
 
