@@ -1,7 +1,6 @@
 const schema = require('./schema');
 const { google } = require('googleapis');
 const credentials = require('./credentials');
-const Person = require('../../backend/models/person');
 const path = require('path');
 
 /**
@@ -13,6 +12,8 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
  * Setup DB
  */
 require('../../backend/modules/db');
+
+const Person = require('../../backend/models/person');
 
 const client = new google.auth.JWT(
   credentials.client_email,
@@ -74,6 +75,7 @@ async function getData(cl) {
 
     newPerson.save();
   });
+  process.exit();
 }
 
 /**
