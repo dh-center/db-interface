@@ -1,3 +1,4 @@
+const schema = require('./schema');
 const { google } = require('googleapis');
 const credentials = require('./credentials');
 const Person = require('../../backend/models/person');
@@ -53,16 +54,23 @@ async function getData(cl) {
   });
 
   dataArray.forEach(function (row) {
-    const newPerson = new Person({
-      firstName: row[0].trim(),
-      lastName: row[1].trim(),
-      patronymic: row[2].trim(),
-      pseudonym: row[3].trim(),
-      birthDate: getDateObject(row[4]),
-      deathDate: getDateObject(row[5]),
-      profession: row[6].trim(),
-      description: row[7].trim()
-    });
+    const personData = {};
+
+    for (const field in schema) {
+      personData[field] = {
+        en: '',
+        ru: ''
+      };
+    }
+    personData.firstName.ru = row[0].trim();
+    personData.lastName.ru = row[1].trim();
+    personData.patronymic.ru = row[2].trim();
+    personData.pseudonym.ru = row[3].trim();
+    personData.birthDate = getDateObject(row[4]);
+    personData.deathDate = getDateObject(row[5]);
+    personData.profession.ru = row[6].trim();
+    personData.description.ru = row[7].trim();
+    const newPerson = new Person(personData);
 
     newPerson.save();
   });
