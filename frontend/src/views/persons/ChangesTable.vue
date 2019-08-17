@@ -1,22 +1,26 @@
 <template>
-  <table class="persons-overview__table">
-    <tr>
-      <td>Actions</td>
-      <td
-        v-for="(field, name) in schema"
-        :key="name"
-      >
-        {{ $t('persons.' + name) }}
-      </td>
-    </tr>
-    <ChangesTableRow
-      v-for="changeRecord in changesList"
-      :key="changeRecord._id"
-      :schema="schema"
-      :entity="changeRecord.entity || {}"
-      :changes="changeRecord.changes"
-      @onApproveButtonClicked="approve(changeRecord)"
-    />
+  <table class="data-table">
+    <thead>
+      <tr>
+        <td>Actions</td>
+        <td
+          v-for="(field, name) in schema"
+          :key="name"
+        >
+          {{ $t('persons.' + name) }}
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <ChangesTableRow
+        v-for="changeRecord in changesList"
+        :key="changeRecord._id"
+        :schema="schema"
+        :entity="changeRecord.entity || {}"
+        :changes="changeRecord.changes"
+        @onApproveButtonClicked="approve(changeRecord)"
+      />
+    </tbody>
   </table>
 </template>
 
@@ -51,3 +55,5 @@
     }
   };
 </script>
+
+<style src="../../styles/data-table.css"></style>

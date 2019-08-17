@@ -36,11 +36,3 @@
     }
   };
 </script>
-
-<style>
-  .persons-overview {
-    &__table {
-      border: 1px solid black;
-    }
-  }
-</style>

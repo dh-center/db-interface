@@ -21,7 +21,7 @@ const router = new Router({
           path: '',
           name: 'persons-overview',
 
-          component: () => import('./views/persons/Table.vue')
+          component: () => import('./views/persons/OverviewTable.vue')
         },
         {
           path: 'changes',
