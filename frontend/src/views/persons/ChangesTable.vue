@@ -37,7 +37,7 @@
     },
     data() {
       return {
-        schema,
+        schema: schema.fields,
         changesList: {}
       };
     },

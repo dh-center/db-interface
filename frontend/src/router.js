@@ -30,17 +30,17 @@ const router = new Router({
         {
           path: 'create',
           name: 'persons-create',
-          component: () => import('./views/persons/Create.vue')
+          component: () => import('./views/persons/OverviewSpecific.vue')
         },
         {
           path: ':personId/edit',
           name: 'persons-edit',
-          component: () => import('./views/persons/Create.vue')
+          component: () => import('./views/persons/OverviewSpecific.vue')
         },
         {
           path: ':personId/view',
           name: 'persons-specific-overview',
-          component: () => import('./views/persons/SpecificOverview.vue')
+          component: () => import('./views/persons/OverviewSpecific.vue')
         }
       ]
     },

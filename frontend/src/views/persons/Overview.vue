@@ -13,7 +13,6 @@
 
 <script>
   import { mapState } from 'vuex';
-  import schema from './schema';
   import DataLanguageSelect from '../../components/DataLanguageSelect';
   import axios from 'axios';
 
@@ -24,7 +23,6 @@
     },
     data() {
       return {
-        schema,
         personsList: {}
       };
     },

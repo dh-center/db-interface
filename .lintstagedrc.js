@@ -1,6 +1,6 @@
 module.exports = {
   '*.(js|vue)': [
-    'yarn lint',
+    'eslint --fix',
     'git add'
   ]
 };

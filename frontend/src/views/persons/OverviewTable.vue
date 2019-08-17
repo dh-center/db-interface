@@ -44,7 +44,7 @@
     name: 'PersonsOverviewTable',
     data() {
       return {
-        schema,
+        schema: schema.fields,
         personsList: {}
       };
     },

@@ -15,7 +15,20 @@
         <h3 class="persons-create__info-header">
           годы жизни
         </h3>
-        1840-05-07–1893-11-06
+        <span
+          data-placeholder="yyyy-mm-dd"
+          contenteditable
+          @input="personData.birthDate = $event.target.innerText"
+          @blur="$event.target.innerText = $event.target.innerText.trim()"
+        >{{ personData && personData.birthDate }}</span>
+        &mdash;
+        <span
+          data-placeholder="yyyy-mm-dd"
+          class="date-input"
+          contenteditable
+          @input="personData.deathDate = $event.target.innerText"
+          @blur="$event.target.innerText = $event.target.innerText.trim()"
+        >{{ personData && personData.deathDate }}</span>
       </div>
       <div class="persons-create__profession">
         <h3 class="persons-create__info-header">
@@ -42,9 +55,10 @@
 <script>
   import { mapState } from 'vuex';
   import axios from 'axios';
+  import schema from './schema';
 
   export default {
-    name: 'PersonsCreate',
+    name: 'PersonsOverviewSpecific',
     data() {
       return {
         personData: null
@@ -78,6 +92,8 @@
 
         if (firstName || lastName || patronymic) {
           this.$refs.personNameInput.innerText = `${firstName} ${lastName} ${patronymic}`;
+        } else {
+          this.$refs.personNameInput.innerText = '';
         }
 
         const multilingualElements = this.$el.querySelectorAll('[data-multilingual-property');
@@ -104,10 +120,13 @@
         if (personId) {
           personData = await axios.get(`/persons/${personId}`);
         }
-        this.personData = personData;
+        this.personData = schema.assign(personData);
+        console.log(this.personData);
       },
 
       async createPerson() {
+        schema.validate(this.personData);
+
         if (this.$route.params.personId) {
           await axios.put(`/persons/${this.$route.params.personId}`, this.personData);
         } else {
@@ -174,9 +193,9 @@
     }
   }
 
-  [contenteditable=true]:empty:before{
+  [contenteditable=true]:empty::before {
     content: attr(data-placeholder);
     opacity: 0.5;
-    display: block; /* For Firefox */
+    display: inline;
   }
 </style>
