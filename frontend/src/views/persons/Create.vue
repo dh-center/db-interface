@@ -6,6 +6,7 @@
     <h2
       ref="personNameInput"
       contenteditable
+      data-placeholder="full person name"
       class="persons-create__name"
       @input="onNameInput"
     />
@@ -22,6 +23,7 @@
         </h3>
         <span
           contenteditable
+          data-placeholder="person's professions"
           data-multilingual-property="personData.profession"
           @input="personData.profession[dataLanguage] = $event.target.innerText"
         />
@@ -29,6 +31,7 @@
     </div>
     <div
       contenteditable
+      data-placeholder="person description"
       data-multilingual-property="personData.description"
       class="persons-create__description"
       @input="personData.description[dataLanguage] = $event.target.innerText"
@@ -168,5 +171,10 @@
     &__description {
       margin-top: 20px;
     }
+  }
+
+  [contenteditable=true]:empty:before{
+    content: attr(data-placeholder);
+    display: block; /* For Firefox */
   }
 </style>
