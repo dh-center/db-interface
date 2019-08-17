@@ -54,16 +54,18 @@ async function getData(cl) {
   });
 
   await Promise.all(dataArray.map(async function (row) {
+    row = row.map(rowItem => rowItem.trim());
+
     const personData = {};
 
-    personData.firstName = row[0].trim();
-    personData.lastName = row[1].trim();
-    personData.patronymic = row[2].trim();
-    personData.pseudonym = row[3].trim();
-    personData.birthDate = row[4].trim();
-    personData.deathDate = row[5].trim();
-    personData.profession = row[6].trim();
-    personData.description = row[7].trim();
+    personData.firstName = row[0];
+    personData.lastName = row[1];
+    personData.patronymic = row[2];
+    personData.pseudonym = row[3];
+    personData.birthDate = row[4];
+    personData.deathDate = row[5];
+    personData.profession = row[6];
+    personData.description = row[7];
     const newPerson = new Person(personData);
 
     await newPerson.save();
