@@ -1,11 +1,12 @@
 <template>
   <div class="persons-create">
+    <button>Save</button>
     <h2
-      contenteditable="true"
+      contenteditable
+      data-multilingual-property="name"
       class="persons-create__name"
-    >
-      Петр Ильич Чайковский
-    </h2>
+      @input="name[dataLanguage] = $event.target.innerText"
+    />
     <div class="persons-create__info-container">
       <div class="persons-create__lifetime">
         <h3 class="persons-create__info-header">
@@ -17,43 +18,19 @@
         <h3 class="persons-create__info-header">
           деятельность
         </h3>
-        дирижер, педагог
+        <span
+          contenteditable
+          data-multilingual-property="personData.profession"
+          @input="personData.profession[dataLanguage] = $event.target.innerText"
+        />
       </div>
     </div>
-    <div class="persons-create__description">
-      Начал заниматься музыкой в раннем детстве. В 1942 году в возрасте шести лет он был эвакуирован из блокадного
-      Ленинграда. С 1944 по 1953 годы Чернушенко учился в хоровом училище при Ленинградской государственной
-      академической капелле .Вернувшись в Ленинград в 1962 году, организовал любительский Ленинградский камерный хор во
-      Дворце культуры пищевой промышленности и руководил этим коллективом в течение 17 лет. Он вновь стал учиться в
-      Ленинградской консерватории и в 1967 году закончил её уже как дирижёр оперно-симфонического оркестра.С 1971 по
-      1974 год — второй дирижёр Ленинградского государственного академического Малого театра оперы и балета.
-
-      В эти же годы активно занимался педагогической деятельностью — в консерватории (профессор с 1987), Хоровом училище
-      имени М. И. Глинки, Музыкальном училище им. М. П. Мусоргского. Работал дирижёром Симфонического оркестра
-      Карельского радио и телевидения, выступал в качестве дирижёра симфонических и камерных концертов, ставил ряд
-      спектаклей в Оперной студии при Ленинградской консерватории.
-    </div>
-    <!--    <form-->
-    <!--      v-if="personData"-->
-    <!--      @submit.prevent="createPerson"-->
-    <!--    >-->
-    <!--      <div-->
-    <!--        v-for="(field, name) in schema"-->
-    <!--        :key="name"-->
-    <!--      >-->
-    <!--        <input-->
-    <!--          v-model="personData[name][dataLanguage]"-->
-    <!--          type="text"-->
-    <!--          :placeholder="$t('persons.'+name)"-->
-    <!--        >-->
-    <!--      </div>-->
-    <!--      <div>-->
-    <!--        <input-->
-    <!--          type="submit"-->
-    <!--          value="Save"-->
-    <!--        >-->
-    <!--      </div>-->
-    <!--    </form>-->
+    <div
+      contenteditable
+      data-multilingual-property="personData.description"
+      class="persons-create__description"
+      @input="personData.description[dataLanguage] = $event.target.innerText"
+    />
   </div>
 </template>
 
@@ -67,16 +44,46 @@
     data() {
       return {
         schema,
+        name: {},
         personData: null
       };
     },
     computed: mapState({
       dataLanguage: state => state.app.dataLanguage
     }),
-    async created() {
+    watch: {
+      dataLanguage() {
+        this.updateLanguage();
+      }
+    },
+    async mounted() {
       await this.fetchData();
+      this.updateLanguage();
     },
     methods: {
+      updateLanguage() {
+        if (!this.name[this.dataLanguage]) {
+          const firstName = this.personData.firstName[this.dataLanguage];
+          const lastName = this.personData.lastName[this.dataLanguage];
+          const patronymic = this.personData.patronymic[this.dataLanguage];
+
+          this.name[this.dataLanguage] = `${firstName} ${lastName} ${patronymic}`;
+        }
+
+        const multilingualElements = this.$el.querySelectorAll('[data-multilingual-property');
+
+        multilingualElements.forEach(element => {
+          const multilingualProperty = element.getAttribute('data-multilingual-property');
+
+          let dataCache = this;
+
+          multilingualProperty.split('.').forEach(field => {
+            dataCache = dataCache[field];
+          });
+          element.innerText = dataCache[this.dataLanguage];
+        });
+      },
+
       async fetchData() {
         const personId = this.$route.params.personId;
 
@@ -124,7 +131,6 @@
     }
 
     &__info-container {
-      height: 44px;
       display: flex;
       flex-wrap: wrap;
       border-bottom: 1px solid rgba(0, 0, 0, .2);
