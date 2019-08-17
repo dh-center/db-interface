@@ -1,42 +1,69 @@
 <template>
-  <div>
-    <p>Edit person</p>
-    <DataLanguageSelect />
-    <form
-      v-if="personData"
-      @submit.prevent="createPerson"
+  <div class="persons-create">
+    <h2
+      contenteditable="true"
+      class="persons-create__name"
     >
-      <div
-        v-for="(field, name) in schema"
-        :key="name"
-      >
-        <input
-          v-model="personData[name][dataLanguage]"
-          type="text"
-          :placeholder="$t('persons.'+name)"
-        >
+      Петр Ильич Чайковский
+    </h2>
+    <div class="persons-create__info-container">
+      <div class="persons-create__lifetime">
+        <h3 class="persons-create__info-header">
+          годы жизни
+        </h3>
+        1840-05-07–1893-11-06
       </div>
-      <div>
-        <input
-          type="submit"
-          value="Save"
-        >
+      <div class="persons-create__profession">
+        <h3 class="persons-create__info-header">
+          деятельность
+        </h3>
+        дирижер, педагог
       </div>
-    </form>
+    </div>
+    <div class="persons-create__description">
+      Начал заниматься музыкой в раннем детстве. В 1942 году в возрасте шести лет он был эвакуирован из блокадного
+      Ленинграда. С 1944 по 1953 годы Чернушенко учился в хоровом училище при Ленинградской государственной
+      академической капелле .Вернувшись в Ленинград в 1962 году, организовал любительский Ленинградский камерный хор во
+      Дворце культуры пищевой промышленности и руководил этим коллективом в течение 17 лет. Он вновь стал учиться в
+      Ленинградской консерватории и в 1967 году закончил её уже как дирижёр оперно-симфонического оркестра.С 1971 по
+      1974 год — второй дирижёр Ленинградского государственного академического Малого театра оперы и балета.
+
+      В эти же годы активно занимался педагогической деятельностью — в консерватории (профессор с 1987), Хоровом училище
+      имени М. И. Глинки, Музыкальном училище им. М. П. Мусоргского. Работал дирижёром Симфонического оркестра
+      Карельского радио и телевидения, выступал в качестве дирижёра симфонических и камерных концертов, ставил ряд
+      спектаклей в Оперной студии при Ленинградской консерватории.
+    </div>
+    <!--    <form-->
+    <!--      v-if="personData"-->
+    <!--      @submit.prevent="createPerson"-->
+    <!--    >-->
+    <!--      <div-->
+    <!--        v-for="(field, name) in schema"-->
+    <!--        :key="name"-->
+    <!--      >-->
+    <!--        <input-->
+    <!--          v-model="personData[name][dataLanguage]"-->
+    <!--          type="text"-->
+    <!--          :placeholder="$t('persons.'+name)"-->
+    <!--        >-->
+    <!--      </div>-->
+    <!--      <div>-->
+    <!--        <input-->
+    <!--          type="submit"-->
+    <!--          value="Save"-->
+    <!--        >-->
+    <!--      </div>-->
+    <!--    </form>-->
   </div>
 </template>
 
 <script>
   import schema from './schema';
-  import DataLanguageSelect from '../../components/DataLanguageSelect';
   import { mapState } from 'vuex';
   import axios from 'axios';
 
   export default {
     name: 'PersonsCreate',
-    components: {
-      DataLanguageSelect
-    },
     data() {
       return {
         schema,
@@ -80,3 +107,59 @@
     }
   };
 </script>
+
+<style>
+  .persons-create {
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    &__name {
+      font-family: 'Oranienbaum', serif;
+      font-size: 24px;
+      line-height: 28px;
+      margin-bottom: 10px;
+      color: #2d2d2d;
+    }
+
+    &__info-container {
+      height: 44px;
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(0, 0, 0, .2);
+    }
+
+    &__info-header {
+      font-family: 'Roboto', sans-serif;
+      font-size: 8px;
+      line-height: 9px;
+      display: block;
+      margin-bottom: 8px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #000;
+    }
+
+    &__lifetime,
+    &__profession {
+      flex-basis: 50%;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 16px;
+      padding-left: 20px;
+      margin-bottom: 0;
+      color: #000;
+    }
+
+    &__lifetime {
+      padding-left: 0;
+      border-right: 1px solid rgba(0, 0, 0, .2);
+    }
+
+    &__description {
+      margin-top: 20px;
+    }
+  }
+</style>
