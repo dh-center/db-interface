@@ -53,12 +53,12 @@
     }),
     watch: {
       dataLanguage() {
-        this.updateLanguage();
+        this.switchDataLanguage();
       }
     },
     async mounted() {
       await this.fetchData();
-      this.updateLanguage();
+      this.switchDataLanguage();
     },
     methods: {
       onNameInput(event) {
@@ -69,7 +69,7 @@
         this.personData.patronymic[this.dataLanguage] = patronymic.join(' ');
       },
 
-      updateLanguage() {
+      switchDataLanguage() {
         const firstName = this.personData.firstName[this.dataLanguage];
         const lastName = this.personData.lastName[this.dataLanguage];
         const patronymic = this.personData.patronymic[this.dataLanguage];
