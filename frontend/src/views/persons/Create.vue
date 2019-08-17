@@ -1,11 +1,13 @@
 <template>
   <div class="persons-create">
-    <button>Save</button>
+    <button @click="createPerson">
+      Save
+    </button>
     <h2
+      ref="personNameInput"
       contenteditable
-      data-multilingual-property="name"
       class="persons-create__name"
-      @input="name[dataLanguage] = $event.target.innerText"
+      @input="onNameInput"
     />
     <div class="persons-create__info-container">
       <div class="persons-create__lifetime">
@@ -35,7 +37,6 @@
 </template>
 
 <script>
-  import schema from './schema';
   import { mapState } from 'vuex';
   import axios from 'axios';
 
@@ -43,7 +44,6 @@
     name: 'PersonsCreate',
     data() {
       return {
-        schema,
         name: {},
         personData: null
       };
@@ -61,14 +61,20 @@
       this.updateLanguage();
     },
     methods: {
-      updateLanguage() {
-        if (!this.name[this.dataLanguage]) {
-          const firstName = this.personData.firstName[this.dataLanguage];
-          const lastName = this.personData.lastName[this.dataLanguage];
-          const patronymic = this.personData.patronymic[this.dataLanguage];
+      onNameInput(event) {
+        const [firstName, lastName, ...patronymic] = event.target.innerText.split(' ');
 
-          this.name[this.dataLanguage] = `${firstName} ${lastName} ${patronymic}`;
-        }
+        this.personData.firstName[this.dataLanguage] = firstName;
+        this.personData.lastName[this.dataLanguage] = lastName;
+        this.personData.patronymic[this.dataLanguage] = patronymic.join(' ');
+      },
+
+      updateLanguage() {
+        const firstName = this.personData.firstName[this.dataLanguage];
+        const lastName = this.personData.lastName[this.dataLanguage];
+        const patronymic = this.personData.patronymic[this.dataLanguage];
+
+        this.$refs.personNameInput.innerText = `${firstName} ${lastName} ${patronymic}`;
 
         const multilingualElements = this.$el.querySelectorAll('[data-multilingual-property');
 
@@ -80,7 +86,9 @@
           multilingualProperty.split('.').forEach(field => {
             dataCache = dataCache[field];
           });
-          element.innerText = dataCache[this.dataLanguage];
+          if (dataCache) {
+            element.innerText = dataCache[this.dataLanguage];
+          }
         });
       },
 
@@ -91,13 +99,6 @@
 
         if (personId) {
           personData = await axios.get(`/persons/${personId}`);
-        }
-        for (const field in schema) {
-          if (personData[field]) continue;
-          personData[field] = {
-            en: '',
-            ru: ''
-          };
         }
         this.personData = personData;
       },
