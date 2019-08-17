@@ -20,6 +20,9 @@
           <button @click="$router.push({name: 'persons-edit', params: {personId: person._id}})">
             Edit
           </button>
+          <button @click="$router.push({name: 'persons-specific-overview', params: {personId: person._id}})">
+            View
+          </button>
         </td>
         <td
           v-for="(field, name) in schema"

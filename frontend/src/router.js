@@ -20,7 +20,6 @@ const router = new Router({
         {
           path: '',
           name: 'persons-overview',
-
           component: () => import('./views/persons/OverviewTable.vue')
         },
         {
@@ -37,6 +36,11 @@ const router = new Router({
           path: ':personId/edit',
           name: 'persons-edit',
           component: () => import('./views/persons/Create.vue')
+        },
+        {
+          path: ':personId/view',
+          name: 'persons-specific-overview',
+          component: () => import('./views/persons/SpecificOverview.vue')
         }
       ]
     },
