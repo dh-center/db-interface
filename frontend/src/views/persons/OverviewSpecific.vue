@@ -1,6 +1,6 @@
 <template>
   <div class="persons-create">
-    <button @click="createPerson">
+    <button @click="savePerson">
       Save
     </button>
     <h2
@@ -121,10 +121,9 @@
           personData = await axios.get(`/persons/${personId}`);
         }
         this.personData = schema.assign(personData);
-        console.log(this.personData);
       },
 
-      async createPerson() {
+      async savePerson() {
         schema.validate(this.personData);
 
         if (this.$route.params.personId) {

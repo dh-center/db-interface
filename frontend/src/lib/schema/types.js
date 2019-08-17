@@ -26,9 +26,10 @@ export class ApiDate extends SchemaType {
   }
 
   static validator(dateString) {
+    if (!dateString) return true;
     const dateRegex = /^(\d{4})-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])$/;
 
-    if (dateRegex.test(dateString)) {
+    if (dateRegex.test(dateString.trim())) {
       return true;
     }
     throw new Error('Wrong data format');
