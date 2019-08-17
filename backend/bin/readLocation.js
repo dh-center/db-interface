@@ -13,9 +13,9 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 /**
  * Setup DB
  */
-require('../backend/modules/db');
+require('../modules/db');
 
-const Location = require('../backend/models/location');
+const Location = require('../models/location');
 
 /**
  * Read data

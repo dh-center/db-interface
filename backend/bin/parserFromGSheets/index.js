@@ -1,4 +1,3 @@
-const schema = require('./schema');
 const { google } = require('googleapis');
 const credentials = require('./credentials');
 const path = require('path');
@@ -6,14 +5,14 @@ const path = require('path');
 /**
  * Read environment settings
  */
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
 /**
  * Setup DB
  */
-require('../../backend/modules/db');
+require('../../modules/db');
 
-const Person = require('../../backend/models/person');
+const Person = require('../../models/person');
 
 const client = new google.auth.JWT(
   credentials.client_email,
@@ -54,40 +53,20 @@ async function getData(cl) {
     return r;
   });
 
-  dataArray.forEach(function (row) {
+  await Promise.all(dataArray.map(async function (row) {
     const personData = {};
 
-    for (const field in schema) {
-      personData[field] = {
-        en: '',
-        ru: ''
-      };
-    }
-    personData.firstName.ru = row[0].trim();
-    personData.lastName.ru = row[1].trim();
-    personData.patronymic.ru = row[2].trim();
-    personData.pseudonym.ru = row[3].trim();
-    personData.birthDate = getDateObject(row[4]);
-    personData.deathDate = getDateObject(row[5]);
-    personData.profession.ru = row[6].trim();
-    personData.description.ru = row[7].trim();
+    personData.firstName = row[0].trim();
+    personData.lastName = row[1].trim();
+    personData.patronymic = row[2].trim();
+    personData.pseudonym = row[3].trim();
+    personData.birthDate = row[4].trim();
+    personData.deathDate = row[5].trim();
+    personData.profession = row[6].trim();
+    personData.description = row[7].trim();
     const newPerson = new Person(personData);
 
-    newPerson.save();
-  });
+    await newPerson.save();
+  }));
   process.exit();
-}
-
-/**
- * Get Date() object from string
- * @param dateStr
- * @returns {*}
- */
-function getDateObject(dateStr) {
-  if (!dateStr) {
-    return;
-  }
-  const [day, month, year] = dateStr.split('.');
-
-  return new Date(`${year}-${month}-${day}`);
 }
