@@ -47,7 +47,6 @@
     name: 'PersonsCreate',
     data() {
       return {
-        name: {},
         personData: null
       };
     },
@@ -77,7 +76,9 @@
         const lastName = this.personData.lastName[this.dataLanguage];
         const patronymic = this.personData.patronymic[this.dataLanguage];
 
-        this.$refs.personNameInput.innerText = `${firstName} ${lastName} ${patronymic}`;
+        if (firstName || lastName || patronymic) {
+          this.$refs.personNameInput.innerText = `${firstName} ${lastName} ${patronymic}`;
+        }
 
         const multilingualElements = this.$el.querySelectorAll('[data-multilingual-property');
 
@@ -90,7 +91,7 @@
             dataCache = dataCache[field];
           });
           if (dataCache) {
-            element.innerText = dataCache[this.dataLanguage];
+            element.innerText = dataCache[this.dataLanguage] || '';
           }
         });
       },
@@ -175,6 +176,7 @@
 
   [contenteditable=true]:empty:before{
     content: attr(data-placeholder);
+    opacity: 0.5;
     display: block; /* For Firefox */
   }
 </style>
