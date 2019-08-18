@@ -2,13 +2,13 @@
   <table class="data-table">
     <thead>
       <tr>
-        <td>Actions</td>
-        <td
+        <th>Actions</th>
+        <th
           v-for="(field, name) in schema"
           :key="name"
         >
           {{ $t('persons.' + name) }}
-        </td>
+        </th>
       </tr>
     </thead>
     <tbody>
