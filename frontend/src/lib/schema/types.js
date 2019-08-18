@@ -1,7 +1,9 @@
+const types = {};
+
 /**
  * Base class for schema field type
  */
-export class SchemaType {
+types.Base = class {
   /**
    * Return object with all necessary fields
    * @abstract
@@ -12,12 +14,29 @@ export class SchemaType {
    * Validates field and throws an error if the field is in the wrong format
    */
   static validator() {}
-}
+
+  /**
+   * Get the descriptor for the property which will represent data in this type
+   * @param {String} fieldName - name of the field to which this descriptor will applied
+   * @return {PropertyDescriptor}
+   */
+  static getDescriptor(fieldName) {
+    return {
+      set(value) {
+        this.data[fieldName] = value;
+      },
+
+      get() {
+        return this.data[fieldName];
+      }
+    };
+  }
+};
 
 /**
  * Represents objects object containing data in different languages
  */
-export class MultilingualString extends SchemaType {
+types.MultilingualString = class extends types.Base {
   /**
    * Return object containing data in different languages
    * @param {Object} stringsObject
@@ -32,32 +51,35 @@ export class MultilingualString extends SchemaType {
     }
     return stringsObject;
   }
-}
+
+  /**
+   * @inheritDoc
+   */
+  static getDescriptor(fieldName) {
+    return {
+      set(value) {
+        this.data[fieldName][this.language] = value;
+      },
+
+      get() {
+        return this.data[fieldName][this.language] || '';
+      }
+    };
+  }
+};
 
 /**
- * Represents string contains date in yyyy-mm-dd format
+ * Represents stringп
  */
-export class ApiDate extends SchemaType {
+types.String = class extends types.Base {
   /**
-   * @param {String} dateString - string contains date in api's format (e.g. 1904-11-12 03:00:00.000)
+   * @param {String} dateString - string
    * @return {string}
    */
   static assigner(dateString) {
     if (!dateString) return '';
-    return dateString.substring(0, 10);
+    return dateString;
   }
+};
 
-  /**
-   * Validates string and throws error if format is invalid
-   * @param {string} dateString - string contains date in yyyy-mm-dd format
-   */
-  static validator(dateString) {
-    if (!dateString) return;
-    const dateRegex = /^(\d{4})-(0[0-9]|1[0-2])-([0-2][0-9]|3[0-1])$/;
-
-    if (dateRegex.test(dateString.trim())) {
-      return;
-    }
-    throw new Error('Wrong data format');
-  }
-}
+export default types;

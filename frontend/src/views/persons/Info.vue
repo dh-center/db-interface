@@ -32,7 +32,6 @@
           ref="profession"
           contenteditable
           data-placeholder="person's professions"
-          data-multilingual-property="person.profession"
         />
       </div>
     </div>
@@ -40,7 +39,6 @@
       ref="description"
       contenteditable
       data-placeholder="person description"
-      data-multilingual-property="person.description"
       class="person-info__description"
     />
   </div>

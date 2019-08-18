@@ -37,14 +37,14 @@
 
 <script>
   import { mapState } from 'vuex';
-  import schema from './schema';
+  import PersonModel from '../../models/person';
   import axios from 'axios';
 
   export default {
     name: 'PersonsOverviewTable',
     data() {
       return {
-        schema: schema.fields,
+        schema: PersonModel.schema.fields,
         personsList: {}
       };
     },

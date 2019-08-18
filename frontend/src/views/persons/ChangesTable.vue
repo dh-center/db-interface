@@ -26,7 +26,7 @@
 
 <script>
   import { mapState } from 'vuex';
-  import schema from './schema';
+  import PersonModel from '../../models/person';
   import axios from 'axios';
 
   import ChangesTableRow from '../../components/ChangesTableRow';
@@ -37,7 +37,7 @@
     },
     data() {
       return {
-        schema: schema.fields,
+        schema: PersonModel.schema.fields,
         changesList: {}
       };
     },
