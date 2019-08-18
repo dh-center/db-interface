@@ -13,13 +13,13 @@
         </h3>
         <span
           ref="birthDate"
-          data-placeholder="dd-mm-yyyy"
+          data-placeholder="dd.mm.yyyy"
           contenteditable
         />
         &mdash;
         <span
           ref="deathDate"
-          data-placeholder="dd-mm-yyyy"
+          data-placeholder="dd.mm.yyyy"
           class="date-input"
           contenteditable
         />
