@@ -18,8 +18,8 @@ const personSchema = new Schema({
     type: String,
     intl: true
   },
-  birthDate: Date,
-  deathDate: Date,
+  birthDate: String,
+  deathDate: String,
   profession: {
     type: String,
     intl: true
