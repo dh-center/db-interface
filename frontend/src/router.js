@@ -36,11 +36,6 @@ const router = new Router({
           path: ':personId/edit',
           name: 'persons-edit',
           component: () => import('./views/persons/OverviewSpecific.vue')
-        },
-        {
-          path: ':personId/view',
-          name: 'persons-specific-overview',
-          component: () => import('./views/persons/OverviewSpecific.vue')
         }
       ]
     },
