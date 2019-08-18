@@ -47,7 +47,7 @@ async function importPersons(cl) {
 
   dataArray = dataArray.reduce(function (result, row) {
     if (row.length > 1) {
-      while (row.length < 10) {
+      while (row.length < 13) {
         row.push('');
       }
       result.push(row);
