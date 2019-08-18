@@ -13,7 +13,7 @@ const changeSchema = new Schema({
   },
   entity: {
     type: Schema.Types.ObjectId,
-    ref: 'persons'
+    refPath: 'entityType'
   },
   changes: {
     required: true,
