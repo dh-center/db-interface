@@ -26,7 +26,7 @@ client.authorize(function (error, tokens) {
     console.log(error);
   } else {
     console.log('Connected!');
-    getData(client);
+    importPersons(client);
   }
 });
 
@@ -35,23 +35,27 @@ client.authorize(function (error, tokens) {
  * @param cl
  * @returns {Promise<void>}
  */
-async function getData(cl) {
+async function importPersons(cl) {
   const gsApi = google.sheets({ version: 'v4', auth: cl });
   const sheetInfo = {
     spreadsheetId: '1ixL6QPibf6jg3EUPwNoigvN2V1bqOvv4eAQpU74_ros',
-    ranges: ['\'Персоны\'!A3:H132', '\'Персоны\'!A134:H150', '\'Персоны\'!A152:H185']
+    range: '\'Персоны\''
   };
 
-  const response = await gsApi.spreadsheets.values.batchGet(sheetInfo);
-  const dataArrayRanges = response.data.valueRanges;
-  let dataArray = dataArrayRanges[0].values.concat(dataArrayRanges[1].values).concat(dataArrayRanges[2].values);
+  const response = await gsApi.spreadsheets.values.get(sheetInfo);
+  let dataArray = response.data.values.slice(2);
 
-  dataArray = dataArray.map(function (r) {
-    while (r.length < 8) {
-      r.push('');
+  dataArray = dataArray.reduce(function (result, row) {
+    if (row.length > 1) {
+      while (row.length < 10) {
+        row.push('');
+      }
+      result.push(row);
     }
-    return r;
-  });
+    return result;
+  }, []);
+
+  let index = 1;
 
   await Promise.all(dataArray.map(async function (row) {
     row = row.map(rowItem => rowItem.trim());
@@ -69,6 +73,7 @@ async function getData(cl) {
     const newPerson = new Person(personData);
 
     await newPerson.save();
+    console.log(`Person #${index++} was saved!`);
   }));
   process.exit();
 }
