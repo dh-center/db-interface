@@ -13,7 +13,7 @@ export default class Person extends Model {
    */
   constructor(personData, language) {
     super(Person.schema);
-    this.data = personData;
+    this.data = Person.schema.assign(personData);
     this.language = language;
   }
 

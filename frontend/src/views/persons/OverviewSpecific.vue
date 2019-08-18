@@ -14,33 +14,8 @@
 <script>
   import { mapState } from 'vuex';
   import axios from 'axios';
-  import schema from './schema';
   import PersonInfo from './Info';
-  import Model from '../../lib/model';
-
-  class Person extends Model {
-    constructor(personData, language) {
-      super(schema);
-      this.data = personData;
-      this.language = language;
-    }
-
-    get name() {
-      const firstName = this.firstName;
-      const lastName = this.lastName;
-      const patronymic = this.patronymic;
-
-      return `${firstName} ${lastName} ${patronymic}`.trim() || '';
-    }
-
-    set name(value) {
-      const [firstName, lastName, ...patronymic] = value;
-
-      this.firstName = firstName;
-      this.lastName = lastName;
-      this.patronymic = patronymic.join(' ');
-    }
-  }
+  import PersonModel from '../../models/person';
 
   export default {
     name: 'PersonsOverviewSpecific',
@@ -63,7 +38,6 @@
     },
     async mounted() {
       await this.fetchData();
-      // this.switchDataLanguage();
     },
     methods: {
       async fetchData() {
@@ -74,22 +48,17 @@
         if (personId) {
           personData = await axios.get(`/persons/${personId}`);
         }
-        this.person = new Person(schema.assign(personData), this.dataLanguage);
+        this.person = new PersonModel(personData, this.dataLanguage);
       },
 
       async savePerson() {
-        console.log(this.person);
-        // schema.validate(this.person);
+        if (this.$route.params.personId) {
+          await axios.put(`/persons/${this.$route.params.personId}`, this.person.data);
+        } else {
+          await axios.post('/persons', this.person.data);
+        }
 
-        /*
-         * if (this.$route.params.personId) {
-         *   await axios.put(`/persons/${this.$route.params.personId}`, this.person);
-         * } else {
-         *   await axios.post('/persons', this.person);
-         * }
-         *
-         * this.$router.push({ name: 'persons-overview' });
-         */
+        this.$router.push({ name: 'persons-overview' });
       }
     }
   };
