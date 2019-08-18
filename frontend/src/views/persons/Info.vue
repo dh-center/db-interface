@@ -6,9 +6,9 @@
       data-placeholder="full person name"
       class="person-info__name"
     />
-    <div class="person-info__info-container">
+    <div class="person-info__mini">
       <div class="person-info__lifetime">
-        <h3 class="person-info__info-header">
+        <h3 class="person-info__mini-header">
           годы жизни
         </h3>
         <span
@@ -25,7 +25,7 @@
         />
       </div>
       <div class="person-info__profession">
-        <h3 class="person-info__info-header">
+        <h3 class="person-info__mini-header">
           деятельность
         </h3>
         <span
@@ -87,13 +87,13 @@
       color: #2d2d2d;
     }
 
-    &__info-container {
+    &__mini {
       display: flex;
       flex-wrap: wrap;
       border-bottom: 1px solid rgba(0, 0, 0, .2);
     }
 
-    &__info-header {
+    &__mini-header {
       font-family: 'Roboto', sans-serif;
       font-size: 8px;
       line-height: 9px;

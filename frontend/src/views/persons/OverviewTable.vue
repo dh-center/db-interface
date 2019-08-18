@@ -42,7 +42,7 @@
     data() {
       return {
         schema: PersonModel.schema.fields,
-        personsList: {}
+        personsList: []
       };
     },
     computed: mapState({

@@ -12,25 +12,12 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import DataLanguageSelect from '../../components/DataLanguageSelect';
-  import axios from 'axios';
 
   export default {
     name: 'PersonsOverview',
     components: {
       DataLanguageSelect
-    },
-    data() {
-      return {
-        personsList: {}
-      };
-    },
-    computed: mapState({
-      dataLanguage: state => state.app.dataLanguage
-    }),
-    async created() {
-      this.personsList = await axios.get('/persons');
     }
   };
 </script>
