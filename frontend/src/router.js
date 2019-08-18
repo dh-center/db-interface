@@ -15,13 +15,29 @@ const router = new Router({
     },
     {
       path: '/persons',
-      name: 'persons-overview',
-      component: () => import('./views/persons/Overview.vue')
-    },
-    {
-      path: '/persons/create',
-      name: 'persons-create',
-      component: () => import('./views/persons/Create.vue')
+      component: () => import('./views/persons/Overview.vue'),
+      children: [
+        {
+          path: '',
+          name: 'persons-overview',
+          component: () => import('./views/persons/OverviewTable.vue')
+        },
+        {
+          path: 'changes',
+          name: 'persons-changes',
+          component: () => import('./views/persons/ChangesTable.vue')
+        },
+        {
+          path: 'create',
+          name: 'persons-create',
+          component: () => import('./views/persons/OverviewSpecific.vue')
+        },
+        {
+          path: ':personId/edit',
+          name: 'persons-edit',
+          component: () => import('./views/persons/OverviewSpecific.vue')
+        }
+      ]
     },
     {
       path: '/sign-up',

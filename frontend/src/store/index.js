@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 
 import app from './modules/app';
 import auth from './modules/auth';
-import persons from './modules/persons';
 
 import createPersistedState from 'vuex-persistedstate';
 
@@ -14,8 +13,7 @@ const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
   modules: {
     app,
-    auth,
-    persons
+    auth
   },
   plugins: [ createPersistedState() ],
   strict: debug
