@@ -13,9 +13,9 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 /**
  * Setup DB
  */
-require('../backend/modules/db');
+require('../modules/db');
 
-const Person = require('../backend/models/person');
+const Person = require('../models/person');
 
 const randomNames = ['Куваева Алиса Никитевна',
   'Панарина Ульяна Борисовна',

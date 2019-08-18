@@ -4,6 +4,7 @@ node_modules
 .env.dev
 frontend/dist
 package-lock.json
+credentials.json
 
 # local env files
 .env.local
