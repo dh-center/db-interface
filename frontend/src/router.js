@@ -28,13 +28,13 @@ const router = new Router({
           component: () => import('./views/persons/ChangesTable.vue')
         },
         {
-          path: 'create',
+          path: 'create/:changeRecordId?',
           name: 'persons-create',
-          component: () => import('./views/persons/OverviewSpecific.vue')
+          component: () => import('./views/persons/Create.vue')
         },
         {
           path: ':personId/edit',
-          name: 'persons-edit',
+          name: 'persons-specific-overview',
           component: () => import('./views/persons/OverviewSpecific.vue')
         }
       ]
