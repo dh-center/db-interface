@@ -18,7 +18,7 @@
       >
         <td>
           <button @click="$router.push({name: 'persons-edit', params: {personId: person._id}})">
-            Edit
+            View
           </button>
         </td>
         <td
