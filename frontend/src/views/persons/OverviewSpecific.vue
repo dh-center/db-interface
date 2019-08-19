@@ -13,7 +13,7 @@
         :person="originalPerson"
       />
       <PersonInfo
-        v-if="edit || changeRecord.changes.length"
+        v-if="edit || changedPerson"
         :person="changedPerson"
         :editable="edit"
       />
@@ -35,9 +35,8 @@
     },
     data() {
       return {
-        originalPerson: null,
+        originalPerson: null, // person data before modification
         edit: false,
-        changeRecord: { changes: [] },
         changedPerson: null
       };
     },
@@ -55,28 +54,24 @@
     },
     methods: {
       async fetchData() {
-        const personId = this.$route.params.personId;
+        const personData = await axios.get(`/persons/${this.$route.params.personId}`, {
+          params: {
+            withChanges: true
+          }
+        });
 
-        let personData = {};
-
-        if (personId) {
-          personData = await axios.get(`/persons/${personId}`, {
-            params: {
-              withChanges: true
-            }
-          });
-        }
-
+        // if person was modified
         if (personData.changes) {
-          this.changeRecord = personData.changes;
-          this.changedPerson = new PersonModel(jsonpatch.applyPatch(JSON.parse(JSON.stringify(personData)), this.changeRecord.changes).newDocument, this.dataLanguage);
+          this.changedPerson = new PersonModel(jsonpatch.applyPatch(JSON.parse(JSON.stringify(personData)), personData.changes.changes).newDocument, this.dataLanguage);
+        } else {
+          // if person was not modified yet
+          this.changedPerson = new PersonModel(personData, this.dataLanguage);
         }
 
         this.originalPerson = new PersonModel(personData, this.dataLanguage);
       },
 
       onEditButtonClick() {
-        this.changedPerson = new PersonModel(jsonpatch.applyPatch(JSON.parse(JSON.stringify(this.originalPerson.data)), this.changeRecord.changes).newDocument, this.dataLanguage);
         this.edit = true;
       },
 
