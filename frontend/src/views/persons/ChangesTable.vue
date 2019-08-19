@@ -57,7 +57,7 @@
 
       openView(changeRecord) {
         if (changeRecord.entity) {
-          this.$router.push({ name: 'persons-specific-overview', params: { projectId: changeRecord.entity._id } });
+          this.$router.push({ name: 'persons-overview-specific', params: { personId: changeRecord.entity._id } });
         } else {
           this.$router.push(({ name: 'persons-create', params: { changeRecordId: changeRecord._id } }));
         }

@@ -34,7 +34,7 @@ const router = new Router({
         },
         {
           path: ':personId/edit',
-          name: 'persons-specific-overview',
+          name: 'persons-overview-specific',
           component: () => import('./views/persons/OverviewSpecific.vue')
         }
       ]
