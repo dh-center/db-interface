@@ -2,7 +2,7 @@
   <div class="person-info">
     <h2
       ref="name"
-      contenteditable
+      :contenteditable="editable"
       data-placeholder="full person name"
       class="person-info__name"
     />
@@ -14,14 +14,14 @@
         <span
           ref="birthDate"
           data-placeholder="dd.mm.yyyy"
-          contenteditable
+          :contenteditable="editable"
         />
         &mdash;
         <span
           ref="deathDate"
           data-placeholder="dd.mm.yyyy"
           class="date-input"
-          contenteditable
+          :contenteditable="editable"
         />
       </div>
       <div class="person-info__profession">
@@ -30,14 +30,14 @@
         </h3>
         <span
           ref="profession"
-          contenteditable
+          :contenteditable="editable"
           data-placeholder="person's professions"
         />
       </div>
     </div>
     <div
       ref="description"
-      contenteditable
+      :contenteditable="editable"
       data-placeholder="person description"
       class="person-info__description"
     />
@@ -51,7 +51,8 @@
       person: {
         type: Object,
         required: true
-      }
+      },
+      editable: Boolean
     },
     mounted() {
       for (const ref in this.$refs) {
@@ -126,7 +127,7 @@
     }
   }
 
-  [contenteditable=true]:empty::before {
+  [contenteditable]:empty::before {
     content: attr(data-placeholder);
     opacity: 0.5;
     display: inline;

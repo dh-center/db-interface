@@ -23,15 +23,21 @@ router.post('/persons', async (req, res) => {
     user: res.locals.user._id,
     changes: jsonpatch.compare({}, req.body)
   });
+  const result = await change.save();
 
-  await change.save();
-  res.sendStatus(201);
+  res.status(201).json({ payload: result });
 });
 
 router.get('/persons/changes', async (req, res) => {
   const changes = await Change.find({ entityType: 'persons', approved: null }).populate('entity');
 
   res.json({ payload: changes });
+});
+
+router.get('/persons/changes/:changeId', async (req, res) => {
+  const change = await Change.findById(req.params.changeId).populate('entity');
+
+  return res.status(200).json({ payload: change });
 });
 
 router.put('/persons/changes/:changeId/approval', async (req, res) => {
@@ -56,6 +62,15 @@ router.put('/persons/changes/:changeId/approval', async (req, res) => {
   }
   res.sendStatus(200);
 });
+router.put('/persons/changes/:changeId/', async (req, res) => {
+  await Change.updateOne(
+    { _id: req.params.changeId },
+    {
+      changes: jsonpatch.compare({}, req.body)
+    });
+
+  res.status(200);
+});
 
 router.put('/persons/:personId', async (req, res) => {
   const person = await Person.findById(req.params.personId);
@@ -76,8 +91,16 @@ router.put('/persons/:personId', async (req, res) => {
 });
 
 router.get('/persons/:personId', async (req, res) => {
-  const person = await Person.findById(req.params.personId);
+  const person = await Person.findById(req.params.personId).lean();
 
+  if (req.query.withChanges) {
+    const change = await Change.findOne({ entityType: 'persons', approved: null, entity: person._id }).lean();
+
+    if (change) {
+      person.changes = change;
+    }
+  }
+  console.log(person);
   res.json({ payload: person });
 });
 
