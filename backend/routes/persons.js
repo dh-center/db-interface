@@ -9,7 +9,7 @@ router.get('/persons', async (req, res) => {
   const dbQuery = req.query.name ? { name: { $regex: new RegExp(`${req.query.name}`, 'i') } } : {};
 
   try {
-    const data = await Person.find(dbQuery);
+    const data = await Person.find(dbQuery).lean();
 
     res.json({ payload: data });
   } catch (error) {
@@ -29,7 +29,7 @@ router.post('/persons', async (req, res) => {
 });
 
 router.get('/persons/changes', async (req, res) => {
-  const changes = await Change.find({ entityType: 'persons', approved: null }).populate('entity');
+  const changes = await Change.find({ entityType: 'persons', approved: null }).populate('entity').lean();
 
   res.json({ payload: changes });
 });
@@ -100,7 +100,6 @@ router.get('/persons/:personId', async (req, res) => {
       person.changes = change;
     }
   }
-  console.log(person);
   res.json({ payload: person });
 });
 
