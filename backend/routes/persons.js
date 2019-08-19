@@ -73,12 +73,8 @@ router.put('/persons/changes/:changeId/', async (req, res) => {
 });
 
 router.put('/persons/:personId', async (req, res) => {
-  const person = await Person.findById(req.params.personId);
-
-  const clearedPersonData = JSON.parse(JSON.stringify(person));
-
-  const changes = jsonpatch.compare(clearedPersonData, req.body);
-
+  const person = await Person.findById(req.params.personId).lean();
+  const changes = jsonpatch.compare(person, req.body);
   const change = new Change({
     entityType: 'persons',
     user: res.locals.user._id,
