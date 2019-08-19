@@ -47,11 +47,11 @@
       dataLanguage: state => state.app.dataLanguage
     }),
     async created() {
-      this.changesList = await axios.get('/persons/changes');
+      this.changesList = await axios.get('/changes/persons');
     },
     methods: {
       async approve(changeRecord) {
-        await axios.put(`/persons/changes/${changeRecord._id}/approval`);
+        await axios.put(`/changes/persons/${changeRecord._id}/approval`);
         this.$delete(this.changesList, this.changesList.indexOf(changeRecord));
       },
 

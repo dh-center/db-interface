@@ -1,8 +1,5 @@
 <template>
   <div class="persons-overview-specific">
-    <button @click="onEditButtonClick">
-      Edit
-    </button>
     <button @click="savePerson">
       Save
     </button>
@@ -13,9 +10,9 @@
         :person="originalPerson"
       />
       <PersonInfo
-        v-if="edit || changedPerson"
+        v-if="changedPerson"
         :person="changedPerson"
-        :editable="edit"
+        editable
       />
     </div>
   </div>
@@ -36,7 +33,7 @@
     data() {
       return {
         originalPerson: null, // person data before modification
-        edit: false,
+        lastChanges: null,
         changedPerson: null
       };
     },
@@ -56,13 +53,13 @@
       async fetchData() {
         const personData = await axios.get(`/persons/${this.$route.params.personId}`, {
           params: {
-            withChanges: true
+            withLastChanges: true
           }
         });
 
         // if person was modified
-        if (personData.changes) {
-          this.changedPerson = new PersonModel(jsonpatch.applyPatch(JSON.parse(JSON.stringify(personData)), personData.changes.changes).newDocument, this.dataLanguage);
+        if (personData.lastChanges) {
+          this.changedPerson = new PersonModel(jsonpatch.applyPatch(JSON.parse(JSON.stringify(personData)), personData.lastChanges.changes).newDocument, this.dataLanguage);
         } else {
           // if person was not modified yet
           this.changedPerson = new PersonModel(personData, this.dataLanguage);
@@ -71,18 +68,13 @@
         this.originalPerson = new PersonModel(personData, this.dataLanguage);
       },
 
-      onEditButtonClick() {
-        this.edit = true;
-      },
-
       async savePerson() {
-        this.edit = false;
-        if (this.$route.params.personId) {
-          // update existing originalPerson
-          await axios.put(`/persons/${this.$route.params.personId}`, this.changedPerson.data);
+        if (this.lastChanges) {
+          // update existing changes record
+          await axios.patch(`/changes/persons/${this.lastChanges._id}`, this.changedPerson.data);
         } else {
-          // create new originalPerson
-          await axios.post('/persons', this.changedPerson.data);
+          // create new changes record
+          this.lastChanges = await axios.post(`/changes/persons/${this.originalPerson.data._id}`, this.changedPerson.data);
         }
       }
     }

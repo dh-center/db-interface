@@ -48,7 +48,7 @@
         const personData = {};
 
         if (changeRecordId) {
-          const changeRecord = await axios.get(`/persons/changes/${changeRecordId}`);
+          const changeRecord = await axios.get(`/changes/persons/${changeRecordId}`);
 
           this.person = new PersonModel(jsonpatch.applyPatch({}, changeRecord.changes).newDocument, this.dataLanguage);
         } else {
@@ -57,9 +57,9 @@
       },
       async savePerson() {
         if (this.$route.params.changeRecordId) {
-          await axios.put(`/persons/changes/${this.$route.params.changeRecordId}`, this.person.data);
+          await axios.patch(`/changes/persons/${this.$route.params.changeRecordId}`, this.person.data);
         } else {
-          const changesRecord = await axios.post('/persons', this.person.data);
+          const changesRecord = await axios.post('/changes/persons', this.person.data);
 
           this.$router.push({
             name: 'persons-create',
