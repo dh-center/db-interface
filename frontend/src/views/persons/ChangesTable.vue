@@ -19,6 +19,7 @@
         :entity="changeRecord.entity || {}"
         :changes="changeRecord.changes"
         @onApproveButtonClicked="approve(changeRecord)"
+        @onViewButtonClicked="openView(changeRecord)"
       />
     </tbody>
   </table>
@@ -30,6 +31,7 @@
   import axios from 'axios';
 
   import ChangesTableRow from '../../components/ChangesTableRow';
+
   export default {
     name: 'ChangesTable',
     components: {
@@ -51,6 +53,14 @@
       async approve(changeRecord) {
         await axios.put(`/persons/changes/${changeRecord._id}/approval`);
         this.$delete(this.changesList, this.changesList.indexOf(changeRecord));
+      },
+
+      openView(changeRecord) {
+        if (changeRecord.entity) {
+          this.$router.push({ name: 'persons-specific-overview', params: { projectId: changeRecord.entity._id } });
+        } else {
+          this.$router.push(({ name: 'persons-create', params: { changeRecordId: changeRecord._id } }));
+        }
       }
     }
   };

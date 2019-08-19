@@ -1,6 +1,9 @@
 <template>
   <tr>
     <td>
+      <button @click="$emit('onViewButtonClicked')">
+        View
+      </button>
       <button @click="$emit('onApproveButtonClicked')">
         Approve
       </button>
