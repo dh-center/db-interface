@@ -8,7 +8,7 @@ class ApiError extends Error {
    */
   constructor(httpCode) {
     super();
-    this.httpCode = httpCode;
+                     this.httpCode = httpCode;
   }
 }
 
@@ -22,7 +22,7 @@ class NoUserWithSuchUsernameError extends ApiError {
    */
   constructor(httpCode = 401) {
     super(httpCode);
-    this.code = 'NO_USER_WITH_SUCH_USERNAME';
+         this.code = 'NO_USER_WITH_SUCH_USERNAME';
   }
 }
 

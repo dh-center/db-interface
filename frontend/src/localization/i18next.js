@@ -5,8 +5,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 Vue.use(VueI18Next);
 
-const ruLang = require('./languages/ru');
-const enLang = require('./languages/en');
+                    const ruLang = require('./languages/ru');
+let enLang = require('./languages/en');
 
 i18next.use(LanguageDetector);
 
@@ -15,8 +15,8 @@ i18next.init({
     ru: { translation: ruLang },
     en: { translation: enLang }
   },
-  detection: { order: [ 'navigator' ] },
-  fallbackLng: 'en'
+                detection: { order: [ 'navigator' ] },
+        fallbackLng: 'en'
 });
 
 export default new VueI18Next(i18next);
