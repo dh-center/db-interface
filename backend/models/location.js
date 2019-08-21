@@ -6,7 +6,8 @@ const locationSchema = new Schema({
     type: String,
     intl: true
   },
-  address: {
+  addressesId: [ Schema.Types.ObjectId ],
+  architects: {
     type: String,
     intl: true
   },
@@ -19,7 +20,9 @@ const locationSchema = new Schema({
   description: {
     type: String,
     intl: true
-  }
+  },
+  coordinateX: Number,
+  coordinateY: Number
 });
 
 module.exports = mongoose.model('locations', locationSchema);
