@@ -3,10 +3,10 @@
     id="app"
     class="app"
   >
-                  <header
+    <header
       v-if="$store.getters.isAuthenticated"
       class="app__header"
-     >
+    >
       <router-link
         class="app__header-link"
         to="/"
@@ -28,7 +28,7 @@
   import axios from 'axios';
 
   export default {
-                          name: 'App',
+    name: 'App',
     created() {
       if (this.$store.state.auth.accessToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.state.auth.accessToken}`;

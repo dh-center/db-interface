@@ -9,11 +9,11 @@ const ruLang = require('./languages/ru');
 
 const enLang = require('./languages/en');
 
-     i18next.use(LanguageDetector);
+i18next.use(LanguageDetector);
 
 i18next.init({
   resources: {
-                 ru: { translation: ruLang },
+    ru: { translation: ruLang },
     en: { translation: enLang }
   },
   detection: { order: [ 'navigator' ] },
