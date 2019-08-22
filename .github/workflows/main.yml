@@ -28,8 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Run ESLint
-      uses: stefanoeb/eslint-action@1.0.0
-      args: '. --ext .js --ext .vue'
-
-
+    - name: Install ESLint and plugins
+      run: npm install eslint github:codex-team/eslint-config babel-eslint eslint-plugin-vue
+    - name: Run ESLint check
+      run: npx eslint . --ext .js --ext .vue
+      
