@@ -29,7 +29,7 @@ jobs:
 
     steps:
     - name: Install ESLint and plugins
-      run: npm install eslint github:codex-team/eslint-config babel-eslint eslint-plugin-vue
+      run: npm install -g eslint github:codex-team/eslint-config babel-eslint eslint-plugin-vue
     - name: Run ESLint check
       run: eslint . --ext .js --ext .vue
 
