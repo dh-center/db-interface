@@ -28,7 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
-    - name: ESLint checks
-      uses: gimenete/eslint-action@1.0
+    - name: Run ESLint
+      uses: stefanoeb/eslint-action@1.0.0
+      args: '. --ext .js --ext .vue'
+
 
