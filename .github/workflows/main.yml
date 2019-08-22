@@ -14,8 +14,10 @@ jobs:
     - name: Check stage branch
       if: github.ref == 'refs/heads/start-using-actions'
       run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker tag db-interface-api dhcenter/db-interface-api:stage
         docker push dhcenter/db-interface-api:stage
+        docker logout
 
   build_frontend:
     name: Build frontend image
@@ -30,8 +32,10 @@ jobs:
     - name: Check stage branch
       if: github.ref == 'refs/heads/start-using-actions'
       run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker tag db-interface-frontend dhcenter/db-interface-frontend:stage
         docker push dhcenter/db-interface-frontend:stage
+        docker logout
 
   check_eslint:
     name: Check ESLint problems
