@@ -22,3 +22,13 @@ jobs:
       run: echo "VUE_APP_API_ENDPOINT=http://5.53.124.45:3000" > ./frontend/.env
     - name: Build docker image
       run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
+  
+  eslint_check:
+    name: Check ESLint problems
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: ESLint checks
+      uses: gimenete/eslint-action@1.0
+
