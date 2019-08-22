@@ -1,9 +1,9 @@
-name: db-interface
+name: db-interface-stage
 
 on:
   push:
     branches:
-    - !stage
+    - stage
 
 jobs:
   build_api:
@@ -14,6 +14,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build docker image
       run: docker image build -t db-interface-api -f backend/docker/Dockerfile.prod .
+    - name: Push docker image
+      run: docker tag db-interface-api dhcenter/db-interface-api:stage
+      run: docker push dhcenter/db-interface-api:stage
 
   build_frontend:
     name: Build frontend image
@@ -25,6 +28,9 @@ jobs:
       run: echo "VUE_APP_API_ENDPOINT=http://5.53.124.45:3000" > ./frontend/.env
     - name: Build docker image
       run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
+    - name: Push docker image
+      run: docker tag db-interface-frontend dhcenter/db-interface-frontend:stage
+      run: docker push dhcenter/db-interface-frontend:stage
 
   check_eslint:
     name: Check ESLint problems
