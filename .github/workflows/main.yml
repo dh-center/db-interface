@@ -22,6 +22,7 @@ jobs:
       run: echo "VUE_APP_API_ENDPOINT=http://5.53.124.45:3000" > ./frontend/.env
     - name: Build docker image
       run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
+    - name: Get GITHUB_REF
       run: echo ${GITHUB_REF}
 
   check_eslint:
