@@ -29,8 +29,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install ESLint
-      run: npm install eslint
+    - name: Install ESLint and plugins
+      run: npm install eslint github:codex-team/eslint-config babel-eslint eslint-plugin-vue
     - name: Start ESlint
       uses: stefanoeb/eslint-action@master
       with:
