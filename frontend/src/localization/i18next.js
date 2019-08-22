@@ -6,6 +6,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 Vue.use(VueI18Next);
 
 const ruLang = require('./languages/ru');
+
 const enLang = require('./languages/en');
 
 i18next.use(LanguageDetector);
