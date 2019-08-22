@@ -10,6 +10,7 @@ module.exports = {
     'prefer-const': ['error', {
       destructuring: 'all',
       ignoreReadBeforeAssign: false
-    } ]
+    } ],
+    'dot-notation': 'off'
   }
 };
