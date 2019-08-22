@@ -12,7 +12,7 @@ jobs:
     - name: Build docker image
       run: docker image build -t db-interface-api -f backend/docker/Dockerfile.prod .
     - name: Check stage branch
-      if: GITHUB_REF == 'refs/heads/stage'
+      if: ${GITHUB_REF} == 'refs/heads/stage'
       run: |
         docker tag db-interface-api dhcenter/db-interface-api:stage
         docker push dhcenter/db-interface-api:stage
@@ -28,7 +28,7 @@ jobs:
     - name: Build docker image
       run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
     - name: Check stage branch
-      if: GITHUB_REF == 'refs/heads/stage'
+      if: ${GITHUB_REF} == 'refs/heads/stage'
       run: |
         docker tag db-interface-frontend dhcenter/db-interface-frontend:stage
         docker push dhcenter/db-interface-frontend:stage
