@@ -6,29 +6,29 @@ jobs:
   build_api:
     name: Build API image
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: Build docker image
       run: docker image build -t db-interface-api -f backend/docker/Dockerfile.prod .
-      
+
   build_frontend:
     name: Build frontend image
     runs-on: ubuntu-latest
-    
-    steps: 
+
+    steps:
     - uses: actions/checkout@v1
     - name: Add env to ./frontend/.env
       run: echo "VUE_APP_API_ENDPOINT=http://5.53.124.45:3000" > ./frontend/.env
     - name: Build docker image
       run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
-  
-  eslint_check:
+
+  check_eslint:
     name: Check ESLint problems
     runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v1
-    - name: ESLint checks
-      uses: gimenete/eslint-action@1.0
 
+    steps:
+    - name: Start ESlint
+      uses: stefanoeb/eslint-action@master
+      with:
+        args: . --ext .js --ext .vue
