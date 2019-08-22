@@ -22,6 +22,7 @@ jobs:
       run: echo "VUE_APP_API_ENDPOINT=http://5.53.124.45:3000" > ./frontend/.env
     - name: Build docker image
       run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
+      run: echo ${GITHUB_REF}
 
   check_eslint:
     name: Check ESLint problems
@@ -35,30 +36,3 @@ jobs:
       uses: stefanoeb/eslint-action@master
       with:
         args: . --ext .js --ext .vue
-
-on:
-  push:
-    branches:
-      - stage
-
-jobs:
-  push_docker_api:
-    name: Push API image
-    runs-on: ubuntu-latest
-    needs: build_api
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Push docker image
-        run: docker tag db-interface-api dhcenter/db-interface-api:stage
-        run: docker push dhcenter/db-interface-api:stage
-
-  push_docker_frontend:
-    name: Push frontend image
-    runs-on: ubuntu-latest
-    needs: build_frontend
-
-    steps:
-      - name: Push docker image
-        run: docker tag db-interface-frontend dhcenter/db-interface-frontend:stage
-        run: docker push dhcenter/db-interface-frontend:stage
