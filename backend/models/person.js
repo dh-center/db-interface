@@ -33,8 +33,6 @@ const personSchema = new Schema({
 });
 
 personSchema.statics.getChangesList = async function (personId, modifiedData) {
-  console.log(personId);
-  console.log(modifiedData);
   const person = personId ? await this.findById(personId).lean() : {};
 
   delete person._id;

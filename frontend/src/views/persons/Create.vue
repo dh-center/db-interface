@@ -50,7 +50,7 @@
         if (changeRecordId) {
           const changeRecord = await axios.get(`/changes/persons/${changeRecordId}`);
 
-          this.person = new PersonModel(jsonpatch.applyPatch({}, changeRecord.changes).newDocument, this.dataLanguage);
+          this.person = new PersonModel(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument, this.dataLanguage);
         } else {
           this.person = new PersonModel(personData, this.dataLanguage);
         }

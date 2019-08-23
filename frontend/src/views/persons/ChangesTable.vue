@@ -13,11 +13,11 @@
     </thead>
     <tbody>
       <ChangesTableRow
-        v-for="changeRecord in changesList"
+        v-for="changeRecord in changesRecordList"
         :key="changeRecord._id"
         :schema="schema"
         :entity="changeRecord.entity || {}"
-        :changes="changeRecord.changes"
+        :changeList="changeRecord.changeList"
         @onApproveButtonClicked="approve(changeRecord)"
         @onViewButtonClicked="openView(changeRecord)"
       />
@@ -40,26 +40,26 @@
     data() {
       return {
         schema: PersonModel.schema.fields,
-        changesList: {}
+        changesRecordList: []
       };
     },
     computed: mapState({
       dataLanguage: state => state.app.dataLanguage
     }),
     async created() {
-      this.changesList = await axios.get('/changes/persons');
+      this.changesRecordList = await axios.get('/changes/persons');
     },
     methods: {
       async approve(changeRecord) {
         await axios.put(`/changes/persons/${changeRecord._id}/approval`);
-        this.$delete(this.changesList, this.changesList.indexOf(changeRecord));
+        this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
       },
 
       openView(changeRecord) {
         if (changeRecord.entity) {
           this.$router.push({ name: 'persons-overview-specific', params: { personId: changeRecord.entity._id } });
         } else {
-          this.$router.push(({ name: 'persons-create', params: { changeRecordId: changeRecord._id } }));
+          this.$router.push({ name: 'persons-create', params: { changeRecordId: changeRecord._id } });
         }
       }
     }

@@ -28,7 +28,7 @@
         type: Object,
         required: true
       },
-      changes: {
+      changeList: {
         type: Array,
         required: true
       },
@@ -42,7 +42,7 @@
         dataLanguage: state => state.app.dataLanguage
       }),
       resultingEntity() {
-        return jsonpatch.applyPatch(this.entity, this.changes).newDocument;
+        return jsonpatch.applyPatch(this.entity, this.changeList).newDocument;
       }
     }
   };

@@ -33,7 +33,7 @@
     data() {
       return {
         originalPerson: null, // person data before modification
-        lastChanges: null,
+        lastChangesRecord: null,
         changedPerson: null
       };
     },
@@ -59,7 +59,7 @@
 
         // if person was modified
         if (personData.lastChangesRecord) {
-          this.changedPerson = new PersonModel(jsonpatch.applyPatch(personData, personData.lastChangesRecord.changes).newDocument, this.dataLanguage);
+          this.changedPerson = new PersonModel(jsonpatch.applyPatch(personData, personData.lastChangesRecord.changeList).newDocument, this.dataLanguage);
         } else {
           // if person was not modified yet
           this.changedPerson = new PersonModel(personData, this.dataLanguage);
@@ -69,12 +69,12 @@
       },
 
       async savePerson() {
-        if (this.lastChanges) {
+        if (this.lastChangesRecord) {
           // update existing changes record
-          await axios.patch(`/changes/persons/${this.lastChanges._id}`, this.changedPerson.data);
+          await axios.patch(`/changes/persons/${this.lastChangesRecord._id}`, this.changedPerson.data);
         } else {
           // create new changes record
-          this.lastChanges = await axios.post(`/changes/persons/${this.originalPerson.data._id}`, this.changedPerson.data);
+          this.lastChangesRecord = await axios.post(`/changes/persons/${this.originalPerson.data._id}`, this.changedPerson.data);
         }
       }
     }
