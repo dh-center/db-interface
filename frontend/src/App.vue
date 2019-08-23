@@ -3,15 +3,16 @@
     id="app"
     class="app"
   >
-    <header v-if="$store.getters.isAuthenticated"
+    <header
+      v-if="$store.getters.isAuthenticated"
       class="app__header"
     >
-              <router-link
+      <router-link
         class="app__header-link"
         to="/"
       >
         Home
-                     </router-link>
+      </router-link>
       <router-link
         class="app__header-link"
         :to="{name: 'persons-overview'}"
