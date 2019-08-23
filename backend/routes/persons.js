@@ -18,11 +18,11 @@ router.get('/persons', async (req, res) => {
 router.get('/persons/:personId', async (req, res) => {
   const person = await Person.findById(req.params.personId).lean();
 
-  if (req.query.withChanges) {
+  if (req.query.withLastChanges) {
     const change = await Change.findOne({ entityType: 'persons', approved: null, entity: person._id }).lean();
 
     if (change) {
-      person.lastChanges = change;
+      person.lastChangesRecord = change;
     }
   }
   res.json({ payload: person });

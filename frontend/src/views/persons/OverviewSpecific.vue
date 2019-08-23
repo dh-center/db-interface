@@ -58,8 +58,8 @@
         });
 
         // if person was modified
-        if (personData.lastChanges) {
-          this.changedPerson = new PersonModel(jsonpatch.applyPatch(JSON.parse(JSON.stringify(personData)), personData.lastChanges.changes).newDocument, this.dataLanguage);
+        if (personData.lastChangesRecord) {
+          this.changedPerson = new PersonModel(jsonpatch.applyPatch(personData, personData.lastChangesRecord.changes).newDocument, this.dataLanguage);
         } else {
           // if person was not modified yet
           this.changedPerson = new PersonModel(personData, this.dataLanguage);
