@@ -7,9 +7,9 @@ Vue.use(Router);
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
+              routes: [
     {
-      path: '/',
+      'path': '/',
       name: 'form',
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
     },
