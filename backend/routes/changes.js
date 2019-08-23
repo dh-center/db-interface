@@ -14,9 +14,9 @@ router.get('/changes/persons', async (req, res) => {
   res.json({ payload: changes });
 });
 
-router.get('changes/persons/:changesRecordId', async (req, res) => {
+router.get('/changes/persons/:changesRecordId', async (req, res) => {
   const change = await Change
-    .findById(req.params.changeId)
+    .findById(req.params.changesRecordId)
     .populate('entity');
 
   return res.status(200).json({ payload: change });
@@ -24,19 +24,11 @@ router.get('changes/persons/:changesRecordId', async (req, res) => {
 
 // create new change record for existing or non-existing person
 router.post('/changes/persons/:personId?', async (req, res) => {
-  let person = {};
-
-  const personId = req.params.personId;
-
-  if (personId) {
-    person = await Person.findById(personId).lean();
-  }
-
   const change = new Change({
     entityType: 'persons',
     user: res.locals.user._id,
-    ...(personId && { entity: personId }),
-    changes: jsonpatch.compare(person, req.body)
+    ...(req.params.personId && { entity: req.params.personId }),
+    changes: await Person.getChangesList(req.params.personId, req.body)
   });
   const result = await change.save();
 
