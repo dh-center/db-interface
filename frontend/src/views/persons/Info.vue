@@ -76,6 +76,7 @@
 <style>
   .person-info {
     max-width: 450px;
+    min-width: 250px;
     display: flex;
     flex-direction: column;
     margin: auto;
