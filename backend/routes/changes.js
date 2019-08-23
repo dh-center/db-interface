@@ -35,10 +35,12 @@ router.post('/changes/persons/:personId?', async (req, res) => {
   res.status(201).json({ payload: result });
 });
 
+// Patch existing change record
 router.patch('/changes/persons/:changesRecordId', async (req, res) => {
-  await Change
-    .updateOne({ _id: req.params.changesRecordId }, { changes: jsonpatch.compare({}, req.body) });
+  const changeRecord = await Change.findById(req.params.changesRecordId);
 
+  changeRecord.changes = await Person.getChangesList(changeRecord.entity, req.body);
+  await changeRecord.save();
   res.status(200);
 });
 
