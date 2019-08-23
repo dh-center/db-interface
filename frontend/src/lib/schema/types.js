@@ -69,7 +69,7 @@ types.MultilingualString = class extends types.Base {
 };
 
 /**
- * Represents stringп
+ * Represents string
  */
 types.String = class extends types.Base {
   /**
