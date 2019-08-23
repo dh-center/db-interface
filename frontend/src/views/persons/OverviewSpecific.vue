@@ -6,11 +6,12 @@
     <div class="persons-overview-specific__container">
       <PersonInfo
         v-if="originalPerson"
-        ref="personInfo"
+        ref="originalPersonInfo"
         :person="originalPerson"
       />
       <PersonInfo
         v-if="changedPerson"
+        ref="changedPersonInfo"
         :person="changedPerson"
         editable
       />
@@ -43,7 +44,9 @@
     watch: {
       dataLanguage(newLang) {
         this.originalPerson.language = newLang;
-        this.$refs.personInfo.setData();
+        this.changedPerson.language = newLang;
+        this.$refs.originalPersonInfo.setData();
+        this.$refs.changedPersonInfo.setData();
       }
     },
     async mounted() {
