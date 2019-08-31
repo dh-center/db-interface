@@ -22,6 +22,13 @@ export default class Location extends Model {
    * @return {Schema}
    */
   static get schema() {
-    return new Schema({});
+    return new Schema({
+      name: schemaTypes.String,
+      address: schemaTypes.String,
+      constructionDate: schemaTypes.String,
+      demolitionDate: schemaTypes.String,
+      buildingType: schemaTypes.String,
+      description: schemaTypes.String
+    });
   }
 }

@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const locationSchema = new Schema({
   name: String,
   address: String,
-  constructionDate: Date,
-  demolitionDate: Date,
+  constructionDate: String,
+  demolitionDate: String,
   buildingType: String,
   description: String
 });
