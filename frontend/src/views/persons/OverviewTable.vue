@@ -25,7 +25,7 @@
           v-for="(field, name) in schema"
           :key="name"
         >
-          {{ person[name] && person[name][dataLanguage] }}
+          {{ typeof person[name] === 'object' ? person[name][dataLanguage] : person[name] }}
         </td>
       </tr>
     </tbody>

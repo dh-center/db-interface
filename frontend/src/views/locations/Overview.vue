@@ -7,6 +7,7 @@
     <router-link :to="{name: ''}">
       View changes
     </router-link>
+    <router-view />
   </div>
 </template>
 

@@ -3,10 +3,12 @@ const router = express.Router();
 const Location = require('../models/location');
 
 router.get('/locations', async (req, res) => {
-  try {
-    const data = await Location.find({ name: { $regex: new RegExp(`${req.query.name}`, 'i') } });
+  const dbQuery = req.query.name ? { name: { $regex: new RegExp(`${req.query.name}`, 'i') } } : {};
 
-    res.json({ data });
+  try {
+    const data = await Location.find(dbQuery);
+
+    res.json({ payload: data });
   } catch (error) {
     res.json({ error });
   }
