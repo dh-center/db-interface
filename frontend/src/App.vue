@@ -19,6 +19,12 @@
       >
         Persons
       </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'locations-overview'}"
+      >
+        Locations
+      </router-link>
     </header>
     <router-view />
   </div>

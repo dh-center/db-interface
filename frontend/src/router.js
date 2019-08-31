@@ -40,6 +40,17 @@ const router = new Router({
       ]
     },
     {
+      path: '/locations',
+      component: () => import('./views/locations/Overview.vue'),
+      children: [
+        {
+          path: '',
+          name: 'locations-overview',
+          component: () => import('./views/locations/OverviewTable.vue')
+        }
+      ]
+    },
+    {
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('./views/auth/SignUp.vue')
