@@ -8,26 +8,28 @@
         Approve
       </button>
     </td>
-    <td
-      v-for="(field, name) in schema"
-      :key="name"
-    >
-      {{ resultingEntity[name] && resultingEntity[name][dataLanguage] }}
+    <td>
+      {{ person.firstName }}
+    </td>
+    <td>
+      {{ person.lastName }}
+    </td>
+    <td>
+      {{ person.patronymic }}
+    </td>
+    <td>
+      {{ person.description }}
     </td>
   </tr>
 </template>
 
 <script>
   import jsonpatch from 'fast-json-patch';
-  import { mapState } from 'vuex';
+  import PersonModel from '../models/person';
 
   export default {
     name: 'ChangesTableRow',
     props: {
-      schema: {
-        type: Object,
-        required: true
-      },
       changeList: {
         type: Array,
         required: true
@@ -38,11 +40,8 @@
       }
     },
     computed: {
-      ...mapState({
-        dataLanguage: state => state.app.dataLanguage
-      }),
-      resultingEntity() {
-        return jsonpatch.applyPatch(this.entity, this.changeList).newDocument;
+      person() {
+        return new PersonModel(jsonpatch.applyPatch(this.entity, this.changeList).newDocument);
       }
     }
   };

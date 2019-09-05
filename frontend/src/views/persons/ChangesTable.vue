@@ -3,11 +3,17 @@
     <thead>
       <tr>
         <th>Actions</th>
-        <th
-          v-for="(field, name) in schema"
-          :key="name"
-        >
-          {{ $t('persons.' + name) }}
+        <th>
+          {{ $t('persons.firstName') }}
+        </th>
+        <th>
+          {{ $t('persons.lastName') }}
+        </th>
+        <th>
+          {{ $t('persons.patronymic') }}
+        </th>
+        <th>
+          {{ $t('persons.description') }}
         </th>
       </tr>
     </thead>
@@ -15,9 +21,8 @@
       <ChangesTableRow
         v-for="changeRecord in changesRecordList"
         :key="changeRecord._id"
-        :schema="schema"
         :entity="changeRecord.entity || {}"
-        :changeList="changeRecord.changeList"
+        :change-list="changeRecord.changeList"
         @onApproveButtonClicked="approve(changeRecord)"
         @onViewButtonClicked="openView(changeRecord)"
       />
@@ -27,7 +32,6 @@
 
 <script>
   import { mapState } from 'vuex';
-  import PersonModel from '../../models/person';
   import axios from 'axios';
 
   import ChangesTableRow from '../../components/ChangesTableRow';
@@ -39,13 +43,9 @@
     },
     data() {
       return {
-        schema: PersonModel.schema.fields,
         changesRecordList: []
       };
     },
-    computed: mapState({
-      dataLanguage: state => state.app.dataLanguage
-    }),
     async created() {
       this.changesRecordList = await axios.get('/changes/persons');
     },
