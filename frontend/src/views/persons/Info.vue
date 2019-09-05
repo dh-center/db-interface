@@ -1,45 +1,24 @@
 <template>
   <div class="person-info">
-    <h2
-      ref="name"
-      :contenteditable="editable"
-      data-placeholder="full person name"
-      class="person-info__name"
-    />
-    <div class="person-info__mini">
-      <div class="person-info__lifetime">
-        <h3 class="person-info__mini-header">
-          годы жизни
-        </h3>
-        <span
-          ref="birthDate"
-          data-placeholder="dd.mm.yyyy"
-          :contenteditable="editable"
-        />
-        &mdash;
-        <span
-          ref="deathDate"
-          data-placeholder="dd.mm.yyyy"
-          class="date-input"
-          :contenteditable="editable"
-        />
-      </div>
-      <div class="person-info__profession">
-        <h3 class="person-info__mini-header">
-          деятельность
-        </h3>
-        <span
-          ref="profession"
-          :contenteditable="editable"
-          data-placeholder="person's professions"
-        />
-      </div>
-    </div>
-    <div
-      ref="description"
-      :contenteditable="editable"
-      data-placeholder="person description"
-      class="person-info__description"
+    <input
+      v-model="person.firstName"
+      type="text"
+      placeholder="person first name"
+    >
+    <input
+      v-model="person.lastName"
+      type="text"
+      placeholder="person last name"
+    >
+    <input
+      v-model="person.patronymic"
+      type="text"
+      placeholder="person patronymic"
+    >
+    <textarea
+      v-model="person.description"
+      rows="20"
+      cols="50"
     />
   </div>
 </template>
@@ -53,22 +32,6 @@
         required: true
       },
       editable: Boolean
-    },
-    mounted() {
-      for (const ref in this.$refs) {
-        this.$refs[ref].addEventListener('input', event => {
-          this.person[ref] = event.target.innerText;
-        });
-      }
-
-      this.setData();
-    },
-    methods: {
-      setData() {
-        for (const ref in this.$refs) {
-          this.$refs[ref].innerText = this.person[ref];
-        }
-      }
     }
   };
 </script>

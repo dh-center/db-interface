@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import axios from 'axios';
   import PersonInfo from './Info';
   import PersonModel from '../../models/person';
@@ -29,15 +28,6 @@
         person: null
       };
     },
-    computed: mapState({
-      dataLanguage: state => state.app.dataLanguage
-    }),
-    watch: {
-      dataLanguage(newLang) {
-        this.person.language = newLang;
-        this.$refs.personInfo.setData();
-      }
-    },
     async mounted() {
       await this.fetchData();
     },
@@ -50,9 +40,9 @@
         if (changeRecordId) {
           const changeRecord = await axios.get(`/changes/persons/${changeRecordId}`);
 
-          this.person = new PersonModel(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument, this.dataLanguage);
+          this.person = new PersonModel(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument);
         } else {
-          this.person = new PersonModel(personData, this.dataLanguage);
+          this.person = new PersonModel(personData);
         }
       },
       async savePerson() {

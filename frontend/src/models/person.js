@@ -7,6 +7,28 @@ function getMultilingualString() {
   };
 }
 
+function getMultilingualDesriptor(propName) {
+  return {
+    set(value) {
+      this.data[propName][this.language] = value;
+    },
+    get() {
+      return this.data[propName][this.language];
+    }
+  };
+}
+
+function getStandardDescriptor(propName) {
+  return {
+    set(value) {
+      this.data[propName][this.language] = value;
+    },
+    get() {
+      return this.data[propName][this.language];
+    }
+  };
+}
+
 export default class Person {
   constructor(personData) {
     this.data = personData;
@@ -14,25 +36,16 @@ export default class Person {
     this.data.lastName = this.data.lastName || getMultilingualString();
     this.data.patronymic = this.data.patronymic || getMultilingualString();
     this.data.description = this.data.description || getMultilingualString();
+
+    Object.defineProperty(this, 'firstName', getMultilingualDesriptor('firstName'));
+    Object.defineProperty(this, 'lastName', getMultilingualDesriptor('lastName'));
+    Object.defineProperty(this, 'patronymic', getMultilingualDesriptor('patronymic'));
+    Object.defineProperty(this, 'description', getMultilingualDesriptor('description'));
+    Object.defineProperty(this, 'birthDate', getStandardDescriptor('birthDate'));
+    Object.defineProperty(this, 'deathDate', getStandardDescriptor('deathDate'));
   }
 
   get language() {
     return store.state.app.dataLanguage;
-  }
-
-  get name() {
-    const firstName = this.data.firstName[this.language];
-    const lastName = this.data.lastName[this.language];
-    const patronymic = this.data.patronymic[this.language];
-
-    return `${firstName} ${lastName} ${patronymic}`;
-  }
-
-  set name(value) {
-    const [firstName, lastName, ...patronymic] = value.split(' ');
-
-    this.data.firstName[this.language] = firstName;
-    this.data.lastName[this.language] = lastName;
-    this.data.patronymic[this.language] = patronymic.join(' ');
   }
 }
