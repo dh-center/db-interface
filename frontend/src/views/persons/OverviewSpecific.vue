@@ -51,7 +51,10 @@
 
         // if person was modified
         if (personData.lastChangesRecord) {
-          this.changedPerson = new PersonModel(jsonpatch.applyPatch(cloneDeep(personData), personData.lastChangesRecord.changeList).newDocument);
+          this.lastChangesRecord = personData.lastChangesRecord;
+          delete personData.lastChangesRecord;
+
+          this.changedPerson = new PersonModel(jsonpatch.applyPatch(cloneDeep(personData), this.lastChangesRecord.changeList).newDocument);
         } else {
           // if person was not modified yet
           this.changedPerson = new PersonModel(personData);
@@ -61,6 +64,7 @@
       },
 
       async savePerson() {
+        console.log(this.lastChangesRecord)
         if (this.lastChangesRecord) {
           // update existing changes record
           await axios.patch(`/changes/persons/${this.lastChangesRecord._id}`, this.changedPerson.data);

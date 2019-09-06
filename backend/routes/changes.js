@@ -41,7 +41,7 @@ router.patch('/changes/persons/:changesRecordId', async (req, res) => {
 
   changeRecord.changeList = await Person.getChangesList(changeRecord.entity, req.body);
   await changeRecord.save();
-  res.status(200);
+  res.sendStatus(200);
 });
 
 // approve changelist
