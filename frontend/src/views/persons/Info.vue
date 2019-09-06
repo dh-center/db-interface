@@ -72,8 +72,8 @@
       >Description</label>
       <textarea
         :id="$id('description')"
-        class="person-info__description"
         v-model="person.description"
+        class="person-info__description"
         :disabled="!editable"
       />
     </div>

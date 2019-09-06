@@ -64,7 +64,7 @@
       },
 
       async savePerson() {
-        console.log(this.lastChangesRecord)
+        console.log(this.lastChangesRecord);
         if (this.lastChangesRecord) {
           // update existing changes record
           await axios.patch(`/changes/persons/${this.lastChangesRecord._id}`, this.changedPerson.data);

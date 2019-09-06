@@ -19,7 +19,7 @@
       >
         Persons
       </router-link>
-      <DataLanguageSelect class="app__data-language-select"/>
+      <DataLanguageSelect class="app__data-language-select" />
     </header>
     <router-view />
   </div>

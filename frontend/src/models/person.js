@@ -1,36 +1,19 @@
 import store from '../store';
 import cloneDeep from 'lodash.clonedeep';
+import {
+  getMultilingualString,
+  getMultilingualDescriptor,
+  getStandardDescriptor
+} from '../utils';
 
-function getMultilingualString() {
-  return {
-    en: '',
-    ru: ''
-  };
-}
-
-function getMultilingualDescriptor(propName) {
-  return {
-    set(value) {
-      this.data[propName][this.language] = value;
-    },
-    get() {
-      return this.data[propName][this.language];
-    }
-  };
-}
-
-function getStandardDescriptor(propName) {
-  return {
-    set(value) {
-      this.data[propName] = value;
-    },
-    get() {
-      return this.data[propName];
-    }
-  };
-}
-
+/**
+ * Class representing person
+ */
 export default class Person {
+  /**
+   * Person constructor
+   * @param {Person} _personData
+   */
   constructor(_personData) {
     const personData = cloneDeep(_personData);
 
@@ -51,6 +34,10 @@ export default class Person {
     Object.defineProperty(this, 'deathDate', getStandardDescriptor('deathDate'));
   }
 
+  /**
+   * Current language for Person data
+   * @return {String}
+   */
   get language() {
     return store.state.app.dataLanguage;
   }

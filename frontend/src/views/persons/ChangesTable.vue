@@ -31,7 +31,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import axios from 'axios';
 
   import ChangesTableRow from '../../components/ChangesTableRow';
