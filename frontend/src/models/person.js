@@ -22,10 +22,10 @@ function getMultilingualDescriptor(propName) {
 function getStandardDescriptor(propName) {
   return {
     set(value) {
-      this.data[propName][this.language] = value;
+      this.data[propName] = value;
     },
     get() {
-      return this.data[propName][this.language];
+      return this.data[propName];
     }
   };
 }
@@ -33,8 +33,10 @@ function getStandardDescriptor(propName) {
 export default class Person {
   constructor(_personData) {
     const personData = cloneDeep(_personData);
+
     this.id = personData._id;
     delete personData._id;
+
     this.data = personData;
     this.data.firstName = this.data.firstName || getMultilingualString();
     this.data.lastName = this.data.lastName || getMultilingualString();

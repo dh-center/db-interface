@@ -1,8 +1,5 @@
 <template>
   <div class="persons-overview-specific">
-    <button @click="savePerson">
-      Save
-    </button>
     <div class="persons-overview-specific__container">
       <PersonInfo
         v-if="originalPerson"
@@ -16,6 +13,9 @@
         editable
       />
     </div>
+    <button @click="savePerson">
+      Save
+    </button>
   </div>
 </template>
 

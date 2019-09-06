@@ -1,14 +1,14 @@
 <template>
   <div class="persons-overview-create">
-    <button @click="savePerson">
-      Save
-    </button>
     <PersonInfo
       v-if="person"
       ref="personInfo"
       editable
       :person="person"
     />
+    <button @click="savePerson">
+      Save
+    </button>
   </div>
 </template>
 

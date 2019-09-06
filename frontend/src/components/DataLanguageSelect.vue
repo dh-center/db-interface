@@ -1,19 +1,25 @@
 <template>
-  <div>
-    <label for="radioButtonRu">Russian</label><input
-      id="radioButtonRu"
-      v-model="dataLanguage"
-      type="radio"
-      name="dataLang"
-      value="ru"
-    >
-    <label for="radioButtonEn">English</label><input
-      id="radioButtonEn"
-      v-model="dataLanguage"
-      type="radio"
-      name="dataLang"
-      value="en"
-    >
+  <div class="data-language-select">
+    <div>
+      <label for="radioButtonRu">ru</label>
+      <input
+        id="radioButtonRu"
+        v-model="dataLanguage"
+        type="radio"
+        name="dataLang"
+        value="ru"
+      >
+    </div>
+    <div>
+      <label for="radioButtonEn">en</label>
+      <input
+        id="radioButtonEn"
+        v-model="dataLanguage"
+        type="radio"
+        name="dataLang"
+        value="en"
+      >
+    </div>
   </div>
 </template>
 
@@ -34,3 +40,11 @@
     }
   };
 </script>
+
+<style>
+  .data-language-select {
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+  }
+</style>
