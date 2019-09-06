@@ -3,21 +3,25 @@
     <input
       v-model="person.firstName"
       type="text"
+      :disabled="!editable"
       placeholder="person first name"
     >
     <input
       v-model="person.lastName"
       type="text"
+      :disabled="!editable"
       placeholder="person last name"
     >
     <input
       v-model="person.patronymic"
       type="text"
+      :disabled="!editable"
       placeholder="person patronymic"
     >
     <textarea
       v-model="person.description"
       rows="20"
+      :disabled="!editable"
       cols="50"
     />
   </div>

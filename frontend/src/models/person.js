@@ -1,4 +1,5 @@
 import store from '../store';
+import cloneDeep from 'lodash.clonedeep';
 
 function getMultilingualString() {
   return {
@@ -7,7 +8,7 @@ function getMultilingualString() {
   };
 }
 
-function getMultilingualDesriptor(propName) {
+function getMultilingualDescriptor(propName) {
   return {
     set(value) {
       this.data[propName][this.language] = value;
@@ -30,17 +31,20 @@ function getStandardDescriptor(propName) {
 }
 
 export default class Person {
-  constructor(personData) {
+  constructor(_personData) {
+    const personData = cloneDeep(_personData);
+    this.id = personData._id;
+    delete personData._id;
     this.data = personData;
     this.data.firstName = this.data.firstName || getMultilingualString();
     this.data.lastName = this.data.lastName || getMultilingualString();
     this.data.patronymic = this.data.patronymic || getMultilingualString();
     this.data.description = this.data.description || getMultilingualString();
 
-    Object.defineProperty(this, 'firstName', getMultilingualDesriptor('firstName'));
-    Object.defineProperty(this, 'lastName', getMultilingualDesriptor('lastName'));
-    Object.defineProperty(this, 'patronymic', getMultilingualDesriptor('patronymic'));
-    Object.defineProperty(this, 'description', getMultilingualDesriptor('description'));
+    Object.defineProperty(this, 'firstName', getMultilingualDescriptor('firstName'));
+    Object.defineProperty(this, 'lastName', getMultilingualDescriptor('lastName'));
+    Object.defineProperty(this, 'patronymic', getMultilingualDescriptor('patronymic'));
+    Object.defineProperty(this, 'description', getMultilingualDescriptor('description'));
     Object.defineProperty(this, 'birthDate', getStandardDescriptor('birthDate'));
     Object.defineProperty(this, 'deathDate', getStandardDescriptor('deathDate'));
   }
