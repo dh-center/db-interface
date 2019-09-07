@@ -3,11 +3,23 @@
     <thead>
       <tr>
         <th>Actions</th>
-        <th
-          v-for="(field, name) in schema"
-          :key="name"
-        >
-          {{ $t('locations.'+name) }}
+        <th>
+          {{ $t('locations.name') }}
+        </th>
+        <th>
+          {{ $t('locations.address') }}
+        </th>
+        <th>
+          {{ $t('locations.constructionDate') }}
+        </th>
+        <th>
+          {{ $t('locations.demolitionDate') }}
+        </th>
+        <th>
+          {{ $t('locations.buildingType') }}
+        </th>
+        <th>
+          {{ $t('locations.description') }}
         </th>
       </tr>
     </thead>
@@ -18,14 +30,26 @@
       >
         <td>
           <button @click="$router.push({name:'', params: {locationId: location._id}})">
-            Edit
+            View
           </button>
         </td>
-        <td
-          v-for="(field,name) in schema"
-          :key="name"
-        >
-          {{ typeof location[name] === 'object' ? location[name][dataLanguage] : location[name] }}
+        <td>
+          {{ location.name }}
+        </td>
+        <td>
+          {{ location.address }}
+        </td>
+        <td>
+          {{ location.constructionDate }}
+        </td>
+        <td>
+          {{ location.demolitionDate }}
+        </td>
+        <td>
+          {{ location.buildingType }}
+        </td>
+        <td>
+          {{ location.description }}
         </td>
       </tr>
     </tbody>
@@ -33,7 +57,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import LocationModel from '../../models/location';
   import axios from 'axios';
 
@@ -41,15 +64,11 @@
     name: 'LocationsOverviewTable',
     data() {
       return {
-        schema: LocationModel.schema.fields,
         locationsList: []
       };
     },
-    computed: mapState({
-      dataLanguage: state => state.app.dataLanguage
-    }),
     async created() {
-      this.locationsList = await axios.get('/locations');
+      this.locationsList = (await axios.get('/locations')).map(location => new LocationModel(location));
     }
   };
 </script>

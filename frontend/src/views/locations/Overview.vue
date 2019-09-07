@@ -1,10 +1,15 @@
 <template>
   <div class="locations-overview">
-    <button @click="$router.push({name: ''})">
+    <router-link
+      class="link"
+      :to="{name: ''}"
+    >
       Add new location
-    </button>
-    <DataLanguageSelect />
-    <router-link :to="{name: ''}">
+    </router-link>
+    <router-link
+      class="link"
+      :to="{name: ''}"
+    >
       View changes
     </router-link>
     <router-view />
@@ -12,12 +17,8 @@
 </template>
 
 <script>
-  import DataLanguageSelect from '../../components/DataLanguageSelect';
 
   export default {
-    name: 'LocationsOverview',
-    components: {
-      DataLanguageSelect
-    }
+    name: 'LocationsOverview'
   };
 </script>

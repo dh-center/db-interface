@@ -1,34 +1,46 @@
-import Model from '../lib/model';
-import schemaTypes from '../lib/schema/types';
-import Schema from '../lib/schema';
+import store from '../store';
+import cloneDeep from 'lodash.clonedeep';
+import {
+  getMultilingualString,
+  getMultilingualDescriptor,
+  getStandardDescriptor
+} from '../utils';
 
 /**
- * Class representing a location's data structure
+ * Class representing location
  */
-export default class Location extends Model {
+export default class Location {
   /**
-   * Create Location model instance
-   * @param {Object} locationData - initial location data
-   * @param {String} language - initial language for location's data
+   * Location constructor
+   * @param {Location} _locationData
    */
-  constructor(locationData, language) {
-    super(Location.schema);
-    this.data = Location.schema.assign(locationData);
-    this.language = language;
+  constructor(_locationData) {
+    const locationData = cloneDeep(_locationData);
+
+    this.id = locationData._id;
+    delete locationData._id;
+
+    this.data = locationData;
+    this.data.name = this.data.name || getMultilingualString();
+    this.data.architects = this.data.architects || getMultilingualString();
+    this.data.buildingType = this.data.buildingType || getMultilingualString();
+    this.data.description = this.data.description || getMultilingualString();
+
+    Object.defineProperty(this, 'name', getMultilingualDescriptor('name'));
+    Object.defineProperty(this, 'architects', getMultilingualDescriptor('architects'));
+    Object.defineProperty(this, 'constructionDate', getStandardDescriptor('constructionDate'));
+    Object.defineProperty(this, 'demolitionDate', getStandardDescriptor('demolitionDate'));
+    Object.defineProperty(this, 'buildingType', getMultilingualDescriptor('buildingType'));
+    Object.defineProperty(this, 'description', getMultilingualDescriptor('description'));
+    Object.defineProperty(this, 'coordinateX', getStandardDescriptor('coordinateX'));
+    Object.defineProperty(this, 'coordinateY', getStandardDescriptor('coordinateY'));
   }
 
   /**
-   * Location's schema
-   * @return {Schema}
+   * Current language for Person data
+   * @return {String}
    */
-  static get schema() {
-    return new Schema({
-      name: schemaTypes.String,
-      address: schemaTypes.String,
-      constructionDate: schemaTypes.String,
-      demolitionDate: schemaTypes.String,
-      buildingType: schemaTypes.String,
-      description: schemaTypes.String
-    });
+  get language() {
+    return store.state.app.dataLanguage;
   }
 }
