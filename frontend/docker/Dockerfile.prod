@@ -16,4 +16,4 @@ RUN yarn global add http-server spa-http-server
 
 COPY --from=build-stage /frontend/dist /
 
-CMD ["http-server", "--push-state", "-c-0", "-p 8080"]
+CMD ["http-server", "--push-state", "-c-0", "-p 8080", "-i False"]
