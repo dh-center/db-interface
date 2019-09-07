@@ -2,6 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const Sentry = require('@sentry/node');
+const { ApiError } = require('./errorTypes');
+
+Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 require('express-async-errors');
 
@@ -18,6 +22,7 @@ require('./modules/db');
 /**
  * Setup necessary middlewares
  */
+app.use(Sentry.Handlers.requestHandler());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('./middlewares/auth'));
@@ -36,6 +41,15 @@ app.use(function (req, res, next) {
  * Setup routes
  */
 app.use(require('./router'));
+
+/**
+ * Setup sentry error handler
+ */
+app.use(Sentry.Handlers.errorHandler({
+  shouldHandleError(error) {
+    return !(error instanceof ApiError);
+  }
+}));
 
 /**
  * Setup error handler
