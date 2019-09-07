@@ -3,23 +3,11 @@
     <thead>
       <tr>
         <th>Actions</th>
-        <th>
-          {{ $t('locations.name') }}
-        </th>
-        <th>
-          {{ $t('locations.address') }}
-        </th>
-        <th>
-          {{ $t('locations.constructionDate') }}
-        </th>
-        <th>
-          {{ $t('locations.demolitionDate') }}
-        </th>
-        <th>
-          {{ $t('locations.buildingType') }}
-        </th>
-        <th>
-          {{ $t('locations.description') }}
+        <th
+          v-for="(fieldName, index) in model.fields"
+          :key="index"
+        >
+          {{ $t(`${model.entityType}.${fieldName}`) }}
         </th>
       </tr>
     </thead>
@@ -33,23 +21,11 @@
             View
           </button>
         </td>
-        <td>
-          {{ entity.name }}
-        </td>
-        <td>
-          {{ entity.address }}
-        </td>
-        <td>
-          {{ entity.constructionDate }}
-        </td>
-        <td>
-          {{ entity.demolitionDate }}
-        </td>
-        <td>
-          {{ entity.buildingType }}
-        </td>
-        <td>
-          {{ entity.description }}
+        <td
+          v-for="(fieldName, index) in model.fields"
+          :key="index"
+        >
+          {{ entity[fieldName] }}
         </td>
       </tr>
     </tbody>

@@ -1,21 +1,21 @@
 <template>
-  <div class="locations-overview-specific">
-    <div class="locations-overview-specific__container">
+  <div class="entities-overview-specific">
+    <div class="entities-overview-specific__container">
       <component
         :is="infoComponent"
-        v-if="originalLocation"
-        ref="originalLocationInfo"
-        :entity="originalLocation"
+        v-if="originalEntity"
+        ref="originalEntityInfo"
+        :entity="originalEntity"
       />
       <component
         :is="infoComponent"
-        v-if="changedLocation"
-        ref="changedLocationInfo"
-        :entity="changedLocation"
+        v-if="changedEntity"
+        ref="changedEntityInfo"
+        :entity="changedEntity"
         editable
       />
     </div>
-    <button @click="saveLocation">
+    <button @click="saveEntity">
       Save
     </button>
   </div>
@@ -38,9 +38,9 @@
     },
     data() {
       return {
-        originalLocation: null, // location data before modification
+        originalEntity: null, // entity data before modification
         lastChangesRecord: null,
-        changedLocation: null,
+        changedEntity: null,
         infoComponent: null
       };
     },
@@ -51,33 +51,33 @@
       async fetchData() {
         this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
 
-        const locationData = await axios.get(`/${this.model.entityType}/${this.$route.params.entityId}`, {
+        const entityData = await axios.get(`/${this.model.entityType}/${this.$route.params.entityId}`, {
           params: {
             withLastChanges: true
           }
         });
 
-        // If location was modified
-        if (locationData.lastChangesRecord) {
-          this.lastChangesRecord = locationData.lastChangesRecord;
-          delete locationData.lastChangesRecord;
+        // If entity was modified
+        if (entityData.lastChangesRecord) {
+          this.lastChangesRecord = entityData.lastChangesRecord;
+          delete entityData.lastChangesRecord;
 
-          this.changedLocation = new this.model(jsonpatch.applyPatch(cloneDeep(locationData), this.lastChangesRecord.changeList).newDocument);
+          this.changedEntity = new this.model(jsonpatch.applyPatch(cloneDeep(entityData), this.lastChangesRecord.changeList).newDocument);
         } else {
-          // If location was not modified yet
-          this.changedLocation = new this.model(locationData);
+          // If entity was not modified yet
+          this.changedEntity = new this.model(entityData);
         }
 
-        this.originalLocation = new this.model(locationData);
+        this.originalEntity = new this.model(entityData);
       },
 
-      async saveLocation() {
+      async saveEntity() {
         if (this.lastChangesRecord) {
           // Update existing changes record
-          await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedLocation.data);
+          await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
         } else {
           // Create new changes record
-          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedLocation.data);
+          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
         }
       }
     }
@@ -85,7 +85,7 @@
 </script>
 
 <style>
-  .locations-overview-specific {
+  .entities-overview-specific {
     &__container {
       display: flex;
     }

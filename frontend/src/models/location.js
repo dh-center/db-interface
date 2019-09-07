@@ -51,4 +51,12 @@ export default class Location {
   static get entityType() {
     return 'locations';
   }
+
+  /**
+   * Return entity fields
+   * @return {Array}
+   */
+  static get fields() {
+    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'buildingType', 'description', 'coordinateX', 'coordinateY'];
+  }
 }

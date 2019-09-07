@@ -1,5 +1,5 @@
 <template>
-  <div class="locations-overview">
+  <div class="entities-overview">
     <router-link
       class="link"
       :to="{name: `${entityName}-create`}"
@@ -21,7 +21,7 @@
   import LocationModel from '../../models/location';
 
   export default {
-    name: 'LocationsOverview',
+    name: 'EntitiesOverview',
     props: {
       entityName: {
         type: String,
