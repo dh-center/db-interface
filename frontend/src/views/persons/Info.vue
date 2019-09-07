@@ -7,7 +7,7 @@
       >First name</label>
       <input
         :id="$id('firstName')"
-        v-model="person.firstName"
+        v-model="entity.firstName"
         type="text"
         :disabled="!editable"
         placeholder="person first name"
@@ -20,7 +20,7 @@
       >Last name</label>
       <input
         :id="$id('lastName')"
-        v-model="person.lastName"
+        v-model="entity.lastName"
         type="text"
         :disabled="!editable"
         placeholder="person last name"
@@ -33,7 +33,7 @@
       >Patronymic</label>
       <input
         :id="$id('patronymic')"
-        v-model="person.patronymic"
+        v-model="entity.patronymic"
         type="text"
         :disabled="!editable"
         placeholder="person patronymic"
@@ -46,7 +46,7 @@
       >Birth date</label>
       <input
         :id="$id('birthDate')"
-        v-model="person.birthDate"
+        v-model="entity.birthDate"
         type="text"
         :disabled="!editable"
         placeholder="person birth date"
@@ -59,7 +59,7 @@
       >Birth date</label>
       <input
         :id="$id('deathDate')"
-        v-model="person.deathDate"
+        v-model="entity.deathDate"
         type="text"
         :disabled="!editable"
         placeholder="person death date"
@@ -72,7 +72,7 @@
       >Description</label>
       <textarea
         :id="$id('description')"
-        v-model="person.description"
+        v-model="entity.description"
         class="person-info__description"
         :disabled="!editable"
       />
@@ -84,7 +84,7 @@
   export default {
     name: 'PersonsInfo',
     props: {
-      person: {
+      entity: {
         type: Object,
         required: true
       },

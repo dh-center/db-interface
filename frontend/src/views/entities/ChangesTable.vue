@@ -4,16 +4,22 @@
       <tr>
         <th>Actions</th>
         <th>
-          {{ $t('persons.firstName') }}
+          {{ $t('locations.name') }}
         </th>
         <th>
-          {{ $t('persons.lastName') }}
+          {{ $t('locations.address') }}
         </th>
         <th>
-          {{ $t('persons.patronymic') }}
+          {{ $t('locations.constructionDate') }}
         </th>
         <th>
-          {{ $t('persons.description') }}
+          {{ $t('locations.demolitionDate') }}
+        </th>
+        <th>
+          {{ $t('locations.buildingType') }}
+        </th>
+        <th>
+          {{ $t('locations.description') }}
         </th>
       </tr>
     </thead>
@@ -46,19 +52,19 @@
       };
     },
     async created() {
-      this.changesRecordList = await axios.get('/changes/persons');
+      this.changesRecordList = await axios.get('/changes/locations');
     },
     methods: {
       async approve(changeRecord) {
-        await axios.put(`/changes/persons/${changeRecord._id}/approval`);
+        await axios.put(`/changes/locations/${changeRecord._id}/approval`);
         this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
       },
 
       openView(changeRecord) {
         if (changeRecord.entity) {
-          this.$router.push({ name: 'persons-overview-specific', params: { personId: changeRecord.entity._id } });
+          this.$router.push({ name: 'locations-overview-specific', params: { locationId: changeRecord.entity._id } });
         } else {
-          this.$router.push({ name: 'persons-create', params: { changeRecordId: changeRecord._id } });
+          this.$router.push({ name: 'locations-create', params: { changeRecordId: changeRecord._id } });
         }
       }
     }

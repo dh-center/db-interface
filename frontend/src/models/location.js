@@ -43,4 +43,12 @@ export default class Location {
   get language() {
     return store.state.app.dataLanguage;
   }
+
+  /**
+   * Return entity name
+   * @return {String}
+   */
+  static get entityType() {
+    return 'locations';
+  }
 }

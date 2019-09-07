@@ -14,7 +14,7 @@
 
 <script>
   import axios from 'axios';
-  import LocationInfo from './Info';
+  import LocationInfo from '../persons/Info';
   import LocationModel from '../../models/location';
   import jsonpatch from 'fast-json-patch';
 
@@ -22,6 +22,12 @@
     name: 'LocationsOverviewSpecific',
     components: {
       LocationInfo
+    },
+    props: {
+      model: {
+        type: Function,
+        required: true
+      }
     },
     data() {
       return {

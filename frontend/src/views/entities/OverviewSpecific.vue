@@ -1,15 +1,17 @@
 <template>
   <div class="locations-overview-specific">
     <div class="locations-overview-specific__container">
-      <LocationInfo
+      <component
+        :is="infoComponent"
         v-if="originalLocation"
         ref="originalLocationInfo"
-        :location="originalLocation"
+        :entity="originalLocation"
       />
-      <LocationInfo
+      <component
+        :is="infoComponent"
         v-if="changedLocation"
         ref="changedLocationInfo"
-        :location="changedLocation"
+        :entity="changedLocation"
         editable
       />
     </div>
@@ -20,22 +22,26 @@
 </template>
 
 <script>
+  /* eslint-disable new-cap */
+
   import axios from 'axios';
-  import LocationInfo from './Info';
-  import LocationModel from '../../models/location';
   import jsonpatch from 'fast-json-patch';
   import cloneDeep from 'lodash.clonedeep';
 
   export default {
-    name: 'LocationsOverviewSpecific',
-    components: {
-      LocationInfo
+    name: 'EntitiesOverviewSpecific',
+    props: {
+      model: {
+        type: Function,
+        required: true
+      }
     },
     data() {
       return {
         originalLocation: null, // location data before modification
         lastChangesRecord: null,
-        changedLocation: null
+        changedLocation: null,
+        infoComponent: null
       };
     },
     async mounted() {
@@ -43,7 +49,9 @@
     },
     methods: {
       async fetchData() {
-        const locationData = await axios.get(`/locations/${this.$route.params.locationId}`, {
+        this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
+
+        const locationData = await axios.get(`/${this.model.entityType}/${this.$route.params.entityId}`, {
           params: {
             withLastChanges: true
           }
@@ -54,22 +62,22 @@
           this.lastChangesRecord = locationData.lastChangesRecord;
           delete locationData.lastChangesRecord;
 
-          this.changedLocation = new LocationModel(jsonpatch.applyPatch(cloneDeep(locationData), this.lastChangesRecord.changeList).newDocument);
+          this.changedLocation = new this.model(jsonpatch.applyPatch(cloneDeep(locationData), this.lastChangesRecord.changeList).newDocument);
         } else {
           // If location was not modified yet
-          this.changedLocation = new LocationModel(locationData);
+          this.changedLocation = new this.model(locationData);
         }
 
-        this.originalLocation = new LocationModel(locationData);
+        this.originalLocation = new this.model(locationData);
       },
 
       async saveLocation() {
         if (this.lastChangesRecord) {
           // Update existing changes record
-          await axios.patch(`/changes/locations/${this.lastChangesRecord._id}`, this.changedLocation.data);
+          await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedLocation.data);
         } else {
           // Create new changes record
-          this.lastChangesRecord = await axios.post(`/changes/locations/${this.lastChangesRecord._id}`, this.changedLocation.data);
+          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedLocation.data);
         }
       }
     }

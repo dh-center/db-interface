@@ -41,4 +41,12 @@ export default class Person {
   get language() {
     return store.state.app.dataLanguage;
   }
+
+  /**
+   * Return entity name
+   * @return {String}
+   */
+  static get entityType() {
+    return 'persons';
+  }
 }

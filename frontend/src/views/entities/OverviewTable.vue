@@ -25,31 +25,31 @@
     </thead>
     <tbody>
       <tr
-        v-for="location in locationsList"
-        :key="location._id"
+        v-for="entity in entitiesList"
+        :key="entity._id"
       >
         <td>
-          <button @click="$router.push({name:'locations-overview-specific', params: {locationId: location.id}})">
+          <button @click="$router.push({name:`${model.entityType}-overview-specific`, params: {entityId: entity.id}})">
             View
           </button>
         </td>
         <td>
-          {{ location.name }}
+          {{ entity.name }}
         </td>
         <td>
-          {{ location.address }}
+          {{ entity.address }}
         </td>
         <td>
-          {{ location.constructionDate }}
+          {{ entity.constructionDate }}
         </td>
         <td>
-          {{ location.demolitionDate }}
+          {{ entity.demolitionDate }}
         </td>
         <td>
-          {{ location.buildingType }}
+          {{ entity.buildingType }}
         </td>
         <td>
-          {{ location.description }}
+          {{ entity.description }}
         </td>
       </tr>
     </tbody>
@@ -57,18 +57,24 @@
 </template>
 
 <script>
-  import LocationModel from '../../models/location';
   import axios from 'axios';
 
   export default {
-    name: 'LocationsOverviewTable',
+    name: 'EntitiesOverviewTable',
+    props: {
+      model: {
+        type: Function,
+        required: true
+      }
+    },
     data() {
       return {
-        locationsList: []
+        entitiesList: []
       };
     },
     async created() {
-      this.locationsList = (await axios.get('/locations')).map(location => new LocationModel(location));
+      // eslint-disable-next-line new-cap
+      this.entitiesList = (await axios.get(`/${this.model.entityType}`)).map(entity => new this.model(entity));
     }
   };
 </script>
