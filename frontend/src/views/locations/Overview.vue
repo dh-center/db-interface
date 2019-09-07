@@ -2,7 +2,7 @@
   <div class="locations-overview">
     <router-link
       class="link"
-      :to="{name: ''}"
+      :to="{name: 'locations-create'}"
     >
       Add new location
     </router-link>

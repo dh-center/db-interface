@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const Person = require('./models/person');
+const Location = require('./models/location');
 
 /**
  * Auth routes
@@ -34,8 +36,9 @@ router.use(relationsRoutes);
 /**
  * Changes routes
  */
-const changesRoutes = require('./routes/changes');
+const changesFactory = require('./routes/changes');
 
-router.use(changesRoutes);
+router.use(changesFactory('persons', Person));
+router.use(changesFactory('locations', Location));
 
 module.exports = router;

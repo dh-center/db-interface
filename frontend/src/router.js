@@ -49,6 +49,11 @@ const router = new Router({
           component: () => import('./views/locations/OverviewTable.vue')
         },
         {
+          path: 'create/:changeRecordId?',
+          name: 'locations-create',
+          component: () => import('./views/locations/Create.vue')
+        },
+        {
           path: ':locationId/edit',
           name: 'locations-overview-specific',
           component: () => import('./views/locations/OverviewSpecific.vue')
