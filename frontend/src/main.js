@@ -4,6 +4,9 @@ import router from './router';
 import store from './store';
 import i18n from './localization/i18next';
 import './httpClient';
+import UniqueId from 'vue-unique-id';
+
+Vue.use(UniqueId);
 
 Vue.config.productionTip = false;
 

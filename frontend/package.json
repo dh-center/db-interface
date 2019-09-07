@@ -15,10 +15,12 @@
     "fast-json-patch": "^2.2.1",
     "i18next": "^17.0.12",
     "i18next-browser-languagedetector": "^3.0.3",
+    "lodash.clonedeep": "^4.5.0",
     "postcss-nested": "^4.1.2",
     "vue": "^2.6.10",
     "vue-router": "^3.1.2",
     "vue-template-compiler": "^2.6.10",
+    "vue-unique-id": "^2.0.0",
     "vuejs-auto-complete": "^0.9.0",
     "vuex": "^3.1.1",
     "vuex-persistedstate": "^2.5.4"

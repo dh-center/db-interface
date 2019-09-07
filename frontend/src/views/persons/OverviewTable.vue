@@ -3,11 +3,17 @@
     <thead>
       <tr>
         <th>Actions</th>
-        <th
-          v-for="(field, name) in schema"
-          :key="name"
-        >
-          {{ $t('persons.' + name) }}
+        <th>
+          {{ $t('persons.firstName') }}
+        </th>
+        <th>
+          {{ $t('persons.lastName') }}
+        </th>
+        <th>
+          {{ $t('persons.patronymic') }}
+        </th>
+        <th>
+          {{ $t('persons.description') }}
         </th>
       </tr>
     </thead>
@@ -17,15 +23,21 @@
         :key="person._id"
       >
         <td>
-          <button @click="$router.push({name: 'persons-edit', params: {personId: person._id}})">
-            Edit
+          <button @click="$router.push({name: 'persons-overview-specific', params: {personId: person.id}})">
+            View
           </button>
         </td>
-        <td
-          v-for="(field, name) in schema"
-          :key="name"
-        >
-          {{ person[name] && person[name][dataLanguage] }}
+        <td>
+          {{ person.firstName }}
+        </td>
+        <td>
+          {{ person.lastName }}
+        </td>
+        <td>
+          {{ person.patronymic }}
+        </td>
+        <td>
+          {{ person.description }}
         </td>
       </tr>
     </tbody>
@@ -33,7 +45,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import PersonModel from '../../models/person';
   import axios from 'axios';
 
@@ -41,15 +52,11 @@
     name: 'PersonsOverviewTable',
     data() {
       return {
-        schema: PersonModel.schema.fields,
         personsList: []
       };
     },
-    computed: mapState({
-      dataLanguage: state => state.app.dataLanguage
-    }),
     async created() {
-      this.personsList = await axios.get('/persons');
+      this.personsList = (await axios.get('/persons')).map(person => new PersonModel(person));
     }
   };
 </script>

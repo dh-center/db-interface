@@ -1,59 +1,44 @@
-import Model from '../lib/model';
-import schemaTypes from '../lib/schema/types';
-import Schema from '../lib/schema';
+import store from '../store';
+import cloneDeep from 'lodash.clonedeep';
+import {
+  getMultilingualString,
+  getMultilingualDescriptor,
+  getStandardDescriptor
+} from '../utils';
 
 /**
- * Class representing a person's data structure
+ * Class representing person
  */
-export default class Person extends Model {
+export default class Person {
   /**
-   * Create Person model instance
-   * @param {Object} personData - initial person data
-   * @param {String} language - initial language for person's data
+   * Person constructor
+   * @param {Person} _personData
    */
-  constructor(personData, language) {
-    super(Person.schema);
-    this.data = Person.schema.assign(personData);
-    this.language = language;
+  constructor(_personData) {
+    const personData = cloneDeep(_personData);
+
+    this.id = personData._id;
+    delete personData._id;
+
+    this.data = personData;
+    this.data.firstName = this.data.firstName || getMultilingualString();
+    this.data.lastName = this.data.lastName || getMultilingualString();
+    this.data.patronymic = this.data.patronymic || getMultilingualString();
+    this.data.description = this.data.description || getMultilingualString();
+
+    Object.defineProperty(this, 'firstName', getMultilingualDescriptor('firstName'));
+    Object.defineProperty(this, 'lastName', getMultilingualDescriptor('lastName'));
+    Object.defineProperty(this, 'patronymic', getMultilingualDescriptor('patronymic'));
+    Object.defineProperty(this, 'description', getMultilingualDescriptor('description'));
+    Object.defineProperty(this, 'birthDate', getStandardDescriptor('birthDate'));
+    Object.defineProperty(this, 'deathDate', getStandardDescriptor('deathDate'));
   }
 
   /**
-   * Persons schema
-   * @return {Schema}
+   * Current language for Person data
+   * @return {String}
    */
-  static get schema() {
-    return new Schema({
-      firstName: schemaTypes.MultilingualString,
-      lastName: schemaTypes.MultilingualString,
-      patronymic: schemaTypes.MultilingualString,
-      description: schemaTypes.MultilingualString,
-      profession: schemaTypes.MultilingualString,
-      birthDate: schemaTypes.String,
-      deathDate: schemaTypes.String
-    });
-  }
-
-  /**
-   * Returns full user name
-   * @return {string}
-   */
-  get name() {
-    const firstName = this.firstName;
-    const lastName = this.lastName;
-    const patronymic = this.patronymic;
-
-    return `${firstName} ${lastName} ${patronymic}`.trim();
-  }
-
-  /**
-   * Sets full user name
-   * @param {String} value - new name
-   */
-  set name(value) {
-    const [firstName, lastName, ...patronymic] = value.split(' ');
-
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.patronymic = patronymic.join(' ');
+  get language() {
+    return store.state.app.dataLanguage;
   }
 }
