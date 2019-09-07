@@ -29,7 +29,7 @@
         :key="location._id"
       >
         <td>
-          <button @click="$router.push({name:'', params: {locationId: location._id}})">
+          <button @click="$router.push({name:'locations-overview-specific', params: {locationId: location.id}})">
             View
           </button>
         </td>

@@ -47,6 +47,11 @@ const router = new Router({
           path: '',
           name: 'locations-overview',
           component: () => import('./views/locations/OverviewTable.vue')
+        },
+        {
+          path: ':locationId/edit',
+          name: 'locations-overview-specific',
+          component: () => import('./views/locations/OverviewSpecific.vue')
         }
       ]
     },
