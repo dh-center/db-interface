@@ -9,7 +9,7 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home/',
+      path: '/home',
       name: 'home',
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
     },
@@ -48,6 +48,10 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/auth/Login.vue')
+    },
+    {
+      path: '*',
+      redirect: '/home'
     }
   ]
 });
