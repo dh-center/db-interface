@@ -12,8 +12,6 @@
     "@vue/cli-service": "^3.11.0",
     "axios": "^0.19.0",
     "babel-eslint": "^10.0.2",
-    "eslint": "^6.2.1",
-    "eslint-config-codex": "github:codex-team/eslint-config",
     "fast-json-patch": "^2.2.1",
     "i18next": "^17.0.12",
     "i18next-browser-languagedetector": "^3.0.3",
