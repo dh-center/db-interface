@@ -6,7 +6,7 @@
       </label>
       <input
         :id="$id('name')"
-        v-model="location.name"
+        v-model="entity.name"
         type="text"
         :disabled="!editable"
         :placeholder="$t('locations.name')"
@@ -18,7 +18,7 @@
       </label>
       <input
         :id="$id('constructionDate')"
-        v-model="location.constructionDate"
+        v-model="entity.constructionDate"
         type="text"
         :disabled="!editable"
         :placeholder="$t('locations.constructionDate')"
@@ -30,7 +30,7 @@
       </label>
       <input
         :id="$id('demolitionDate')"
-        v-model="location.demolitionDate"
+        v-model="entity.demolitionDate"
         type="text"
         :disabled="!editable"
         :placeholder="$t('locations.demolitionDate')"
@@ -42,7 +42,7 @@
       </label>
       <input
         :id="$id('buildingType')"
-        v-model="location.buildingType"
+        v-model="entity.buildingType"
         type="text"
         :disabled="!editable"
         :placeholder="$t('locations.buildingType')"
@@ -54,7 +54,7 @@
       </label>
       <textarea
         :id="$id('description')"
-        v-model="location.description"
+        v-model="entity.description"
         class="location-info__description"
         :disabled="!editable"
         :placeholder="$t('locations.description')"
@@ -67,7 +67,7 @@
   export default {
     name: 'LocationsInfo',
     props: {
-      location: {
+      entity: {
         type: Object,
         required: true
       },
