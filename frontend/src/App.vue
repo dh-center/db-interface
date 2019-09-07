@@ -9,7 +9,7 @@
     >
       <router-link
         class="app__header-link"
-        to="/"
+        :to="{name: 'home'}"
       >
         Home
       </router-link>
@@ -20,11 +20,12 @@
         Persons
       </router-link>
       <router-link
-        class="app__header-link"
-        :to="{name: 'locations-overview'}"
-      >
-        Locations
-      </router-link>
+      class="app__header-link"
+      :to="{name: 'locations-overview'}"
+    >
+      Locations
+    </router-link>
+      <DataLanguageSelect class="app__data-language-select" />
     </header>
     <router-view />
   </div>
@@ -32,9 +33,13 @@
 
 <script>
   import axios from 'axios';
+  import DataLanguageSelect from './components/DataLanguageSelect';
 
   export default {
     name: 'App',
+    components: {
+      DataLanguageSelect
+    },
     created() {
       if (this.$store.state.auth.accessToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.state.auth.accessToken}`;
@@ -70,6 +75,14 @@
       color: blue;
       margin-left: 20px;
       text-decoration: none;
+    }
+
+    &__data-language-select {
+      margin-left: auto;
+    }
+
+    .router-link-active {
+      text-decoration: underline;
     }
   }
 </style>

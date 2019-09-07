@@ -1,10 +1,15 @@
 <template>
   <div class="persons-overview">
-    <button @click="$router.push({name: 'persons-create'})">
+    <router-link
+      class="link"
+      :to="{name: 'persons-create'}"
+    >
       Add new person
-    </button>
-    <DataLanguageSelect />
-    <router-link :to="{name: 'persons-changes'}">
+    </router-link>
+    <router-link
+      class="link"
+      :to="{name: 'persons-changes'}"
+    >
       View changes
     </router-link>
     <router-view />
@@ -12,12 +17,8 @@
 </template>
 
 <script>
-  import DataLanguageSelect from '../../components/DataLanguageSelect';
 
   export default {
-    name: 'PersonsOverview',
-    components: {
-      DataLanguageSelect
-    }
+    name: 'PersonsOverview'
   };
 </script>

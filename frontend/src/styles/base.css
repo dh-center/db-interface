@@ -12,3 +12,10 @@ body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+.link {
+  display: inline-block;
+  padding: 3px 6px;
+  color: blue;
+  text-decoration: none;
+}

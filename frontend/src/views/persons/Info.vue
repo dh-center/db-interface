@@ -1,46 +1,82 @@
 <template>
   <div class="person-info">
-    <h2
-      ref="name"
-      contenteditable
-      data-placeholder="full person name"
-      class="person-info__name"
-    />
-    <div class="person-info__mini">
-      <div class="person-info__lifetime">
-        <h3 class="person-info__mini-header">
-          годы жизни
-        </h3>
-        <span
-          ref="birthDate"
-          data-placeholder="dd.mm.yyyy"
-          contenteditable
-        />
-        &mdash;
-        <span
-          ref="deathDate"
-          data-placeholder="dd.mm.yyyy"
-          class="date-input"
-          contenteditable
-        />
-      </div>
-      <div class="person-info__profession">
-        <h3 class="person-info__mini-header">
-          деятельность
-        </h3>
-        <span
-          ref="profession"
-          contenteditable
-          data-placeholder="person's professions"
-        />
-      </div>
+    <div class="person-info__section">
+      <label
+        class="person-info__label"
+        :for="$id('firstName')"
+      >First name</label>
+      <input
+        :id="$id('firstName')"
+        v-model="person.firstName"
+        type="text"
+        :disabled="!editable"
+        placeholder="person first name"
+      >
     </div>
-    <div
-      ref="description"
-      contenteditable
-      data-placeholder="person description"
-      class="person-info__description"
-    />
+    <div class="person-info__section">
+      <label
+        class="person-info__label"
+        :for="$id('lastName')"
+      >Last name</label>
+      <input
+        :id="$id('lastName')"
+        v-model="person.lastName"
+        type="text"
+        :disabled="!editable"
+        placeholder="person last name"
+      >
+    </div>
+    <div class="person-info__section">
+      <label
+        class="person-info__label"
+        :for="$id('patronymic')"
+      >Patronymic</label>
+      <input
+        :id="$id('patronymic')"
+        v-model="person.patronymic"
+        type="text"
+        :disabled="!editable"
+        placeholder="person patronymic"
+      >
+    </div>
+    <div class="person-info__section">
+      <label
+        class="person-info__label"
+        :for="$id('birthDate')"
+      >Birth date</label>
+      <input
+        :id="$id('birthDate')"
+        v-model="person.birthDate"
+        type="text"
+        :disabled="!editable"
+        placeholder="person birth date"
+      >
+    </div>
+    <div class="person-info__section">
+      <label
+        class="person-info__label"
+        :for="$id('deathDate')"
+      >Birth date</label>
+      <input
+        :id="$id('deathDate')"
+        v-model="person.deathDate"
+        type="text"
+        :disabled="!editable"
+        placeholder="person death date"
+      >
+    </div>
+    <div class="person-info__section">
+      <label
+        class="person-info__label"
+        :for="$id('description')"
+      >Description</label>
+      <textarea
+        :id="$id('description')"
+        v-model="person.description"
+        class="person-info__description"
+        :disabled="!editable"
+      />
+    </div>
   </div>
 </template>
 
@@ -51,84 +87,28 @@
       person: {
         type: Object,
         required: true
-      }
-    },
-    mounted() {
-      for (const ref in this.$refs) {
-        this.$refs[ref].addEventListener('input', event => {
-          this.person[ref] = event.target.innerText;
-        });
-      }
-
-      this.setData();
-    },
-    methods: {
-      setData() {
-        for (const ref in this.$refs) {
-          this.$refs[ref].innerText = this.person[ref];
-        }
-      }
+      },
+      editable: Boolean
     }
   };
 </script>
 
 <style>
   .person-info {
-    max-width: 450px;
     display: flex;
     flex-direction: column;
-    margin: auto;
+    width: 400px;
 
-    &__name {
-      font-family: 'Oranienbaum', serif;
-      font-size: 24px;
-      line-height: 28px;
-      margin-bottom: 10px;
-      color: #2d2d2d;
-    }
-
-    &__mini {
+    &__section {
+      width: 100%;
       display: flex;
-      flex-wrap: wrap;
-      border-bottom: 1px solid rgba(0, 0, 0, .2);
-    }
+      flex-direction: column;
 
-    &__mini-header {
-      font-family: 'Roboto', sans-serif;
-      font-size: 8px;
-      line-height: 9px;
-      display: block;
-      margin-bottom: 8px;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: #000;
-    }
-
-    &__lifetime,
-    &__profession {
-      flex-basis: 50%;
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 16px;
-      padding-left: 20px;
-      margin-bottom: 0;
-      color: #000;
-    }
-
-    &__lifetime {
-      padding-left: 0;
-      border-right: 1px solid rgba(0, 0, 0, .2);
+      margin: auto auto 10px;
     }
 
     &__description {
-      margin-top: 20px;
+      height: 400px;
     }
-  }
-
-  [contenteditable=true]:empty::before {
-    content: attr(data-placeholder);
-    opacity: 0.5;
-    display: inline;
   }
 </style>

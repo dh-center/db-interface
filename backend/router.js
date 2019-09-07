@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 /**
+ * Auth routes
+ */
+const signUpRoute = require('./routes/auth/sign-up');
+const loginRoute = require('./routes/auth/login');
+
+router.use(signUpRoute);
+router.use(loginRoute);
+
+/**
  * Persons routes
  */
 const personsRoutes = require('./routes/persons');
@@ -23,12 +32,10 @@ const relationsRoutes = require('./routes/relations');
 router.use(relationsRoutes);
 
 /**
- * Auth routes
+ * Changes routes
  */
-const signUpRoute = require('./routes/auth/sign-up');
-const loginRoute = require('./routes/auth/login');
+const changesRoutes = require('./routes/changes');
 
-router.use(signUpRoute);
-router.use(loginRoute);
+router.use(changesRoutes);
 
 module.exports = router;

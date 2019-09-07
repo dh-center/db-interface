@@ -15,7 +15,7 @@ const changeSchema = new Schema({
     type: Schema.Types.ObjectId,
     refPath: 'entityType'
   },
-  changes: {
+  changeList: {
     required: true,
     type: Schema.Types.Mixed
   }

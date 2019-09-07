@@ -9,8 +9,8 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'form',
+      path: '/home',
+      name: 'home',
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
     },
     {
@@ -28,13 +28,13 @@ const router = new Router({
           component: () => import('./views/persons/ChangesTable.vue')
         },
         {
-          path: 'create',
+          path: 'create/:changeRecordId?',
           name: 'persons-create',
-          component: () => import('./views/persons/OverviewSpecific.vue')
+          component: () => import('./views/persons/Create.vue')
         },
         {
           path: ':personId/edit',
-          name: 'persons-edit',
+          name: 'persons-overview-specific',
           component: () => import('./views/persons/OverviewSpecific.vue')
         }
       ]
@@ -59,6 +59,10 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/auth/Login.vue')
+    },
+    {
+      path: '*',
+      redirect: '/home'
     }
   ]
 });
