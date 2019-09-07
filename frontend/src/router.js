@@ -47,6 +47,11 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+/**
+ * Generate routes for entities by name
+ * @param {String} name - entities name
+ * @return {Object}
+ */
 function generateRoutes(name) {
   return {
     path: `/${name}`,

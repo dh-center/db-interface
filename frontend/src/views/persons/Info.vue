@@ -1,8 +1,8 @@
 <template>
-  <div class="person-info">
-    <div class="person-info__section">
+  <div class="entity-info">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('firstName')"
       >First name</label>
       <input
@@ -13,9 +13,9 @@
         placeholder="person first name"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('lastName')"
       >Last name</label>
       <input
@@ -26,9 +26,9 @@
         placeholder="person last name"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('patronymic')"
       >Patronymic</label>
       <input
@@ -39,9 +39,9 @@
         placeholder="person patronymic"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('birthDate')"
       >Birth date</label>
       <input
@@ -52,9 +52,9 @@
         placeholder="person birth date"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('deathDate')"
       >Birth date</label>
       <input
@@ -65,15 +65,15 @@
         placeholder="person death date"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('description')"
       >Description</label>
       <textarea
         :id="$id('description')"
         v-model="entity.description"
-        class="person-info__description"
+        class="entity-info__description"
         :disabled="!editable"
       />
     </div>
@@ -93,22 +93,4 @@
   };
 </script>
 
-<style>
-  .person-info {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-
-    &__section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-
-      margin: auto auto 10px;
-    }
-
-    &__description {
-      height: 400px;
-    }
-  }
-</style>
+<style src="../../styles/entity-info.css"></style>

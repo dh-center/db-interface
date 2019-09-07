@@ -1,6 +1,6 @@
 <template>
-  <div class="location-info">
-    <div class="location-info__section">
+  <div class="entity-info">
+    <div class="entity-info__section">
       <label :for="$id('name')">
         {{ $t('locations.name') }}
       </label>
@@ -12,7 +12,7 @@
         :placeholder="$t('locations.name')"
       >
     </div>
-    <div class="location-info__section">
+    <div class="entity-info__section">
       <label :for="$id('constructionDate')">
         {{ $t('locations.constructionDate') }}
       </label>
@@ -24,7 +24,7 @@
         :placeholder="$t('locations.constructionDate')"
       >
     </div>
-    <div class="location-info__section">
+    <div class="entity-info__section">
       <label :for="$id('demolitionDate')">
         {{ $t('locations.demolitionDate') }}
       </label>
@@ -36,7 +36,7 @@
         :placeholder="$t('locations.demolitionDate')"
       >
     </div>
-    <div class="location-info__section">
+    <div class="entity-info__section">
       <label :for="$id('buildingType')">
         {{ $t('locations.buildingType') }}
       </label>
@@ -48,14 +48,14 @@
         :placeholder="$t('locations.buildingType')"
       >
     </div>
-    <div class="location-info__section">
+    <div class="entity-info__section">
       <label :for="$id('description')">
         {{ $t('locations.description') }}
       </label>
       <textarea
         :id="$id('description')"
         v-model="entity.description"
-        class="location-info__description"
+        class="entity-info__description"
         :disabled="!editable"
         :placeholder="$t('locations.description')"
       />
@@ -76,22 +76,4 @@
   };
 </script>
 
-<style>
-  .location-info {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-
-    &__section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-
-      margin: auto auto 10px;
-    }
-
-    &__description {
-      height: 400px;
-    }
-  }
-</style>
+<style src="../../styles/entity-info.css"></style>

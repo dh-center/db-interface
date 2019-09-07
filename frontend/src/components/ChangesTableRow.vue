@@ -8,24 +8,19 @@
         Approve
       </button>
     </td>
-    <td>
-      {{ person.firstName }}
-    </td>
-    <td>
-      {{ person.lastName }}
-    </td>
-    <td>
-      {{ person.patronymic }}
-    </td>
-    <td>
-      {{ person.description }}
+    <td
+      v-for="(fieldName, index) in model.fields"
+      :key="index"
+    >
+      {{ entity[fieldName] }}
     </td>
   </tr>
 </template>
 
 <script>
+  /* eslint-disable new-cap */
+
   import jsonpatch from 'fast-json-patch';
-  import PersonModel from '../models/person';
 
   export default {
     name: 'ChangesTableRow',
@@ -34,14 +29,18 @@
         type: Array,
         required: true
       },
-      entity: {
+      entityData: {
         type: Object,
+        required: true
+      },
+      model: {
+        type: Function,
         required: true
       }
     },
     computed: {
-      person() {
-        return new PersonModel(jsonpatch.applyPatch(this.entity, this.changeList).newDocument);
+      entity() {
+        return new this.model(jsonpatch.applyPatch(this.entityData, this.changeList).newDocument);
       }
     }
   };
