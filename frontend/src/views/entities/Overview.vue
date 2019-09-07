@@ -12,10 +12,7 @@
     >
       View changes
     </router-link>
-    <router-view
-      :key="entityName"
-      :model="EntityModel"
-    />
+    <router-view :model="EntityModel" />
   </div>
 </template>
 
