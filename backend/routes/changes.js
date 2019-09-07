@@ -5,6 +5,9 @@ const jsonpatch = require('fast-json-patch');
 const Person = require('../models/person');
 const mongoose = require('mongoose');
 
+/**
+ * Get all non-approved changes in persons
+ */
 router.get('/changes/persons', async (req, res) => {
   const changes = await Change
     .find({ entityType: 'persons', approved: null })
@@ -14,6 +17,9 @@ router.get('/changes/persons', async (req, res) => {
   res.json({ payload: changes });
 });
 
+/**
+ * Get changes for certain record
+ */
 router.get('/changes/persons/:changesRecordId', async (req, res) => {
   const changeRecord = await Change
     .findById(req.params.changesRecordId)
@@ -22,7 +28,9 @@ router.get('/changes/persons/:changesRecordId', async (req, res) => {
   return res.status(200).json({ payload: changeRecord });
 });
 
-// create new change record for existing or non-existing person
+/**
+ * Create new change record for existing or non-existing person
+ */
 router.post('/changes/persons/:personId?', async (req, res) => {
   const changeRecord = new Change({
     entityType: 'persons',
@@ -35,7 +43,9 @@ router.post('/changes/persons/:personId?', async (req, res) => {
   res.status(201).json({ payload: result });
 });
 
-// Patch existing change record
+/**
+ * Patch existing change record
+ */
 router.patch('/changes/persons/:changesRecordId', async (req, res) => {
   const changeRecord = await Change.findById(req.params.changesRecordId);
 
@@ -44,7 +54,9 @@ router.patch('/changes/persons/:changesRecordId', async (req, res) => {
   res.sendStatus(200);
 });
 
-// approve changelist
+/**
+ * Approve changelist
+ */
 router.put('/changes/persons/:changeId/approval', async (req, res) => {
   const changeRecord = await Change.findById(req.params.changeId).populate('entity');
 
