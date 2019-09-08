@@ -31,6 +31,12 @@
       >
         Addresses
       </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'relationTypes-overview'}"
+      >
+        Relation types
+      </router-link>
       <DataLanguageSelect class="app__data-language-select" />
     </header>
     <router-view :key="$route.fullPath" />

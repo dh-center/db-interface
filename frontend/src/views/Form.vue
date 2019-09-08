@@ -66,7 +66,6 @@
   import Autocomplete from 'vuejs-auto-complete';
   import axios from 'axios';
   import { RESET_STORE } from '../store/actions';
-  import relations from '../../../backend/models/relationId.json';
 
   export default {
     name: 'Form',
@@ -75,7 +74,7 @@
     },
     data() {
       return {
-        relations,
+        relations: null,
         selectedRelation: null,
         quote: null,
         selectedPerson: null,
