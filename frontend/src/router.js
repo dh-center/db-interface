@@ -25,6 +25,7 @@ const router = new Router({
     },
     generateRoutes('persons'),
     generateRoutes('locations'),
+    generateRoutes('relationTypes'),
     {
       path: '*',
       redirect: '/home'
