@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const jsonpatch = require('fast-json-patch');
+const getChangesListPlugin = require('./getChangesListPlugin');
 
 const relationTypeSchema = new Schema({
   sqlId: Number,
@@ -11,16 +11,7 @@ const relationTypeSchema = new Schema({
   }
 });
 
-relationTypeSchema.statics.getChangesList = async function (locationId, modifiedData) {
-  const location = locationId ? await this.findById(locationId).lean() : {};
-
-  delete location._id;
-  delete location.__v;
-  delete modifiedData._id;
-  delete modifiedData.__v;
-
-  return jsonpatch.compare(location, modifiedData);
-};
+relationTypeSchema.plugin(getChangesListPlugin)
 
 
 module.exports = mongoose.model('relationTypes', relationTypeSchema);

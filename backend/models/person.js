@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const jsonpatch = require('fast-json-patch');
+const getChangesListPlugin = require('./getChangesListPlugin');
 
 const personSchema = new Schema({
   sqlId: Number,
@@ -32,15 +32,6 @@ const personSchema = new Schema({
   }
 });
 
-personSchema.statics.getChangesList = async function (personId, modifiedData) {
-  const person = personId ? await this.findById(personId).lean() : {};
-
-  delete person._id;
-  delete person.__v;
-  delete modifiedData._id;
-  delete modifiedData.__v;
-
-  return jsonpatch.compare(person, modifiedData);
-};
+personSchema.plugin(getChangesListPlugin);
 
 module.exports = mongoose.model('persons', personSchema);
