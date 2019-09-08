@@ -27,18 +27,18 @@
         />
       </div>
       <div class="form__field">
-        <label for="relation">{{ $t('form.relation') }}: </label>
+        <label for="relationType">{{ $t('form.relation') }}: </label>
         <select
-          id="relation"
+          id="relationType"
           v-model="selectedRelation"
-          name="relation"
+          name="relationType"
         >
           <option
-            v-for="relation in relations"
-            :key="relation.id"
-            :value="relation.id"
+            v-for="relationType in relationTypes"
+            :key="relationType.id"
+            :value="relationType.id"
           >
-            {{ relation.name }}
+            {{ relationType.name }}
           </option>
         </select>
       </div>
@@ -66,6 +66,7 @@
   import Autocomplete from 'vuejs-auto-complete';
   import axios from 'axios';
   import { RESET_STORE } from '../store/actions';
+  import RelationType from '../models/relationType';
 
   export default {
     name: 'Form',
@@ -74,12 +75,15 @@
     },
     data() {
       return {
-        relations: null,
+        relationTypes: [],
         selectedRelation: null,
         quote: null,
         selectedPerson: null,
         selectedLocation: null
       };
+    },
+    async created() {
+      this.relationTypes = (await axios.get('/relationTypes')).map(relationType => new RelationType(relationType));
     },
     methods: {
       logout() {
@@ -103,10 +107,10 @@
       },
       saveRelation() {
         axios.post('/relations', {
-          relationId: this.selectedRelation,
+          relationId: this.selectedRelation.id,
           quote: this.quote,
-          personId: this.selectedPerson,
-          locationId: this.selectedLocation
+          personId: this.selectedPerson.id,
+          locationId: this.selectedLocation.id
         });
       },
       personSelect(input) {
