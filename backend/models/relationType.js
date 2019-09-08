@@ -11,7 +11,6 @@ const relationTypeSchema = new Schema({
   }
 });
 
-relationTypeSchema.plugin(getChangesListPlugin)
-
+relationTypeSchema.plugin(getChangesListPlugin);
 
 module.exports = mongoose.model('relationTypes', relationTypeSchema);
