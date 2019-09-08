@@ -25,6 +25,12 @@
       >
         Locations
       </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'addresses-overview'}"
+      >
+        Addresses
+      </router-link>
       <DataLanguageSelect class="app__data-language-select" />
     </header>
     <router-view :key="$route.fullPath" />

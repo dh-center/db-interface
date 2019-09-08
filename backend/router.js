@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Person = require('./models/person');
 const Location = require('./models/location');
+const Address = require('./models/address');
 
 /**
  * Auth routes
@@ -19,6 +20,7 @@ const entityFactory = require('./routes/entityFactory');
 
 router.use(entityFactory('persons', Person));
 router.use(entityFactory('locations', Location));
+router.use(entityFactory('addresses', Address));
 
 /**
  * Changes routes
@@ -27,5 +29,6 @@ const changesFactory = require('./routes/changesFactory');
 
 router.use(changesFactory('persons', Person));
 router.use(changesFactory('locations', Location));
+router.use(changesFactory('addresses', Address));
 
 module.exports = router;

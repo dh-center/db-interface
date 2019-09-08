@@ -19,6 +19,7 @@
 <script>
   import PersonModel from '../../models/person';
   import LocationModel from '../../models/location';
+  import AddressModel from '../../models/address';
 
   export default {
     name: 'EntitiesOverview',
@@ -37,6 +38,9 @@
         break;
       case 'locations':
         EntityModel = LocationModel;
+        break;
+      case 'addresses':
+        EntityModel = AddressModel;
         break;
       }
 
