@@ -3,7 +3,6 @@ FROM node:10-alpine as build-stage
 
 COPY package.json yarn.lock ./
 COPY frontend/ ./frontend/
-COPY backend/models/relationId.json ./backend/models/relationId.json
 
 RUN yarn install --prod
 
