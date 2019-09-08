@@ -20,6 +20,7 @@
   import PersonModel from '../../models/person';
   import LocationModel from '../../models/location';
   import RelationTypeModel from '../../models/relationType';
+  import AddressModel from '../../models/address';
 
   export default {
     name: 'EntitiesOverview',
@@ -38,6 +39,9 @@
         break;
       case 'locations':
         EntityModel = LocationModel;
+        break;
+      case 'addresses':
+        EntityModel = AddressModel;
         break;
       case 'relationTypes':
         EntityModel = RelationTypeModel;
