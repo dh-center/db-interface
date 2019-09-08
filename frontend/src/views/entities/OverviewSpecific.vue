@@ -77,7 +77,7 @@
           await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
         } else {
           // Create new changes record
-          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity._id}`, this.changedEntity.data);
+          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, this.changedEntity.data);
         }
       }
     }
