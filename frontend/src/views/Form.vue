@@ -3,27 +3,19 @@
     <h1>{{ $t('form.header') }}</h1>
     <form @submit.prevent="saveRelation">
       <div class="form__field">
-        <label>{{ $t('form.person') }}: </label>
-        <autocomplete
-          ref="personAutocomplete"
-          :placeholder="$t('form.personSearch')"
-          :source="`${$API_ENDPOINT}/persons?name=`"
-          results-property="data"
-          results-value="_id"
-          :results-display="formattedDisplayPerson"
-          @selected="personSelect"
+        <CustomSelect
+          v-if="personsList"
+          v-model="selectedPerson"
+          :options="personsList"
+          :label="$t('form.person')"
         />
       </div>
       <div class="form__field">
-        <label>{{ $t('form.location') }}: </label>
-        <autocomplete
-          ref="locationAutocomplete"
-          :placeholder="$t('form.locationSearch')"
-          :source="`${$API_ENDPOINT}/locations?name=`"
-          results-property="data"
-          results-value="_id"
-          :results-display="formattedDisplayLocation"
-          @selected="locationSelect"
+        <CustomSelect
+          v-if="locationsList"
+          :options="locationsList"
+          :value="selectedLocation"
+          :label="$t('form.location')"
         />
       </div>
       <div class="form__field">
@@ -64,18 +56,23 @@
 
 <script>
   import Autocomplete from 'vuejs-auto-complete';
+  import CustomSelect from '../components/CustomSelect';
   import axios from 'axios';
   import { RESET_STORE } from '../store/actions';
-  import RelationType from '../models/relationType';
+  import RelationTypeModel from '../models/relationType';
+  import PersonModel from '../models/person';
+  import LocationModel from '../models/location';
 
   export default {
     name: 'Form',
     components: {
-      Autocomplete
+      CustomSelect
     },
     data() {
       return {
         relationTypes: [],
+        personsList: null,
+        locationsList: null,
         selectedRelation: null,
         quote: null,
         selectedPerson: null,
@@ -83,27 +80,16 @@
       };
     },
     async created() {
-      this.relationTypes = (await axios.get('/relationTypes')).map(relationType => new RelationType(relationType));
+      this.fetchData();
     },
     methods: {
+      async fetchData() {
+        this.personsList = (await axios.get('/persons')).map(person => new PersonModel(person));
+        this.locationsList = (await axios.get('/locations')).map(location => new LocationModel(location));
+        this.relationTypes = (await axios.get('/relationTypes')).map(relationType => new RelationTypeModel(relationType));
+      },
       logout() {
         this.$store.dispatch(RESET_STORE);
-      },
-      formattedDisplayPerson(result) {
-        const birthDate = new Date(result.birthDate);
-        const deathDate = new Date(result.deathDate);
-
-        return result.name +
-          '<br><span class="autocomplete__description">' + birthDate.getFullYear() + ' - ' + deathDate.getFullYear() +
-          '<br>' + result.profession + '</span>';
-      },
-      formattedDisplayLocation(result) {
-        const constructionDate = new Date(result.constructionDate);
-        const demolitionDate = new Date(result.demolitionDate);
-
-        return result.name +
-          '<br><span class="autocomplete__description">' + constructionDate.getFullYear() + ' - ' + demolitionDate.getFullYear() +
-          '<br>' + result.buildingType + '</span>';
       },
       saveRelation() {
         axios.post('/relations', {
@@ -112,14 +98,6 @@
           personId: this.selectedPerson.id,
           locationId: this.selectedLocation.id
         });
-      },
-      personSelect(input) {
-        this.selectedPerson = input.value;
-        this.$refs.personAutocomplete.selectedDisplay = input.selectedObject.name;
-      },
-      locationSelect(input) {
-        this.selectedLocation = input.value;
-        this.$refs.locationAutocomplete.selectedDisplay = input.selectedObject.name;
       }
     }
   };

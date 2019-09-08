@@ -59,4 +59,12 @@ export default class Location {
   static get fields() {
     return ['name', 'architects', 'constructionDate', 'demolitionDate', 'buildingType', 'description', 'coordinateX', 'coordinateY'];
   }
+
+  get searchName() {
+    return this.name;
+  }
+
+  search(searchQuery) {
+    return this.name.includes(searchQuery);
+  }
 }

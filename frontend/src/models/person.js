@@ -61,4 +61,12 @@ export default class Person {
   static get fields() {
     return ['firstName', 'lastName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession', 'description'];
   }
+
+  get searchName() {
+    return this.lastName + ' ' + this.firstName + ' ' + this.patronymic;
+  }
+
+  search(searchQuery) {
+    return this.searchName.includes(searchQuery);
+  }
 }
