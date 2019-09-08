@@ -14,32 +14,6 @@ const router = new Router({
       component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
     },
     {
-      path: '/persons',
-      component: () => import('./views/persons/Overview.vue'),
-      children: [
-        {
-          path: '',
-          name: 'persons-overview',
-          component: () => import('./views/persons/OverviewTable.vue')
-        },
-        {
-          path: 'changes',
-          name: 'persons-changes',
-          component: () => import('./views/persons/ChangesTable.vue')
-        },
-        {
-          path: 'create/:changeRecordId?',
-          name: 'persons-create',
-          component: () => import('./views/persons/Create.vue')
-        },
-        {
-          path: ':personId/edit',
-          name: 'persons-overview-specific',
-          component: () => import('./views/persons/OverviewSpecific.vue')
-        }
-      ]
-    },
-    {
       path: '/sign-up',
       name: 'sign-up',
       component: () => import('./views/auth/SignUp.vue')
@@ -49,6 +23,8 @@ const router = new Router({
       name: 'login',
       component: () => import('./views/auth/Login.vue')
     },
+    generateRoutes('persons'),
+    generateRoutes('locations'),
     {
       path: '*',
       redirect: '/home'
@@ -70,5 +46,40 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
+
+/**
+ * Generate routes for entities by name
+ * @param {String} name - entities name
+ * @return {Object}
+ */
+function generateRoutes(name) {
+  return {
+    path: `/${name}`,
+    component: () => import('./views/entities/Overview.vue'),
+    props: { entityName: name },
+    children: [
+      {
+        path: '',
+        name: `${name}-overview`,
+        component: () => import('./views/entities/OverviewTable.vue')
+      },
+      {
+        path: 'changes',
+        name: `${name}-changes`,
+        component: () => import('./views/entities/ChangesTable.vue')
+      },
+      {
+        path: 'create/:changeRecordId?',
+        name: `${name}-create`,
+        component: () => import('./views/entities/Create.vue')
+      },
+      {
+        path: ':entityId/edit',
+        name: `${name}-overview-specific`,
+        component: () => import('./views/entities/OverviewSpecific.vue')
+      }
+    ]
+  };
+}
 
 export default router;

@@ -1,79 +1,79 @@
 <template>
-  <div class="person-info">
-    <div class="person-info__section">
+  <div class="entity-info">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('firstName')"
       >First name</label>
       <input
         :id="$id('firstName')"
-        v-model="person.firstName"
+        v-model="entity.firstName"
         type="text"
         :disabled="!editable"
         placeholder="person first name"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('lastName')"
       >Last name</label>
       <input
         :id="$id('lastName')"
-        v-model="person.lastName"
+        v-model="entity.lastName"
         type="text"
         :disabled="!editable"
         placeholder="person last name"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('patronymic')"
       >Patronymic</label>
       <input
         :id="$id('patronymic')"
-        v-model="person.patronymic"
+        v-model="entity.patronymic"
         type="text"
         :disabled="!editable"
         placeholder="person patronymic"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('birthDate')"
       >Birth date</label>
       <input
         :id="$id('birthDate')"
-        v-model="person.birthDate"
+        v-model="entity.birthDate"
         type="text"
         :disabled="!editable"
         placeholder="person birth date"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('deathDate')"
       >Birth date</label>
       <input
         :id="$id('deathDate')"
-        v-model="person.deathDate"
+        v-model="entity.deathDate"
         type="text"
         :disabled="!editable"
         placeholder="person death date"
       >
     </div>
-    <div class="person-info__section">
+    <div class="entity-info__section">
       <label
-        class="person-info__label"
+        class="entity-info__label"
         :for="$id('description')"
       >Description</label>
       <textarea
         :id="$id('description')"
-        v-model="person.description"
-        class="person-info__description"
+        v-model="entity.description"
+        class="entity-info__description"
         :disabled="!editable"
       />
     </div>
@@ -82,9 +82,9 @@
 
 <script>
   export default {
-    name: 'PersonInfo',
+    name: 'PersonsInfo',
     props: {
-      person: {
+      entity: {
         type: Object,
         required: true
       },
@@ -93,22 +93,4 @@
   };
 </script>
 
-<style>
-  .person-info {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-
-    &__section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-
-      margin: auto auto 10px;
-    }
-
-    &__description {
-      height: 400px;
-    }
-  }
-</style>
+<style src="../../styles/entity-info.css"></style>

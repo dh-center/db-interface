@@ -19,9 +19,15 @@
       >
         Persons
       </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'locations-overview'}"
+      >
+        Locations
+      </router-link>
       <DataLanguageSelect class="app__data-language-select" />
     </header>
-    <router-view />
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 

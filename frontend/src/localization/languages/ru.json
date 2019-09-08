@@ -18,6 +18,16 @@
     "patronymic": "Отчество",
     "pseudonym": "Псевдоним",
     "profession": "Профессия",
+    "description": "Описание",
+    "birthDate": "Дата рождения",
+    "deathDate": "Дата смерти"
+  },
+  "locations": {
+    "name": "Имя",
+    "address": "Адрес",
+    "constructionDate": "Дата постройки",
+    "demolitionDate": "Дата сноса",
+    "buildingType": "Тип строения",
     "description": "Описание"
   },
   "form": {

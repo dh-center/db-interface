@@ -18,6 +18,16 @@
     "patronymic": "Patronymic",
     "pseudonym": "Pseudonym",
     "profession": "Profession",
+    "description": "Description",
+    "birthDate": "Date of birth",
+    "deathDate": "Date of death"
+  },
+  "locations": {
+    "name": "Name",
+    "address": "Address",
+    "constructionDate": "Construction date",
+    "demolitionDate": "Demolition date",
+    "buildingType": "Building type",
     "description": "Description"
   },
   "form": {
