@@ -29,5 +29,6 @@ const changesFactory = require('./routes/changesFactory');
 
 router.use(changesFactory('persons', Person));
 router.use(changesFactory('locations', Location));
+router.use(changesFactory('addresses', Address));
 
 module.exports = router;
