@@ -13,30 +13,17 @@ router.use(signUpRoute);
 router.use(loginRoute);
 
 /**
- * Persons routes
+ * Entity routes
  */
-const personsRoutes = require('./routes/persons');
+const entityFactory = require('./routes/entityFactory');
 
-router.use(personsRoutes);
-
-/**
- * Locations routes
- */
-const locationsRoutes = require('./routes/locations');
-
-router.use(locationsRoutes);
-
-/**
- * Relations routes
- */
-const relationsRoutes = require('./routes/relations');
-
-router.use(relationsRoutes);
+router.use(entityFactory('persons', Person));
+router.use(entityFactory('locations', Location));
 
 /**
  * Changes routes
  */
-const changesFactory = require('./routes/changes');
+const changesFactory = require('./routes/changesFactory');
 
 router.use(changesFactory('persons', Person));
 router.use(changesFactory('locations', Location));
