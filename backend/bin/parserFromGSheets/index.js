@@ -64,8 +64,8 @@ async function importPersons(cl) {
 
     const personData = {};
 
-    personData.firstName = row[0];
-    personData.lastName = row[1];
+    personData.lastName = row[0];
+    personData.firstName = row[1];
     personData.patronymic = row[2];
     personData.pseudonym = row[3];
     personData.birthDate = row[4];
