@@ -4,13 +4,19 @@ const Change = require('../models/change');
 const jsonpatch = require('fast-json-patch');
 const mongoose = require('mongoose');
 
-module.exports = function changesFactory(entityName, EntityModel) {
+/**
+ *
+ * @param {String} entityType - entity type name
+ * @param {mongoose.Model} EntityModel - model
+ * @return {Router}
+ */
+module.exports = function changesFactory(entityType, EntityModel) {
   /**
    * Get all non-approved changes in entities
    */
-  router.get(`/changes/${entityName}`, async (req, res) => {
+  router.get(`/changes/${entityType}`, async (req, res) => {
     const changes = await Change
-      .find({ entityType: entityName, approved: null })
+      .find({ entityType: entityType, approved: null })
       .populate('entity')
       .lean();
 
@@ -20,7 +26,7 @@ module.exports = function changesFactory(entityName, EntityModel) {
   /**
    * Get changes for certain record
    */
-  router.get(`/changes/${entityName}/:changesRecordId`, async (req, res) => {
+  router.get(`/changes/${entityType}/:changesRecordId`, async (req, res) => {
     const changeRecord = await Change
       .findById(req.params.changesRecordId)
       .populate('entity');
@@ -31,9 +37,9 @@ module.exports = function changesFactory(entityName, EntityModel) {
   /**
    * Create new change record for existing or non-existing entity
    */
-  router.post(`/changes/${entityName}/:entityId?`, async (req, res) => {
+  router.post(`/changes/${entityType}/:entityId?`, async (req, res) => {
     const changeRecord = new Change({
-      entityType: entityName,
+      entityType: entityType,
       user: res.locals.user._id,
       ...(req.params.entityId && { entity: req.params.entityId }),
       changeList: await EntityModel.getChangesList(req.params.entityId, req.body)
@@ -46,7 +52,7 @@ module.exports = function changesFactory(entityName, EntityModel) {
   /**
    * Patch existing change record
    */
-  router.patch(`/changes/${entityName}/:changesRecordId`, async (req, res) => {
+  router.patch(`/changes/${entityType}/:changesRecordId`, async (req, res) => {
     const changeRecord = await Change.findById(req.params.changesRecordId);
 
     changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body);
@@ -57,7 +63,7 @@ module.exports = function changesFactory(entityName, EntityModel) {
   /**
    * Approve changelist
    */
-  router.put(`/changes/${entityName}/:changeId/approval`, async (req, res) => {
+  router.put(`/changes/${entityType}/:changeId/approval`, async (req, res) => {
     const changeRecord = await Change.findById(req.params.changeId).populate('entity');
 
     if (changeRecord.entity) {
