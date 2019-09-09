@@ -27,7 +27,7 @@
         class="relation-types-info__synonyms-list-item"
         @click.self="currentSynonym = synonym"
       >
-        <div>{{ index }}. {{ synonym.name }}</div><button class="relation-types-info__synonym-delete-button">
+        <div>{{ index }}. {{ synonym.name }}</div><button  @click="entity.deleteSynonym(synonym)" class="relation-types-info__synonym-delete-button">
           -
         </button>
       </div>
@@ -65,7 +65,7 @@
       cursor: pointer;
 
       &:hover, &--current {
-        background-color: gray;
+        background-color: #d1d2c0;
       }
     }
 

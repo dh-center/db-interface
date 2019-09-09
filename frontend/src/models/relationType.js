@@ -20,12 +20,20 @@ export default class RelationType extends BaseModel {
       'name'
     ]);
 
+    console.log(this.data.synonyms)
     this.data.synonyms = this.data.synonyms.map(synonym => new RelationTypeSynonym(synonym));
     Object.defineProperty(this, 'synonyms', getStandardDescriptor('synonyms'));
   }
 
   insertNewSynonym() {
     this.data.synonyms.push(new RelationTypeSynonym({ name: getMultilingualString() }));
+  }
+
+  deleteSynonym(synonym) {
+    const index = this.data.synonyms.findIndex(_synonym => synonym === _synonym);
+
+    console.log(index);
+    this.data.synonyms.splice(index, 1);
   }
 
   /**
