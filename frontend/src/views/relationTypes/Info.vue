@@ -17,9 +17,9 @@
       <label :for="$id('synonymName')">Synonym name</label>
       <input
         :id="$id('synonymName')"
+        ref="synonymName"
         v-model="currentSynonym.name"
         type="text"
-        ref="synonymName"
       >
       <div
         v-for="(synonym, index) in entity.synonyms"
@@ -28,7 +28,10 @@
         class="relation-types-info__synonyms-list-item"
         @click.self="currentSynonym = synonym"
       >
-        <div>{{ index }}. {{ synonym.name }}</div><button  @click="entity.deleteSynonym(synonym)" class="relation-types-info__synonym-delete-button">
+        <div>{{ index }}. {{ synonym.name }}</div><button
+          class="relation-types-info__synonym-delete-button"
+          @click="entity.deleteSynonym(synonym)"
+        >
           -
         </button>
       </div>
@@ -51,7 +54,7 @@
     },
     data() {
       return {
-        currentSynonym: (this.entity.synonyms && this.entity.synonyms[0]) || null
+        currentSynonym: (this.entity.synonyms && this.entity.synonyms[0]) || {}
       };
     },
     methods: {

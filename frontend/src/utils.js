@@ -45,13 +45,18 @@ export function getStandardDescriptor(propName) {
 export function defineMultilingualProperties(to, from, propNames) {
   const props = {};
 
-  propNames.forEach(propName => (props[propName] = {
-    set(value) {
-      from[propName][this.language] = value;
-    },
-    get() {
-      return from[propName][this.language];
+  propNames.forEach(propName => {
+    if (!from[propName]) {
+      from[propName] = getMultilingualString()
     }
-  }));
+    props[propName] = {
+      set(value) {
+        from[propName][this.language] = value;
+      },
+      get() {
+        return from[propName][this.language];
+      }
+    }
+  });
   Object.defineProperties(to, props);
 }

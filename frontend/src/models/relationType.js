@@ -20,6 +20,7 @@ export default class RelationType extends BaseModel {
       'name'
     ]);
 
+    this.data.synonyms = this.data.synonyms || [];
     this.data.synonyms = this.data.synonyms.map(synonym => new RelationTypeSynonym(synonym));
     Object.defineProperty(this, 'synonyms', getStandardDescriptor('synonyms'));
   }
