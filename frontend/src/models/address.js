@@ -5,22 +5,19 @@ import {
   getMultilingualDescriptor,
   getStandardDescriptor
 } from '../utils';
+import BaseModel from './base'
 
 /**
  * Class representing address
  */
-export default class Address {
+export default class Address extends BaseModel {
   /**
    * Address constructor
    * @param {Address} _addressData
    */
   constructor(_addressData) {
-    const addressData = cloneDeep(_addressData);
+    super(_addressData);
 
-    this.id = addressData._id;
-    delete addressData._id;
-
-    this.data = addressData;
     this.data.street = this.data.street || getMultilingualString();
     this.data.build = this.data.build || getMultilingualString();
 
@@ -28,14 +25,6 @@ export default class Address {
     Object.defineProperty(this, 'homeNumber', getStandardDescriptor('homeNumber'));
     Object.defineProperty(this, 'housing', getStandardDescriptor('housing'));
     Object.defineProperty(this, 'build', getMultilingualDescriptor('build'));
-  }
-
-  /**
-   * Current language for Person data
-   * @return {String}
-   */
-  get language() {
-    return store.state.app.dataLanguage;
   }
 
   /**

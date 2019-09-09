@@ -5,22 +5,19 @@ import {
   getMultilingualDescriptor,
   getStandardDescriptor
 } from '../utils';
+import BaseModel from './base';
 
 /**
  * Class representing location
  */
-export default class Location {
+export default class Location extends BaseModel {
   /**
    * Location constructor
    * @param {Location} _locationData
    */
   constructor(_locationData) {
-    const locationData = cloneDeep(_locationData);
+    super(_locationData);
 
-    this.id = locationData._id;
-    delete locationData._id;
-
-    this.data = locationData;
     this.data.name = this.data.name || getMultilingualString();
     this.data.architects = this.data.architects || getMultilingualString();
     this.data.buildingType = this.data.buildingType || getMultilingualString();
@@ -34,14 +31,6 @@ export default class Location {
     Object.defineProperty(this, 'description', getMultilingualDescriptor('description'));
     Object.defineProperty(this, 'coordinateX', getStandardDescriptor('coordinateX'));
     Object.defineProperty(this, 'coordinateY', getStandardDescriptor('coordinateY'));
-  }
-
-  /**
-   * Current language for Person data
-   * @return {String}
-   */
-  get language() {
-    return store.state.app.dataLanguage;
   }
 
   /**

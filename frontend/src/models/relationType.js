@@ -1,25 +1,20 @@
-import store from '../store';
-import cloneDeep from 'lodash.clonedeep';
 import {
   getMultilingualString,
   getMultilingualDescriptor, getStandardDescriptor
 } from '../utils';
+import BaseModel from './base';
 
 /**
- * Class representing person
+ * Class representing relationType
  */
-export default class RelationType {
+export default class RelationType extends BaseModel {
   /**
    * Person constructor
    * @param {Person} _relationTypeData
    */
   constructor(_relationTypeData) {
-    const relationTypeData = cloneDeep(_relationTypeData);
+    super(_relationTypeData);
 
-    this.id = relationTypeData._id;
-    delete relationTypeData._id;
-
-    this.data = relationTypeData;
     this.data.name = this.data.name || getMultilingualString();
 
     Object.defineProperty(this, 'name', getMultilingualDescriptor('name'));
@@ -28,14 +23,6 @@ export default class RelationType {
 
   insertNewSynonym() {
     this.data.synonyms.push({name: getMultilingualString()});
-  }
-
-  /**
-   * Current language for Person data
-   * @return {String}
-   */
-  get language() {
-    return store.state.app.dataLanguage;
   }
 
   /**
