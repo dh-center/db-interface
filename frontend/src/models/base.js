@@ -8,6 +8,7 @@ import {
 
 /**
  * Base model class
+ * @abstract
  */
 export default class Base {
   /**
@@ -24,7 +25,7 @@ export default class Base {
   }
 
   /**
-   * Current language for Person data
+   * Current language for entity data
    * @return {String}
    */
   get language() {
@@ -33,6 +34,7 @@ export default class Base {
 
   /**
    * Return entity name
+   * @abstract
    * @return {String}
    */
   static get entityType() {
@@ -41,6 +43,7 @@ export default class Base {
 
   /**
    * Return entity fields
+   * @abstract
    * @return {Array}
    */
   static get fields() {

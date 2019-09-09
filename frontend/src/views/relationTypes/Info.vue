@@ -17,15 +17,16 @@
       <button @click="entity.insertNewSynonym()">
         +
       </button>
-      <input type="text" v-model="currentSynonym.name.ru">
+      <input
+        v-model="currentSynonym.name"
+        type="text"
+      >
       <select
-        id=""
-        name=""
         v-model="currentSynonym"
       >
         <option
           v-for="synonym in entity.synonyms"
-          value=""
+          :value="synonym"
         >
           {{ synonym.name }}
         </option>
@@ -44,10 +45,10 @@
       },
       editable: Boolean
     },
-    data(){
+    data() {
       return {
-        currentSynonym: this.entity.synonyms[0] || null
-      }
+        currentSynonym: (this.entity.synonyms && this.entity.synonyms[0]) || null
+      };
     }
   };
 </script>

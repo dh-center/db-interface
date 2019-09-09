@@ -1,6 +1,7 @@
 import {
   getMultilingualString,
-  getMultilingualDescriptor, getStandardDescriptor
+  getStandardDescriptor,
+  defineMultilingualProperties
 } from '../utils';
 import BaseModel from './base';
 
@@ -15,14 +16,16 @@ export default class RelationType extends BaseModel {
   constructor(_relationTypeData) {
     super(_relationTypeData);
 
-    this.data.name = this.data.name || getMultilingualString();
+    defineMultilingualProperties(this, this.data, [
+      'name'
+    ]);
 
-    Object.defineProperty(this, 'name', getMultilingualDescriptor('name'));
+    this.data.synonyms = this.data.synonyms.map(synonym => new RelationTypeSynonym(synonym));
     Object.defineProperty(this, 'synonyms', getStandardDescriptor('synonyms'));
   }
 
   insertNewSynonym() {
-    this.data.synonyms.push({name: getMultilingualString()});
+    this.data.synonyms.push(new RelationTypeSynonym({ name: getMultilingualString() }));
   }
 
   /**
@@ -39,5 +42,19 @@ export default class RelationType extends BaseModel {
    */
   static get fields() {
     return [ 'name' ];
+  }
+}
+
+class RelationTypeSynonym extends BaseModel {
+  constructor(_synonymData) {
+    super(_synonymData);
+
+    defineMultilingualProperties(this, this.data, [
+      'name'
+    ]);
+  }
+
+  toJSON() {
+    return this.data;
   }
 }
