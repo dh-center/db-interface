@@ -19,6 +19,7 @@
         :id="$id('synonymName')"
         v-model="currentSynonym.name"
         type="text"
+        ref="synonymName"
       >
       <div
         v-for="(synonym, index) in entity.synonyms"
@@ -31,7 +32,7 @@
           -
         </button>
       </div>
-      <button @click="entity.insertNewSynonym()">
+      <button @click="insertNewSynonym">
         +
       </button>
     </div>
@@ -52,6 +53,13 @@
       return {
         currentSynonym: (this.entity.synonyms && this.entity.synonyms[0]) || null
       };
+    },
+    methods: {
+      insertNewSynonym() {
+        this.entity.insertNewSynonym();
+        this.currentSynonym = this.entity.synonyms[this.entity.synonyms.length - 1];
+        this.$refs.synonymName.focus();
+      }
     }
   };
 </script>
