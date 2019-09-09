@@ -8,8 +8,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-
-    //margin: auto auto 10px;
   }
 
   &__description {
