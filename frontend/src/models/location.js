@@ -1,7 +1,5 @@
 import {
-  getMultilingualString,
-  getMultilingualDescriptor,
-  getStandardDescriptor,
+  defineStandardProperties,
   defineMultilingualProperties
 } from '../utils';
 import BaseModel from './base';
@@ -24,10 +22,12 @@ export default class Location extends BaseModel {
       'description'
     ]);
 
-    Object.defineProperty(this, 'constructionDate', getStandardDescriptor('constructionDate'));
-    Object.defineProperty(this, 'demolitionDate', getStandardDescriptor('demolitionDate'));
-    Object.defineProperty(this, 'coordinateX', getStandardDescriptor('coordinateX'));
-    Object.defineProperty(this, 'coordinateY', getStandardDescriptor('coordinateY'));
+    defineStandardProperties(this, this.data, [
+      'constructionDate',
+      'demolitionDate',
+      'coordinateX',
+      'coordinateY'
+    ]);
   }
 
   /**

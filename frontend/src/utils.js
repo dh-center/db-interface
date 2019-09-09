@@ -49,6 +49,7 @@ export function defineMultilingualProperties(to, from, propNames) {
     if (!from[propName]) {
       from[propName] = getMultilingualString()
     }
+
     props[propName] = {
       set(value) {
         from[propName][this.language] = value;
@@ -56,7 +57,23 @@ export function defineMultilingualProperties(to, from, propNames) {
       get() {
         return from[propName][this.language];
       }
-    }
+    };
+  });
+  Object.defineProperties(to, props);
+}
+
+export function defineStandardProperties(to, from, propNames) {
+  const props = {};
+
+  propNames.forEach(propName => {
+    props[propName] = {
+      set(value) {
+        from[propName] = value;
+      },
+      get() {
+        return from[propName];
+      }
+    };
   });
   Object.defineProperties(to, props);
 }
