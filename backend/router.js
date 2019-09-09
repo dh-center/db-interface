@@ -24,8 +24,7 @@ router.use(entityFactory('locations', Location));
 router.use(entityFactory('addresses', Address));
 router.use(entityFactory('relationTypes', RelationType));
 
-
-router.use('/synonym-test', async (req, res)=> {
+router.use('/synonym-test', async (req, res) => {
   const relationType = new RelationType({
     name: 'мяу',
     synonyms: [

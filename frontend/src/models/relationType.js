@@ -27,10 +27,17 @@ export default class RelationType extends BaseModel {
     ]);
   }
 
+  /**
+   * Inserts new synonym to the end of list
+   */
   insertNewSynonym() {
     this.data.synonyms.push(new RelationTypeSynonym());
   }
 
+  /**
+   * Delete relation type synonym
+   * @param {RelationTypeSynonym} synonym - synonym to delete
+   */
   deleteSynonym(synonym) {
     const index = this.data.synonyms.findIndex(_synonym => synonym === _synonym);
 
@@ -54,7 +61,14 @@ export default class RelationType extends BaseModel {
   }
 }
 
+/**
+ * Class representing relation type synonym
+ */
 class RelationTypeSynonym extends BaseModel {
+  /**
+   * Creates new instance with specified data
+   * @param {Object} [_synonymData] - synonym data
+   */
   constructor(_synonymData) {
     super(_synonymData);
 
@@ -63,6 +77,11 @@ class RelationTypeSynonym extends BaseModel {
     ]);
   }
 
+  /**
+   * Standard method for JSON serialization
+   * @override
+   * @return {Object}
+   */
   toJSON() {
     return this.data;
   }
