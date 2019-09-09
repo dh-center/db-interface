@@ -1,10 +1,5 @@
 import store from '../store';
 import cloneDeep from 'lodash.clonedeep';
-import {
-  getMultilingualString,
-  getMultilingualDescriptor,
-  getStandardDescriptor
-} from '../utils';
 
 /**
  * Base model class
@@ -16,7 +11,7 @@ export default class Base {
    * @param {Object} _entityData
    */
   constructor(_entityData) {
-    const entityData = cloneDeep(_entityData);
+    const entityData = _entityData ? cloneDeep(_entityData): {};
 
     this.id = entityData._id;
     delete entityData._id;

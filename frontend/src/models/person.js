@@ -21,9 +21,7 @@ export default class Person extends BaseModel {
       'patronymic',
       'pseudonym',
       'profession',
-      'description',
-      'birthDate',
-      'deathDate'
+      'description'
     ]);
 
     defineStandardProperties(this, this.data, [

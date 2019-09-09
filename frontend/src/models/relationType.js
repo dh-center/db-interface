@@ -1,7 +1,6 @@
 import {
-  getMultilingualString,
-  getStandardDescriptor,
-  defineMultilingualProperties, defineStandardProperties
+  defineMultilingualProperties,
+  defineStandardProperties
 } from '../utils';
 import BaseModel from './base';
 
@@ -29,7 +28,7 @@ export default class RelationType extends BaseModel {
   }
 
   insertNewSynonym() {
-    this.data.synonyms.push(new RelationTypeSynonym({ name: getMultilingualString() }));
+    this.data.synonyms.push(new RelationTypeSynonym());
   }
 
   deleteSynonym(synonym) {
