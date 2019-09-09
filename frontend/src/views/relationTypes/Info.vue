@@ -14,7 +14,7 @@
       >
     </div>
     <div class="entity-info__section">
-      <label :for="$id('synonymName')">Synonym name</label>
+      <label>Synonym name</label>
       <table>
         <tbody>
           <tr
@@ -27,10 +27,12 @@
               <input
                 v-model="synonym.name"
                 type="text"
+                :disabled="!editable"
               >
             </td>
             <td>
               <button
+                v-if="editable"
                 class="relation-types-info__synonym-delete-button"
                 @click="entity.deleteSynonym(synonym)"
               >
@@ -41,7 +43,10 @@
         </tbody>
       </table>
 
-      <button @click="insertNewSynonym">
+      <button
+        v-if="editable"
+        @click="entity.insertNewSynonym()"
+      >
         +
       </button>
     </div>
@@ -57,12 +62,6 @@
         required: true
       },
       editable: Boolean
-    },
-    methods: {
-      insertNewSynonym() {
-        this.entity.insertNewSynonym();
-        // this.$refs.synonymName.focus();
-      }
     }
   };
 </script>
