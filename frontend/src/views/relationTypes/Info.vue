@@ -13,6 +13,24 @@
         placeholder="relation type name"
       >
     </div>
+    <div class="entity-info__section">
+      <button @click="entity.insertNewSynonym()">
+        +
+      </button>
+      <input type="text" v-model="currentSynonym.name.ru">
+      <select
+        id=""
+        name=""
+        v-model="currentSynonym"
+      >
+        <option
+          v-for="synonym in entity.synonyms"
+          value=""
+        >
+          {{ synonym.name }}
+        </option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -25,6 +43,11 @@
         required: true
       },
       editable: Boolean
+    },
+    data(){
+      return {
+        currentSynonym: this.entity.synonyms[0] || null
+      }
     }
   };
 </script>

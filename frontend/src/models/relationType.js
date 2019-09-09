@@ -2,7 +2,7 @@ import store from '../store';
 import cloneDeep from 'lodash.clonedeep';
 import {
   getMultilingualString,
-  getMultilingualDescriptor
+  getMultilingualDescriptor, getStandardDescriptor
 } from '../utils';
 
 /**
@@ -23,6 +23,11 @@ export default class RelationType {
     this.data.name = this.data.name || getMultilingualString();
 
     Object.defineProperty(this, 'name', getMultilingualDescriptor('name'));
+    Object.defineProperty(this, 'synonyms', getStandardDescriptor('synonyms'));
+  }
+
+  insertNewSynonym() {
+    this.data.synonyms.push({name: getMultilingualString()});
   }
 
   /**
