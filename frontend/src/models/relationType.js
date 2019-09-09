@@ -1,36 +1,47 @@
-import store from '../store';
-import cloneDeep from 'lodash.clonedeep';
 import {
-  getMultilingualString,
-  getMultilingualDescriptor
+  defineMultilingualProperties,
+  defineStandardProperties
 } from '../utils';
+import BaseModel from './base';
 
 /**
- * Class representing person
+ * Class representing relationType
  */
-export default class RelationType {
+export default class RelationType extends BaseModel {
   /**
    * Person constructor
    * @param {Person} _relationTypeData
    */
   constructor(_relationTypeData) {
-    const relationTypeData = cloneDeep(_relationTypeData);
+    super(_relationTypeData);
 
-    this.id = relationTypeData._id;
-    delete relationTypeData._id;
+    defineMultilingualProperties(this, this.data, [
+      'name'
+    ]);
 
-    this.data = relationTypeData;
-    this.data.name = this.data.name || getMultilingualString();
+    this.data.synonyms = this.data.synonyms || [];
+    this.data.synonyms = this.data.synonyms.map(synonym => new RelationTypeSynonym(synonym));
 
-    Object.defineProperty(this, 'name', getMultilingualDescriptor('name'));
+    defineStandardProperties(this, this.data, [
+      'synonyms'
+    ]);
   }
 
   /**
-   * Current language for Person data
-   * @return {String}
+   * Inserts new synonym to the end of list
    */
-  get language() {
-    return store.state.app.dataLanguage;
+  insertNewSynonym() {
+    this.data.synonyms.push(new RelationTypeSynonym());
+  }
+
+  /**
+   * Delete relation type synonym
+   * @param {RelationTypeSynonym} synonym - synonym to delete
+   */
+  deleteSynonym(synonym) {
+    const index = this.data.synonyms.findIndex(_synonym => synonym === _synonym);
+
+    this.data.synonyms.splice(index, 1);
   }
 
   /**
@@ -47,5 +58,31 @@ export default class RelationType {
    */
   static get fields() {
     return [ 'name' ];
+  }
+}
+
+/**
+ * Class representing relation type synonym
+ */
+class RelationTypeSynonym extends BaseModel {
+  /**
+   * Creates new instance with specified data
+   * @param {Object} [_synonymData] - synonym data
+   */
+  constructor(_synonymData) {
+    super(_synonymData);
+
+    defineMultilingualProperties(this, this.data, [
+      'name'
+    ]);
+  }
+
+  /**
+   * Standard method for JSON serialization
+   * @override
+   * @return {Object}
+   */
+  toJSON() {
+    return this.data;
   }
 }

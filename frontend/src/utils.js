@@ -10,34 +10,49 @@ export function getMultilingualString() {
 }
 
 /**
- * Returns property descriptor for multilingual data in object
- * Requires language property in object
- * @param {String} propName - property name for access
- * @return {{set(*): void, get(): *}|*}
+ * Defines getter and setter for multilingual property
+ * @param {Object} to - object to assign property
+ * @param {Object} from - where to get the value
+ * @param {String[]} propNames - property names to define
  */
-export function getMultilingualDescriptor(propName) {
-  return {
-    set(value) {
-      this.data[propName][this.language] = value;
-    },
-    get() {
-      return this.data[propName][this.language];
+export function defineMultilingualProperties(to, from, propNames) {
+  const props = {};
+
+  propNames.forEach(propName => {
+    if (!from[propName]) {
+      from[propName] = getMultilingualString();
     }
-  };
+
+    props[propName] = {
+      set(value) {
+        from[propName][this.language] = value;
+      },
+      get() {
+        return from[propName][this.language];
+      }
+    };
+  });
+  Object.defineProperties(to, props);
 }
 
 /**
- * Returns getters and setter for property in object
- * @param {String} propName - property name to access
- * @return {{set(*): void, get(): *}|*}
+ * Defines getter and setter with specified property name
+ * @param {Object} to - object to assign property
+ * @param {Object} from - where to get the value
+ * @param {String[]} propNames - property names to define
  */
-export function getStandardDescriptor(propName) {
-  return {
-    set(value) {
-      this.data[propName] = value;
-    },
-    get() {
-      return this.data[propName];
-    }
-  };
+export function defineStandardProperties(to, from, propNames) {
+  const props = {};
+
+  propNames.forEach(propName => {
+    props[propName] = {
+      set(value) {
+        from[propName] = value;
+      },
+      get() {
+        return from[propName];
+      }
+    };
+  });
+  Object.defineProperties(to, props);
 }

@@ -1,14 +1,13 @@
 .entity-info {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   width: 400px;
 
   &__section {
     width: 100%;
     display: flex;
     flex-direction: column;
-
-    margin: auto auto 10px;
   }
 
   &__description {
