@@ -51,7 +51,6 @@ export function defineStandardProperties(to, from, propNames) {
 
     props[propName] = {
       set(value) {
-        console.log('setter', propName, value);
         from[propName] = value;
         console.log(from[propName]);
       },

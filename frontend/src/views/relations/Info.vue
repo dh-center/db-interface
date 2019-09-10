@@ -65,7 +65,6 @@
       editable: Boolean
     },
     data() {
-      console.log(this.entity.relationId);
       return {
         relationTypes: [],
         personsList: [],
