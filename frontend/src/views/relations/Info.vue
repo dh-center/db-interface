@@ -3,6 +3,7 @@
     <div class="entity-info__section">
       <CustomSelect
         v-model="entity.personId"
+        :disabled="!editable"
         :options="personsList"
         :label="$t('form.person')"
       />
@@ -10,6 +11,7 @@
     <div class="entity-info__section">
       <CustomSelect
         v-model="entity.locationId"
+        :disabled="!editable"
         :options="locationsList"
         :label="$t('form.location')"
       />
@@ -19,6 +21,7 @@
       <select
         :id="$id('relationType')"
         v-model="entity.relationId"
+        :disabled="!editable"
         name="relationType"
       >
         <option
@@ -34,7 +37,9 @@
       <label :for="$id('quote')">{{ $t('form.quotes') }}: </label>
       <textarea
         :id="$id('quote')"
+
         v-model="entity.quote"
+        :disabled="!editable"
       />
     </div>
   </div>
@@ -60,7 +65,7 @@
       editable: Boolean
     },
     data() {
-      console.log(this.entity.relationId)
+      console.log(this.entity.relationId);
       return {
         relationTypes: [],
         personsList: [],
