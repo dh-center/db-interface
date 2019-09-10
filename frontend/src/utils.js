@@ -45,9 +45,15 @@ export function defineStandardProperties(to, from, propNames) {
   const props = {};
 
   propNames.forEach(propName => {
+    if (!from[propName]) {
+      from[propName] = '';
+    }
+
     props[propName] = {
       set(value) {
+        console.log('setter', propName, value)
         from[propName] = value;
+        console.log(from[propName])
       },
       get() {
         return from[propName];

@@ -5,7 +5,6 @@
     :class="{'custom-select--opened': isOpened}"
     @click="isOpened = !isOpened"
   >
-    {{ value }}
     <label class="custom-select__label">
       {{ label }}
     </label>
@@ -26,7 +25,7 @@
           v-for="option in filteredOption"
           :key="option.id"
           class="custom-select__option"
-          @click="$emit('input', option.id)"
+          @click="setValue(option.id)"
         >
           {{ option.searchName }}
         </div>
@@ -45,8 +44,7 @@
       },
       value: {
         type: String,
-        default: () => {
-        }
+        required: true
       },
       label: {
         type: String,
@@ -54,6 +52,7 @@
       }
     },
     data() {
+      console.log('value', this.value)
       return {
         isOpened: false,
         searchQuery: ''
@@ -65,7 +64,9 @@
       },
 
       currentOptionSearchName() {
-        const current = this.options.find(opt => opt.id === this.value);
+        console.log('changed')
+        const value = this.value;
+        const current = this.options.find(opt => opt.id === value);
 
         return (current || '') && current.searchName;
       }
@@ -84,6 +85,11 @@
        */
       close() {
         this.isOpened = false;
+      },
+
+      setValue(id) {
+        console.log('input', id)
+        this.$emit('input', id);
       }
     }
   };

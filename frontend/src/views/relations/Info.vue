@@ -1,7 +1,6 @@
 <template>
   <div class="entity-info">
     <div class="entity-info__section">
-      {{ entity.personId }}
       <CustomSelect
         v-model="entity.personId"
         :options="personsList"
@@ -61,6 +60,7 @@
       editable: Boolean
     },
     data() {
+      console.log(this.entity.relationId)
       return {
         relationTypes: [],
         personsList: [],
@@ -72,9 +72,9 @@
     },
     methods: {
       async fetchData() {
-        this.personsList = (await axios.get('/persons')).map(person => new PersonModel(person));
-        this.locationsList = (await axios.get('/locations')).map(location => new LocationModel(location));
-        this.relationTypes = (await axios.get('/relationTypes')).map(relationType => new RelationTypeModel(relationType));
+        axios.get('/persons').then(persons => (this.personsList = persons.map(person => new PersonModel(person))));
+        axios.get('/locations').then(persons => (this.locationsList = persons.map(person => new LocationModel(person))));
+        axios.get('/relationTypes').then(persons => (this.relationTypes = persons.map(person => new RelationTypeModel(person))));
       }
     }
   };
