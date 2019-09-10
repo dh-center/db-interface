@@ -11,7 +11,7 @@ const router = new Router({
     {
       path: '/home',
       name: 'home',
-      component: () => import(/* webpackChunkName: 'form' */ './views/relations/Info')
+      component: () => import(/* webpackChunkName: 'home' */ './views/Home')
     },
     {
       path: '/sign-up',
