@@ -11,7 +11,7 @@ const router = new Router({
     {
       path: '/home',
       name: 'home',
-      component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
+      component: () => import(/* webpackChunkName: 'form' */ './views/relations/Info')
     },
     {
       path: '/sign-up',
@@ -26,6 +26,7 @@ const router = new Router({
     generateRoutes('persons'),
     generateRoutes('locations'),
     generateRoutes('addresses'),
+    generateRoutes('relations'),
     generateRoutes('relationTypes'),
     {
       path: '*',

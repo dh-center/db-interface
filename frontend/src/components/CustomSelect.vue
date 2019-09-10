@@ -24,7 +24,7 @@
           v-for="option in filteredOption"
           :key="option.id"
           class="custom-select__option"
-          @click="$emit('input', option) && (searchQuery=option.searchName)"
+          @click="$emit('input', option.id) && (searchQuery=option.searchName)"
         >
           {{ option.searchName }}
         </div>
@@ -42,7 +42,7 @@
         required: true
       },
       value: {
-        type: Object,
+        type: String,
         default: () => {}
       },
       label: {
@@ -53,12 +53,24 @@
     data() {
       return {
         isOpened: false,
-        searchQuery: this.value && this.value.searchName
+        searchQuery: ''
       };
     },
     computed: {
       filteredOption() {
         return this.options.filter(opt => opt.search(this.searchQuery));
+      },
+
+      currentOption() {
+        return this.options.find(opt => opt.id === this.value);
+      }
+    },
+    watch: {
+      currentOption: {
+        immediate: true,
+        handler(current) {
+          this.searchQuery = current && current.searchName;
+        }
       }
     },
     methods: {
