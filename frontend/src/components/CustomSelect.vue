@@ -14,6 +14,7 @@
       <input
         v-model="searchQuery"
         type="text"
+        @input="isOpened = true"
       >
     </div>
     <transition name="options-appear">
