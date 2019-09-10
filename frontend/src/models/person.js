@@ -47,7 +47,7 @@ export default class Person extends BaseModel {
   }
 
   get searchName() {
-    return this.lastName + ' ' + this.firstName + ' ' + this.patronymic;
+    return (this.lastName + ' ' + this.firstName + ' ' + this.patronymic).trim();
   }
 
   search(searchQuery) {

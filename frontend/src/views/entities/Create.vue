@@ -42,14 +42,12 @@
 
         const { changeRecordId } = this.$route.params;
 
-        const entityData = {};
-
         if (changeRecordId) {
           const changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
 
           this.entity = new this.model(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument);
         } else {
-          this.entity = new this.model(entityData);
+          this.entity = new this.model();
         }
       },
       async saveEntity() {

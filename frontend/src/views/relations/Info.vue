@@ -1,22 +1,21 @@
 <template>
-  <div class="form">
-    <div class="form__field">
+  <div class="entity-info">
+    <div class="entity-info__section">
+      {{ entity.personId }}
       <CustomSelect
-        v-if="personsList"
         v-model="entity.personId"
         :options="personsList"
         :label="$t('form.person')"
       />
     </div>
-    <div class="form__field">
+    <div class="entity-info__section">
       <CustomSelect
-        v-if="locationsList"
-        :options="locationsList"
         v-model="entity.locationId"
+        :options="locationsList"
         :label="$t('form.location')"
       />
     </div>
-    <div class="form__field">
+    <div class="entity-info__section">
       <label :for="$id('relationType')">{{ $t('form.relation') }}: </label>
       <select
         :id="$id('relationType')"
@@ -32,11 +31,11 @@
         </option>
       </select>
     </div>
-    <div class="form__field">
-      <label for="quote">{{ $t('form.quotes') }}: </label>
+    <div class="entity-info__section">
+      <label :for="$id('quote')">{{ $t('form.quotes') }}: </label>
       <textarea
-        id="quote"
-        v-model="quote"
+        :id="$id('quote')"
+        v-model="entity.quote"
       />
     </div>
   </div>
@@ -64,12 +63,8 @@
     data() {
       return {
         relationTypes: [],
-        personsList: null,
-        locationsList: null,
-        selectedRelation: null,
-        quote: null,
-        selectedPerson: null,
-        selectedLocation: null
+        personsList: [],
+        locationsList: []
       };
     },
     async created() {
@@ -85,34 +80,4 @@
   };
 
 </script>
-
-<style>
-  .form {
-    width: 600px;
-    margin-left: calc(50vw - 313px);
-  }
-
-  .form__field {
-    margin-bottom: 10px;
-  }
-
-  .form__field select {
-    width: 25%;
-  }
-
-  .form__field textarea {
-    width: 100%;
-    height: 200px;
-  }
-
-  .autocomplete__description {
-    color: dimgray;
-    font-size: 80%;
-    font-style: italic;
-  }
-
-  .form_link {
-    display: inline-block;
-    margin-top: 5px;
-  }
-</style>
+<style src="../../styles/entity-info.css"></style>

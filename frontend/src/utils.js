@@ -28,7 +28,7 @@ export function defineMultilingualProperties(to, from, propNames) {
         from[propName][this.language] = value;
       },
       get() {
-        return from[propName][this.language];
+        return from[propName][this.language] || '';
       }
     };
   });

@@ -1,9 +1,11 @@
 <template>
   <fieldset
+    v-click-outside="close"
     class="custom-select"
     :class="{'custom-select--opened': isOpened}"
     @click="isOpened = !isOpened"
   >
+    {{ value }}
     <label class="custom-select__label">
       {{ label }}
     </label>
@@ -24,7 +26,7 @@
           v-for="option in filteredOption"
           :key="option.id"
           class="custom-select__option"
-          @click="$emit('input', option.id) && (searchQuery=option.searchName)"
+          @click="$emit('input', option.id)"
         >
           {{ option.searchName }}
         </div>
@@ -43,7 +45,8 @@
       },
       value: {
         type: String,
-        default: () => {}
+        default: () => {
+        }
       },
       label: {
         type: String,
@@ -61,15 +64,18 @@
         return this.options.filter(opt => opt.search(this.searchQuery));
       },
 
-      currentOption() {
-        return this.options.find(opt => opt.id === this.value);
+      currentOptionSearchName() {
+        console.log('kek');
+        const current = this.options.find(opt => opt.id === this.value);
+
+        return current && current.searchName;
       }
     },
     watch: {
-      currentOption: {
+      currentOptionSearchName: {
         immediate: true,
         handler(current) {
-          this.searchQuery = current && current.searchName;
+          this.searchQuery = this.currentOptionSearchName;
         }
       }
     },
@@ -81,8 +87,7 @@
         this.isOpened = false;
       }
     }
-  }
-  ;
+  };
 </script>
 
 <style>
@@ -91,6 +96,7 @@
     padding: 0;
     border: 0;
     user-select: none;
+
     &__label {
       display: block;
       margin-bottom: 9px;
@@ -99,10 +105,12 @@
       font-size: 12px;
       text-transform: uppercase;
     }
+
     &__select {
       position: relative;
       z-index: 1;
     }
+
     &__expand-icon {
       position: absolute;
       top: 50%;
@@ -111,6 +119,7 @@
       height: 10px;
       transform: translateY(-50%);
     }
+
     &__options-wrapper {
       position: absolute;
       top: 100%;
@@ -127,18 +136,22 @@
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
       transition: transform 120ms cubic-bezier(0.29, 0.97, 0.82, 1.43);
       will-change: transform;
+
       &.options-appear-leave-active {
         transition: none;
       }
+
       &.options-appear-enter,
       &.options-appear-leave-to {
         transform: translateY(-10px);
       }
+
       &.options-appear-enter-to,
       &.options-appear-leave {
         transform: none;
       }
     }
+
     &__option, &__select {
       display: flex;
       align-items: center;
@@ -148,21 +161,25 @@
       font-size: 14px;
       cursor: pointer;
     }
+
     &--opened &__select {
       border-bottom: 1px solid transparent;
       border-bottom-right-radius: unset;
       border-bottom-left-radius: unset;
       z-index: 3;
     }
+
     &--opened &__option,
     &--opened &__select {
       &:hover {
         background-color: lightgray;
       }
     }
+
     &--opened &__expand-icon {
       transform: rotate(180deg) translateY(50%);
     }
+
     &__option-image {
       display: inline-block;
       width: 28px;
