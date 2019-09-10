@@ -29,6 +29,12 @@
         >
           {{ option.searchName }}
         </div>
+        <div
+          v-show="!filteredOption.length"
+          class="custom-select__option"
+        >
+          No items found
+        </div>
       </div>
     </transition>
   </fieldset>
