@@ -15,6 +15,7 @@ require('../../modules/db');
 const Person = require('../../models/person');
 const Address = require('../../models/address');
 const Location = require('../../models/location');
+const RelationType = require('../../models/relationType');
 
 const client = new google.auth.JWT(
   credentials.client_email,
@@ -28,7 +29,7 @@ client.authorize(function (error, tokens) {
     console.log(error);
   } else {
     console.log('Connected!');
-    Promise.all([importPersons(client), importLocations(client)]).then(() => importAddresses(client)).then(() => process.exit());
+    Promise.all([importPersons(client), importLocations(client), importRelationTypes(client)]).then(() => importAddresses(client)).then(() => process.exit());
   }
 });
 
@@ -173,5 +174,52 @@ async function importLocations(cl) {
 
     await newLocation.save();
     console.log(`Location #${index++} was saved!`);
+  }));
+}
+
+/**
+ * Get relationTypes's data from gSheets
+ * @param cl
+ * @returns {Promise<void>}
+ */
+async function importRelationTypes(cl) {
+  const gsApi = google.sheets({ version: 'v4', auth: cl });
+
+  // Get array of relation types
+  let sheetInfo = {
+    spreadsheetId: '1ixL6QPibf6jg3EUPwNoigvN2V1bqOvv4eAQpU74_ros',
+    range: '\'Тип Связи\''
+  };
+
+  let response = await gsApi.spreadsheets.values.get(sheetInfo);
+  const relationTypesArray = response.data.values.slice(2);
+
+  // Get array of synonyms
+  sheetInfo = {
+    spreadsheetId: '1ixL6QPibf6jg3EUPwNoigvN2V1bqOvv4eAQpU74_ros',
+    range: '\'Синонимы\''
+  };
+
+  response = await gsApi.spreadsheets.values.get(sheetInfo);
+  const synonymsArray = response.data.values.slice(2);
+
+  // Save relationTypes to mongoDB
+  let index = 1;
+
+  await Promise.all(relationTypesArray.map(async function (relationRow) {
+    const relationType = {};
+
+    relationType.name = relationRow[0].trim();
+    relationType.synonyms = [];
+    synonymsArray.map((synonymRow) => {
+      if (relationRow[0].trim() === synonymRow[0].trim()) {
+        relationType.synonyms.push({ name: { ru: synonymRow[1].trim() } });
+      }
+      return synonymRow;
+    });
+    const newRelationType = new RelationType(relationType);
+
+    await newRelationType.save();
+    console.log(`RelationType #${index++} was saved!`);
   }));
 }
