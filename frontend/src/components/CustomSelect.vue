@@ -52,7 +52,7 @@
       }
     },
     data() {
-      console.log('value', this.value)
+      console.log('value', this.value);
       return {
         isOpened: false,
         searchQuery: ''
@@ -64,7 +64,7 @@
       },
 
       currentOptionSearchName() {
-        console.log('changed')
+        console.log('changed');
         const value = this.value;
         const current = this.options.find(opt => opt.id === value);
 
@@ -88,7 +88,7 @@
       },
 
       setValue(id) {
-        console.log('input', id)
+        console.log('input', id);
         this.$emit('input', id);
       }
     }

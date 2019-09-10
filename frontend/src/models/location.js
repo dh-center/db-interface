@@ -46,11 +46,20 @@ export default class Location extends BaseModel {
     return ['name', 'architects', 'constructionDate', 'demolitionDate', 'buildingType', 'description', 'coordinateX', 'coordinateY'];
   }
 
+  /**
+   * String to display on select component
+   * @return {string}
+   */
   get searchName() {
     return this.name;
   }
 
-  search(searchQuery) {
-    return this.name.includes(searchQuery);
+  /**
+   * Returns true if search string satisfies the entity
+   * @param {String} searchString
+   * @return {boolean}
+   */
+  search(searchString) {
+    return this.name.includes(searchString);
   }
 }
