@@ -16,6 +16,7 @@ const Person = require('../../models/person');
 const Address = require('../../models/address');
 const Location = require('../../models/location');
 const RelationType = require('../../models/relationType');
+const LocationType = require('../../models/locationType');
 
 const client = new google.auth.JWT(
   credentials.client_email,
@@ -29,7 +30,7 @@ client.authorize(function (error, tokens) {
     console.log(error);
   } else {
     console.log('Connected!');
-    Promise.all([importPersons(client), importLocations(client), importRelationTypes(client)]).then(() => importAddresses(client)).then(() => process.exit());
+    Promise.all([importPersons(client), importLocations(client), importRelationTypes(client), importLocationTypes(client)]).then(() => importAddresses(client)).then(() => process.exit());
   }
 });
 
@@ -221,5 +222,37 @@ async function importRelationTypes(cl) {
 
     await newRelationType.save();
     console.log(`RelationType #${index++} was saved!`);
+  }));
+}
+
+/**
+ * Get locationTypes's data from gSheets
+ * @param cl
+ * @returns {Promise<void>}
+ */
+async function importLocationTypes(cl) {
+  const gsApi = google.sheets({ version: 'v4', auth: cl });
+
+  // Get array of relation types
+  const sheetInfo = {
+    spreadsheetId: '1ixL6QPibf6jg3EUPwNoigvN2V1bqOvv4eAQpU74_ros',
+    range: '\'Тип Локации\''
+  };
+
+  const response = await gsApi.spreadsheets.values.get(sheetInfo);
+  const locationTypesArray = response.data.values.slice(2);
+
+  // Save relationTypes to mongoDB
+  let index = 1;
+
+  await Promise.all(locationTypesArray.map(async function (locationRow) {
+    const locationType = {};
+
+    locationType.name = locationRow[0].trim();
+
+    const newLocationType = new LocationType(locationType);
+
+    await newLocationType.save();
+    console.log(`LocationType #${index++} was saved!`);
   }));
 }
