@@ -7,6 +7,7 @@ import './httpClient';
 import UniqueId from 'vue-unique-id';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
+import './directives';
 
 Sentry.init({
   dsn: process.env.VUE_APP_SENTRY_DSN,
