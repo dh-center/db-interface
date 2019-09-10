@@ -27,6 +27,12 @@
       </router-link>
       <router-link
         class="app__header-link"
+        :to="{name: 'relations-overview'}"
+      >
+        Relations
+      </router-link>
+      <router-link
+        class="app__header-link"
         :to="{name: 'addresses-overview'}"
       >
         Addresses

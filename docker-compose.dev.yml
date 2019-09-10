@@ -23,7 +23,7 @@ services:
     env_file:
       - .env.dev
     ports:
-      - 8080:8080
+      - 8095:8080
     volumes:
       - ./frontend:/frontend
       - /frontend/node_modules

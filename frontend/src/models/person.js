@@ -45,4 +45,21 @@ export default class Person extends BaseModel {
   static get fields() {
     return ['firstName', 'lastName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession', 'description'];
   }
+
+  /**
+   * String to display on select component
+   * @return {string}
+   */
+  get searchName() {
+    return (this.lastName + ' ' + this.firstName + ' ' + this.patronymic).trim();
+  }
+
+  /**
+   * Returns true if search string satisfies the entity
+   * @param {String} searchString
+   * @return {boolean}
+   */
+  search(searchString) {
+    return this.searchName.toLowerCase().includes(searchString.toLowerCase());
+  }
 }
