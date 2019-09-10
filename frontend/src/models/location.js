@@ -60,6 +60,6 @@ export default class Location extends BaseModel {
    * @return {boolean}
    */
   search(searchString) {
-    return this.name.includes(searchString);
+    return this.name.toLowerCase().includes(searchString.toLowerCase());
   }
 }

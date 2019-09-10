@@ -52,7 +52,6 @@ export function defineStandardProperties(to, from, propNames) {
     props[propName] = {
       set(value) {
         from[propName] = value;
-        console.log(from[propName]);
       },
       get() {
         return from[propName];

@@ -60,6 +60,6 @@ export default class Person extends BaseModel {
    * @return {boolean}
    */
   search(searchString) {
-    return this.searchName.includes(searchString);
+    return this.searchName.toLowerCase().includes(searchString.toLowerCase());
   }
 }
