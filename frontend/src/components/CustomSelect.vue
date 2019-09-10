@@ -65,16 +65,15 @@
       },
 
       currentOptionSearchName() {
-        console.log('kek');
         const current = this.options.find(opt => opt.id === this.value);
 
-        return current && current.searchName;
+        return (current || '') && current.searchName;
       }
     },
     watch: {
       currentOptionSearchName: {
         immediate: true,
-        handler(current) {
+        handler() {
           this.searchQuery = this.currentOptionSearchName;
         }
       }
@@ -111,28 +110,13 @@
       z-index: 1;
     }
 
-    &__expand-icon {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      width: 18px;
-      height: 10px;
-      transform: translateY(-50%);
-    }
-
     &__options-wrapper {
       position: absolute;
       top: 100%;
       right: 0;
       left: 0;
       z-index: 2;
-      margin-top: -5px;
-      padding-top: 5px;
       background-color: lightgray;
-      border: 1px solid black;
-      border-top: none;
-      border-bottom-right-radius: 3px;
-      border-bottom-left-radius: 3px;
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
       transition: transform 120ms cubic-bezier(0.29, 0.97, 0.82, 1.43);
       will-change: transform;
@@ -162,31 +146,10 @@
       cursor: pointer;
     }
 
-    &--opened &__select {
-      border-bottom: 1px solid transparent;
-      border-bottom-right-radius: unset;
-      border-bottom-left-radius: unset;
-      z-index: 3;
-    }
-
-    &--opened &__option,
-    &--opened &__select {
+    &--opened &__option {
       &:hover {
-        background-color: lightgray;
+        background-color: #afafaf;
       }
-    }
-
-    &--opened &__expand-icon {
-      transform: rotate(180deg) translateY(50%);
-    }
-
-    &__option-image {
-      display: inline-block;
-      width: 28px;
-      height: 28px;
-      margin-right: 6px;
-      font-size: 13px;
-      line-height: 28px;
     }
   }
 </style>
