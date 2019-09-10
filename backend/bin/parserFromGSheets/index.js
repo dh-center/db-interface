@@ -233,7 +233,7 @@ async function importRelationTypes(cl) {
 async function importLocationTypes(cl) {
   const gsApi = google.sheets({ version: 'v4', auth: cl });
 
-  // Get array of relation types
+  // Get array of location types
   const sheetInfo = {
     spreadsheetId: '1ixL6QPibf6jg3EUPwNoigvN2V1bqOvv4eAQpU74_ros',
     range: '\'Тип Локации\''
@@ -242,7 +242,7 @@ async function importLocationTypes(cl) {
   const response = await gsApi.spreadsheets.values.get(sheetInfo);
   const locationTypesArray = response.data.values.slice(2);
 
-  // Save relationTypes to mongoDB
+  // Save locationTypes to mongoDB
   let index = 1;
 
   await Promise.all(locationTypesArray.map(async function (locationRow) {
