@@ -17,6 +17,7 @@ const Address = require('../../models/address');
 const Location = require('../../models/location');
 const RelationType = require('../../models/relationType');
 const LocationType = require('../../models/locationType');
+const Relation = require('../../models/relation');
 
 const client = new google.auth.JWT(
   credentials.client_email,
@@ -30,7 +31,10 @@ client.authorize(function (error, tokens) {
     console.log(error);
   } else {
     console.log('Connected!');
-    Promise.all([importPersons(client), importLocations(client), importRelationTypes(client), importLocationTypes(client)]).then(() => importAddresses(client)).then(() => process.exit());
+    Promise.all([importPersons(client), importLocations(client), importRelationTypes(client), importLocationTypes(client)])
+      .then(() => importAddresses(client))
+      .then(() => importRelations(client))
+      .then(() => process.exit());
   }
 });
 
@@ -254,5 +258,80 @@ async function importLocationTypes(cl) {
 
     await newLocationType.save();
     console.log(`LocationType #${index++} was saved!`);
+  }));
+}
+
+/**
+ * Get relation's data from gSheets
+ * @param cl
+ * @returns {Promise<void>}
+ */
+async function importRelations(cl) {
+  const gsApi = google.sheets({ version: 'v4', auth: cl });
+
+  // Get array of location types
+  const sheetInfo = {
+    spreadsheetId: '1ixL6QPibf6jg3EUPwNoigvN2V1bqOvv4eAQpU74_ros',
+    range: '\'Персона Локация Связь\'!A3:H152'
+  };
+
+  const response = await gsApi.spreadsheets.values.get(sheetInfo);
+  let relationsArray = response.data.values;
+
+  relationsArray = relationsArray.reduce(function (result, row) {
+    if (row.length > 1) {
+      while (row.length < 8) {
+        row.push('');
+      }
+      row = row.map(rowItem => rowItem.trim());
+      result.push(row);
+    }
+    return result;
+  }, []);
+
+  // Save relations to mongoDB
+  let index = 1;
+
+  await Promise.all(relationsArray.map(async function (relationRow) {
+    const relation = {};
+
+    relation.quote = relationRow[7];
+    let person = await Person.findOne({ lastName: { ru: relationRow[2] }, firstName: { ru: relationRow[3] }, patronymic: { ru: relationRow[4] } });
+
+    if (person) {
+      relation.personId = person._id;
+    } else {
+      person = new Person({ lastName: { ru: relationRow[2] }, firstName: { ru: relationRow[3] }, patronymic: { ru: relationRow[4] } });
+      relation.personId = person._id;
+      await person.save();
+      console.log(`Person ${person.lastName} was saved!`);
+      person = null;
+    }
+    let location = await Location.findOne({ name: { ru: relationRow[0] } });
+
+    if (location) {
+      relation.locationId = location._id;
+    } else {
+      location = new Location({ name: { ru: relationRow[0] } });
+      relation.locationId = location._id;
+      await location.save();
+      console.log(`Location ${location.name} was saved!`);
+      location = null;
+    }
+    let relationType = await RelationType.findOne({ name: { ru: relationRow[1] } });
+
+    if (relationType) {
+      relation.relationId = relationType._id;
+    } else {
+      relationType = new RelationType({ name: { ru: relationRow[1] } });
+      relation.relationId = relationType._id;
+      await relationType.save();
+      console.log(`RelationType ${relationType.name} was saved!`);
+      relationType = null;
+    }
+    const newRelation = new Relation(relation);
+
+    await newRelation.save();
+    console.log(`Relation #${index++} was saved!`);
   }));
 }

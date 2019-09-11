@@ -37,8 +37,8 @@
       <label :for="$id('quote')">{{ $t('form.quotes') }}: </label>
       <textarea
         :id="$id('quote')"
-
         v-model="entity.quote"
+        class="entity-info__description"
         :disabled="!editable"
       />
     </div>
