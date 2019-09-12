@@ -66,7 +66,7 @@
         }
 
         notifier.show({
-          message: 'Saved successfully',
+          message: this.$t('notifications.savedSuccessfully'),
           time: 2000
         });
       }

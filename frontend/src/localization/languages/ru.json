@@ -12,6 +12,9 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "notifications": {
+    "savedSuccessfully": "Успешно сохранено"
+  },
   "entities": {
     "viewChanges": "Посмотреть изменения",
     "save": "Сохранить",

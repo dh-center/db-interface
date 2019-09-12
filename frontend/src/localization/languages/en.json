@@ -12,6 +12,9 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "notifications": {
+    "savedSuccessfully": "Saved successfully"
+  },
   "entities": {
     "viewChanges": "View changes",
     "save": "Save",
