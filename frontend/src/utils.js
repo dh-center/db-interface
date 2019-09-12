@@ -60,3 +60,7 @@ export function defineStandardProperties(to, from, propNames) {
   });
   Object.defineProperties(to, props);
 }
+
+export function decodeToken(token) {
+  return JSON.parse(atob(token.split('.')[1]));
+}

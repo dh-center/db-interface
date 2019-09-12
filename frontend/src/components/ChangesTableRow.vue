@@ -4,7 +4,10 @@
       <button @click="$emit('onViewButtonClicked')">
         {{ $t('entities.view') }}
       </button>
-      <button @click="$emit('onApproveButtonClicked')">
+      <button
+        v-if="$store.state.auth.user.isAdmin"
+        @click="$emit('onApproveButtonClicked')"
+      >
         {{ $t('entities.approve') }}
       </button>
     </td>
