@@ -12,7 +12,13 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "entities": {
+    "viewChanges": "View changes",
+    "save": "Save"
+  },
   "persons": {
+    "linkTitle": "Persons",
+    "addNew": "Add new person",
     "firstName": "First name",
     "lastName": "Last name",
     "patronymic": "Patronymic",
@@ -23,6 +29,7 @@
     "deathDate": "Date of death"
   },
   "locations": {
+    "addNew": "Add new location",
     "name": "Name",
     "address": "Address",
     "constructionDate": "Construction date",

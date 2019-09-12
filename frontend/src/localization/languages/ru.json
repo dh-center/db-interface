@@ -12,7 +12,13 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "entities": {
+    "viewChanges": "Посмотреть изменения",
+    "save": "Сохранить"
+  },
   "persons": {
+    "linkTitle": "Персоны",
+    "addNew": "Добавить новую персону",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "patronymic": "Отчество",

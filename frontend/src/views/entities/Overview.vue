@@ -4,13 +4,13 @@
       class="link"
       :to="{name: `${entityName}-create`}"
     >
-      Add new location
+      {{ $t(entityName+'.addNew') }}
     </router-link>
     <router-link
       class="link"
       :to="{name: `${entityName}-changes`}"
     >
-      View changes
+      {{ $t('entities.viewChanges') }}
     </router-link>
     <router-view :model="EntityModel" />
   </div>
