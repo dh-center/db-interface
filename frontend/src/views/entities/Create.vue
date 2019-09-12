@@ -18,6 +18,7 @@
 
   import axios from 'axios';
   import jsonpatch from 'fast-json-patch';
+  import notifier from 'codex-notifier';
 
   export default {
     name: 'EntitiesOverviewSpecific',
@@ -63,6 +64,11 @@
             }
           });
         }
+
+        notifier.show({
+          message: 'Saved successfully',
+          time: 2000
+        });
       }
     }
   };
