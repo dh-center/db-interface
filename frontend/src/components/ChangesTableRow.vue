@@ -2,10 +2,10 @@
   <tr>
     <td>
       <button @click="$emit('onViewButtonClicked')">
-        View
+        {{ $t('entities.view') }}
       </button>
       <button @click="$emit('onApproveButtonClicked')">
-        Approve
+        {{ $t('entities.approve') }}
       </button>
     </td>
     <td

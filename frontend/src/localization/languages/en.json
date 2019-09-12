@@ -19,7 +19,8 @@
     "viewChanges": "View changes",
     "save": "Save",
     "actions": "Actions",
-    "view": "View"
+    "view": "View",
+    "approve": "Approve"
   },
   "persons": {
     "linkTitle": "Persons",
