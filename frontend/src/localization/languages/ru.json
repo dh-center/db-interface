@@ -14,7 +14,9 @@
   },
   "entities": {
     "viewChanges": "Посмотреть изменения",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "actions": "Действия",
+    "view": "Обзор"
   },
   "persons": {
     "linkTitle": "Персоны",
@@ -29,12 +31,17 @@
     "deathDate": "Дата смерти"
   },
   "locations": {
+    "linkTitle": "Локации",
+    "addNew": "Добавить новую локацию",
     "name": "Имя",
     "address": "Адрес",
+    "architects": "Архитекторы",
     "constructionDate": "Дата постройки",
     "demolitionDate": "Дата сноса",
     "buildingType": "Тип строения",
-    "description": "Описание"
+    "description": "Описание",
+    "coordinateX": "координата X",
+    "coordinateY": "координата Y"
   },
   "form": {
     "header": "Форма",
@@ -45,6 +52,23 @@
     "relation": "Связь",
     "quotes": "Цитата и ссылка на издание",
     "save": "Сохранить"
+  },
+  "relations": {
+    "addNew": "Добавить новую связь",
+    "linkTitle": "Связи"
+  },
+  "addresses": {
+    "addNew": "Добавить новый адрес",
+    "linkTitle": "Адреса",
+    "street": "Улица",
+    "homeNumber": "Номер дома",
+    "housing": "Корпус",
+    "build": "Строение"
+  },
+  "relationTypes": {
+    "linkTitle": "Типы связей",
+    "addNew": "Добавить новый тип",
+    "name": "Название"
   },
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",
