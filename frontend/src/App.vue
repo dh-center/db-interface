@@ -17,31 +17,31 @@
         class="app__header-link"
         :to="{name: 'persons-overview'}"
       >
-        Persons
+        {{ $t('persons.linkTitle') }}
       </router-link>
       <router-link
         class="app__header-link"
         :to="{name: 'locations-overview'}"
       >
-        Locations
+        {{ $t('locations.linkTitle') }}
       </router-link>
       <router-link
         class="app__header-link"
         :to="{name: 'relations-overview'}"
       >
-        Relations
+        {{ $t('relations.linkTitle') }}
       </router-link>
       <router-link
         class="app__header-link"
         :to="{name: 'addresses-overview'}"
       >
-        Addresses
+        {{ $t('addresses.linkTitle') }}
       </router-link>
       <router-link
         class="app__header-link"
         :to="{name: 'relationTypes-overview'}"
       >
-        Relation types
+        {{ $t('relationTypes.linkTitle') }}
       </router-link>
       <DataLanguageSelect class="app__data-language-select" />
     </header>

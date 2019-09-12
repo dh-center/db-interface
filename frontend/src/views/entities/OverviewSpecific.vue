@@ -16,7 +16,7 @@
       />
     </div>
     <button @click="saveEntity">
-      Save
+      {{ $t('entities.save') }}
     </button>
   </div>
 </template>
@@ -27,6 +27,7 @@
   import axios from 'axios';
   import jsonpatch from 'fast-json-patch';
   import cloneDeep from 'lodash.clonedeep';
+  import notifier from 'codex-notifier';
 
   export default {
     name: 'EntitiesOverviewSpecific',
@@ -79,6 +80,11 @@
           // Create new changes record
           this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, this.changedEntity.data);
         }
+
+        notifier.show({
+          message: this.$t('notifications.savedSuccessfully'),
+          time: 2000
+        });
       }
     }
   };

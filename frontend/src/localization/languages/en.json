@@ -12,7 +12,18 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "notifications": {
+    "savedSuccessfully": "Saved successfully"
+  },
+  "entities": {
+    "viewChanges": "View changes",
+    "save": "Save",
+    "actions": "Actions",
+    "view": "View"
+  },
   "persons": {
+    "linkTitle": "Persons",
+    "addNew": "Add new person",
     "firstName": "First name",
     "lastName": "Last name",
     "patronymic": "Patronymic",
@@ -23,12 +34,35 @@
     "deathDate": "Date of death"
   },
   "locations": {
+    "linkTitle": "Locations",
+    "addNew": "Add new location",
     "name": "Name",
+    "architects": "Architects",
     "address": "Address",
     "constructionDate": "Construction date",
     "demolitionDate": "Demolition date",
     "buildingType": "Building type",
-    "description": "Description"
+    "description": "Description",
+    "coordinateX": "coordinate X",
+    "coordinateY": "coordinate Y"
+  },
+  "relations": {
+    "addNew": "Add new relation",
+    "linkTitle": "Relations"
+  },
+  "addresses": {
+    "addNew": "Add new address",
+    "linkTitle": "Addresses",
+    "street": "Street",
+    "homeNumber": "Home number",
+    "housing": "Housing",
+    "build": "Build"
+  },
+  "relationTypes": {
+    "linkTitle": "Relation types",
+    "addNew": "Add new relation type",
+    "name": "Name",
+    "synonyms": "synonyms"
   },
   "form": {
     "header": "Form",
