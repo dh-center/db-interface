@@ -58,7 +58,8 @@
   "relationTypes": {
     "linkTitle": "Relation types",
     "addNew": "Add new relation type",
-    "name": "Name"
+    "name": "Name",
+    "synonyms": "synonyms"
   },
   "form": {
     "header": "Form",

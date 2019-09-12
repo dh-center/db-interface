@@ -9,7 +9,6 @@
         v-model="entity.name"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('locations.name')"
       >
     </div>
     <div class="entity-info__section">
@@ -21,7 +20,6 @@
         v-model="entity.constructionDate"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('locations.constructionDate')"
       >
     </div>
     <div class="entity-info__section">
@@ -33,7 +31,6 @@
         v-model="entity.demolitionDate"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('locations.demolitionDate')"
       >
     </div>
     <div class="entity-info__section">
@@ -45,7 +42,6 @@
         v-model="entity.buildingType"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('locations.buildingType')"
       >
     </div>
     <div class="entity-info__section">
@@ -57,7 +53,6 @@
         v-model="entity.description"
         class="entity-info__description"
         :disabled="!editable"
-        :placeholder="$t('locations.description')"
       />
     </div>
   </div>

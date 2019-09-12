@@ -68,7 +68,8 @@
   "relationTypes": {
     "linkTitle": "Типы связей",
     "addNew": "Добавить новый тип",
-    "name": "Название"
+    "name": "Название",
+    "synonyms": "Синонимы"
   },
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",

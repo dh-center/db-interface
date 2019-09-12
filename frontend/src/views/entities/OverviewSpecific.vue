@@ -16,7 +16,7 @@
       />
     </div>
     <button @click="saveEntity">
-      Save
+      {{ $t('entities.save') }}
     </button>
   </div>
 </template>
