@@ -296,7 +296,7 @@ async function importRelations(cl) {
     const relation = {};
 
     relation.quote = relationRow[7];
-    let person = await Person.findOne({ lastName: { ru: new RegExp('^relationRow[2]$', 'i') }, firstName: { ru: new RegExp('^relationRow[3]$', 'i') }, patronymic: { ru: new RegExp('^relationRow[4]$', 'i') } });
+    let person = await Person.findOne({ lastName: { ru: new RegExp(`${relationRow[2]}`, 'i') }, firstName: { ru: new RegExp(`${relationRow[3]}`, 'i') }, patronymic: { ru: new RegExp(`${relationRow[4]}`, 'i') } });
 
     if (person) {
       relation.personId = person._id;
@@ -307,7 +307,7 @@ async function importRelations(cl) {
       console.log(`Person ${person.lastName} was saved!`);
       person = null;
     }
-    let location = await Location.findOne({ name: { ru: new RegExp('^relationRow[0]$', 'i') } });
+    let location = await Location.findOne({ name: { ru: new RegExp(`${relationRow[0]}`, 'i') } });
 
     if (location) {
       relation.locationId = location._id;
@@ -318,7 +318,7 @@ async function importRelations(cl) {
       console.log(`Location ${location.name} was saved!`);
       location = null;
     }
-    let relationType = await RelationType.findOne({ name: { ru: new RegExp('^relationRow[1]$', 'i') } });
+    let relationType = await RelationType.findOne({ name: { ru: new RegExp(`${relationRow[1]}`, 'i') } });
 
     if (relationType) {
       relation.relationId = relationType._id;
