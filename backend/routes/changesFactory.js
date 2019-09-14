@@ -59,7 +59,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
   router.patch(`/changes/${entityType}/:changesRecordId`, async (req, res) => {
     const changeRecord = await Change.findById(req.params.changesRecordId);
 
-    if (res.locals.user._id !== changeRecord.user) {
+    if (res.locals.user._id.toString() !== changeRecord.user.toString()) {
       throw new ChangesPatchingForbiddenError();
     }
 
