@@ -60,3 +60,12 @@ export function defineStandardProperties(to, from, propNames) {
   });
   Object.defineProperties(to, props);
 }
+
+/**
+ * Decodes JWT and returns it's JSON content
+ * @param {String} token - jwt token
+ * @returns {Object}
+ */
+export function decodeToken(token) {
+  return JSON.parse(atob(token.split('.')[1]));
+}
