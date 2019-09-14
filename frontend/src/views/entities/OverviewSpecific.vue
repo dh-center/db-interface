@@ -12,14 +12,14 @@
         v-if="changedEntity"
         ref="changedEntityInfo"
         :entity="changedEntity"
-        :editable="lastChangesRecord? $store.state.auth.user.id === lastChangesRecord.user: true"
+        :editable="isUserCanEditThisEntity"
       />
     </div>
-    <button @click="saveEntity">
+    <button @click="saveEntity" v-if="isUserCanEditThisEntity">
       {{ $t('entities.save') }}
     </button>
     <button
-      v-if="lastChangesRecord"
+      v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
       @click="approve"
     >
       {{ $t('entities.approve') }}
@@ -50,6 +50,11 @@
         changedEntity: null,
         infoComponent: null
       };
+    },
+    computed: {
+      isUserCanEditThisEntity() {
+        return this.lastChangesRecord? this.$store.state.auth.user.id === this.lastChangesRecord.user: true;
+      }
     },
     async mounted() {
       await this.fetchData();

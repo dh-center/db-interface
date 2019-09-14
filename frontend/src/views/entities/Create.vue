@@ -4,14 +4,17 @@
       :is="infoComponent"
       v-if="entity"
       ref="entityInfo"
-      :editable="changeRecord? ($store.state.auth.user.id === changeRecord.user): true"
+      :editable="isUserCanEditThisEntity"
       :entity="entity"
     />
-    <button @click="saveEntity">
+    <button
+      v-if="isUserCanEditThisEntity"
+      @click="saveEntity"
+    >
       {{ $t('entities.save') }}
     </button>
     <button
-      v-if="$store.state.auth.user.isAdmin && this.$route.params.changeRecordId"
+      v-if="$store.state.auth.user.isAdmin && $route.params.changeRecordId"
       @click="approve"
     >
       {{ $t('entities.approve') }}
@@ -40,6 +43,11 @@
         changeRecord: null,
         infoComponent: null
       };
+    },
+    computed: {
+      isUserCanEditThisEntity() {
+        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
+      }
     },
     async mounted() {
       await this.fetchData();
