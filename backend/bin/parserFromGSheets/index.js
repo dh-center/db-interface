@@ -71,17 +71,21 @@ async function importPersons(cl) {
   let index = 1;
 
   await asyncForEach(personsArray, async function (row) {
-    const personData = {};
+    const person = {};
 
-    personData.lastName = row[0];
-    personData.firstName = row[1];
-    personData.patronymic = row[2];
-    personData.pseudonym = row[3];
-    personData.birthDate = row[4];
-    personData.deathDate = row[5];
-    personData.profession = row[6];
-    personData.description = row[7];
-    const newPerson = new Person(personData);
+    person.lastName = row[0];
+    person.firstName = row[1];
+    person.patronymic = row[2];
+    person.pseudonym = row[3];
+    person.birthDate = row[4];
+    person.deathDate = row[5];
+    person.profession = row[6];
+    person.description = row[7];
+    person.sourceLink = row[8];
+    person.wikiLink = row[9];
+    person.photoLinks = row[10].split(',').map(link => link.trim());
+    person.mainPhotoLink = row[11];
+    const newPerson = new Person(person);
 
     await newPerson.save();
     console.log(`Person #${index++} was saved!`);
