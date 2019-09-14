@@ -64,7 +64,8 @@
     "street": "Street",
     "homeNumber": "Home number",
     "housing": "Housing",
-    "build": "Build"
+    "build": "Build",
+    "link": "Link"
   },
   "relationTypes": {
     "linkTitle": "Relation types",

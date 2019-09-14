@@ -9,7 +9,6 @@
         v-model="entity.street"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('addresses.street')"
       >
     </div>
     <div class="entity-info__section">
@@ -21,7 +20,6 @@
         v-model="entity.homeNumber"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('addresses.homeNumber')"
       >
     </div>
     <div class="entity-info__section">
@@ -33,7 +31,6 @@
         v-model="entity.housing"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('addresses.housing')"
       >
     </div>
     <div class="entity-info__section">
@@ -45,7 +42,17 @@
         v-model="entity.build"
         type="text"
         :disabled="!editable"
-        :placeholder="$t('addresses.build')"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('link')">
+        {{ $t('addresses.link') }}
+      </label>
+      <input
+        :id="$id('link')"
+        v-model="entity.link"
+        type="text"
+        :disabled="!editable"
       >
     </div>
   </div>
