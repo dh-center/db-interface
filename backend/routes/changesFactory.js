@@ -3,6 +3,7 @@ const router = express.Router();
 const Change = require('../models/change');
 const jsonpatch = require('fast-json-patch');
 const mongoose = require('mongoose');
+const {ApproveForbiddenError} = require('../errorTypes');
 
 /**
  *
@@ -65,6 +66,10 @@ module.exports = function changesFactory(entityType, EntityModel) {
    */
   router.put(`/changes/${entityType}/:changeId/approval`, async (req, res) => {
     const changeRecord = await Change.findById(req.params.changeId).populate('entity');
+
+    if (!res.locals.user.isAdmin) {
+      throw new ApproveForbiddenError();
+    }
 
     if (changeRecord.entity) {
       const updatedDocument = jsonpatch.applyPatch(JSON.parse(JSON.stringify(changeRecord.entity)), changeRecord.changeList).newDocument;

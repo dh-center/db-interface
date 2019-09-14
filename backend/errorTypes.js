@@ -54,9 +54,24 @@ class UsernameDuplicationError extends ApiError {
   }
 }
 
+/**
+ * Throws when trying to register with already registered username
+ */
+class ApproveForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'APPROVE_FORBIDDEN';
+  }
+}
+
 module.exports = {
   ApiError,
   NoUserWithSuchUsernameError,
   WrongUserPasswordError,
+  ApproveForbiddenError,
   UsernameDuplicationError
 };

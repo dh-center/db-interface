@@ -18,6 +18,12 @@
     <button @click="saveEntity">
       {{ $t('entities.save') }}
     </button>
+    <button
+      v-if="lastChangesRecord"
+      @click="approve"
+    >
+      {{ $t('entities.approve') }}
+    </button>
   </div>
 </template>
 
@@ -49,6 +55,19 @@
       await this.fetchData();
     },
     methods: {
+      async approve() {
+        try {
+          await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
+          this.$router.push({ name: `${this.model.entityType}-overview` });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+        }
+      },
+
       async fetchData() {
         this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
 

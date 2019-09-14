@@ -10,6 +10,12 @@
     <button @click="saveEntity">
       {{ $t('entities.save') }}
     </button>
+    <button
+      v-if="$store.state.auth.user.isAdmin && this.$route.params.changeRecordId"
+      @click="approve"
+    >
+      {{ $t('entities.approve') }}
+    </button>
   </div>
 </template>
 
@@ -51,6 +57,14 @@
           this.entity = new this.model();
         }
       },
+
+      async approve() {
+        const { changeRecordId } = this.$route.params;
+
+        await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
+        this.$router.push({ name: `${this.model.entityType}-overview` });
+      },
+
       async saveEntity() {
         if (this.$route.params.changeRecordId) {
           await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, this.entity.data);
