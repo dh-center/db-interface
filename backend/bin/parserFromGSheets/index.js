@@ -1,6 +1,7 @@
 const { google } = require('googleapis');
 const credentials = require('./credentials');
 const path = require('path');
+const asyncForEach = require('./asyncForEach');
 
 /**
  * Read environment settings
@@ -26,15 +27,18 @@ const client = new google.auth.JWT(
   [ 'https://www.googleapis.com/auth/spreadsheets.readonly' ]
 );
 
-client.authorize(function (error, tokens) {
+client.authorize(async function (error, tokens) {
   if (error) {
     console.log(error);
   } else {
     console.log('Connected!');
-    Promise.all([importPersons(client), importLocations(client), importRelationTypes(client), importLocationTypes(client)])
-      .then(() => importAddresses(client))
-      .then(() => importRelations(client))
-      .then(() => process.exit());
+    await importRelationTypes(client);
+    await importLocationTypes(client);
+    await importPersons(client);
+    await importLocations(client);
+    await importAddresses(client);
+    await importRelations(client);
+    process.exit();
   }
 });
 
@@ -292,40 +296,44 @@ async function importRelations(cl) {
   // Save relations to mongoDB
   let index = 1;
 
-  await Promise.all(relationsArray.map(async function (relationRow) {
+  await asyncForEach(relationsArray, async function (relationRow) {
     const relation = {};
 
     relation.quote = relationRow[7];
-    let person = await Person.findOne({ lastName: { ru: new RegExp(`${relationRow[2]}`, 'i') }, firstName: { ru: new RegExp(`${relationRow[3]}`, 'i') }, patronymic: { ru: new RegExp(`${relationRow[4]}`, 'i') } });
+    let person = await Person.findOne({ 'lastName.ru': { $regex: relationRow[2], $options: 'i' }, 'firstName.ru': { $regex: relationRow[3], $options: 'i' }, 'patronymic.ru': { $regex: relationRow[4], $options: 'i' } });
 
     if (person) {
       relation.personId = person._id;
     } else {
-      person = new Person({ lastName: { ru: relationRow[2] }, firstName: { ru: relationRow[3] }, patronymic: { ru: relationRow[4] } });
+      person = new Person({ 'lastName.ru': relationRow[2], 'firstName.ru': relationRow[3], 'patronymic.ru': relationRow[4] });
+
+      person = await person.save();
       relation.personId = person._id;
-      await person.save();
       console.log(`Person ${person.lastName} was saved!`);
+
       person = null;
     }
-    let location = await Location.findOne({ name: { ru: new RegExp(`${relationRow[0]}`, 'i') } });
+    let location = await Location.findOne({ 'name.ru': { $regex: relationRow[0], $options: 'i' } });
 
     if (location) {
       relation.locationId = location._id;
     } else {
-      location = new Location({ name: { ru: relationRow[0] } });
+      location = new Location({ 'name.ru': relationRow[0] });
+
+      location = await location.save();
       relation.locationId = location._id;
-      await location.save();
       console.log(`Location ${location.name} was saved!`);
+
       location = null;
     }
-    let relationType = await RelationType.findOne({ name: { ru: new RegExp(`${relationRow[1]}`, 'i') } });
+    let relationType = await RelationType.findOne({ 'name.ru': { $regex: relationRow[1], $options: 'i' } });
 
     if (relationType) {
       relation.relationId = relationType._id;
     } else {
-      relationType = new RelationType({ name: { ru: relationRow[1] } });
+      relationType = new RelationType({ 'name.ru': relationRow[1] });
+      relationType = await relationType.save();
       relation.relationId = relationType._id;
-      await relationType.save();
       console.log(`RelationType ${relationType.name} was saved!`);
       relationType = null;
     }
@@ -333,5 +341,5 @@ async function importRelations(cl) {
 
     await newRelation.save();
     console.log(`Relation #${index++} was saved!`);
-  }));
+  });
 }
