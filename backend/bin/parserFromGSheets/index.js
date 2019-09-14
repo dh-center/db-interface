@@ -70,21 +70,21 @@ async function importPersons(cl) {
 
   let index = 1;
 
-  await asyncForEach(personsArray, async function (row) {
+  await asyncForEach(personsArray, async function (personRow) {
     const person = {};
 
-    person.lastName = row[0];
-    person.firstName = row[1];
-    person.patronymic = row[2];
-    person.pseudonym = row[3];
-    person.birthDate = row[4];
-    person.deathDate = row[5];
-    person.profession = row[6];
-    person.description = row[7];
-    person.sourceLink = row[8];
-    person.wikiLink = row[9];
-    person.photoLinks = row[10].split(',').map(link => link.trim());
-    person.mainPhotoLink = row[11];
+    person.lastName = personRow[0];
+    person.firstName = personRow[1];
+    person.patronymic = personRow[2];
+    person.pseudonym = personRow[3];
+    person.birthDate = personRow[4];
+    person.deathDate = personRow[5];
+    person.profession = personRow[6];
+    person.description = personRow[7];
+    person.sourceLink = personRow[8];
+    person.wikiLink = personRow[9];
+    person.photoLinks = personRow[10].split(',').map(link => link.trim());
+    person.mainPhotoLink = personRow[11];
     const newPerson = new Person(person);
 
     await newPerson.save();
@@ -136,7 +136,7 @@ async function importAddresses(cl) {
 
     await newAddress.save();
     console.log(`Address #${index++} was saved!`);
-    await Location.updateMany({ name: { ru: addressRow[5] } }, { $push: { addressesId: newAddress._id } });
+    await Location.updateMany({ 'name.ru': addressRow[5] }, { $push: { addressesId: newAddress._id } });
   });
 }
 
@@ -239,7 +239,7 @@ async function importRelationTypes(cl) {
     relationType.synonyms = [];
     synonymsArray.map((synonymRow) => {
       if (relationRow[0].trim() === synonymRow[0].trim()) {
-        relationType.synonyms.push({ name: { ru: synonymRow[1].trim() } });
+        relationType.synonyms.push({ 'name.ru': synonymRow[1].trim() });
       }
       return synonymRow;
     });
