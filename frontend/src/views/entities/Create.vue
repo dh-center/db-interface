@@ -4,7 +4,7 @@
       :is="infoComponent"
       v-if="entity"
       ref="entityInfo"
-      :editable="changeRecord && ($store.state.auth.user.id === changeRecord.user)"
+      :editable="changeRecord? ($store.state.auth.user.id === changeRecord.user): true"
       :entity="entity"
     />
     <button @click="saveEntity">
