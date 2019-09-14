@@ -42,7 +42,7 @@
     "architects": "Архитекторы",
     "constructionDate": "Дата постройки",
     "demolitionDate": "Дата сноса",
-    "buildingType": "Тип строения",
+    "locationTypeId": "Тип строения",
     "description": "Описание",
     "coordinateX": "Координата X",
     "coordinateY": "Координата Y"
