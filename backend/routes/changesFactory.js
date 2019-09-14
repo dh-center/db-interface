@@ -3,7 +3,7 @@ const router = express.Router();
 const Change = require('../models/change');
 const jsonpatch = require('fast-json-patch');
 const mongoose = require('mongoose');
-const {ApproveForbiddenError} = require('../errorTypes');
+const { ApproveForbiddenError } = require('../errorTypes');
 
 /**
  *
