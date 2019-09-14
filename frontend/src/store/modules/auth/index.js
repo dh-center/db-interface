@@ -5,6 +5,7 @@ import {
 } from './actionTypes';
 import { RESET_STORE } from '../../actions';
 import axios from 'axios';
+import { decodeToken } from '../../../utils';
 
 /**
  * Mutations enum for this module
@@ -17,6 +18,7 @@ const mutationTypes = {
  * Module state
  * @typedef {object} AuthModuleState
  * @property {string} accessToken - user's access token
+ * @property {User} user
  */
 
 /**
@@ -25,7 +27,11 @@ const mutationTypes = {
  */
 function initialState() {
   return {
-    accessToken: ''
+    accessToken: '',
+    user: {
+      id: '',
+      isAdmin: false
+    }
   };
 }
 
@@ -86,6 +92,10 @@ const mutations = {
    */
   [mutationTypes.SET_TOKEN](state, accessToken) {
     state.accessToken = accessToken;
+    const jwtData = decodeToken(accessToken);
+
+    state.user.isAdmin = jwtData.isAdmin;
+    state.user.id = jwtData.id;
   },
 
   /**

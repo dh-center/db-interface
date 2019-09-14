@@ -19,7 +19,8 @@
     "viewChanges": "View changes",
     "save": "Save",
     "actions": "Actions",
-    "view": "View"
+    "view": "View",
+    "approve": "Approve"
   },
   "persons": {
     "linkTitle": "Persons",
@@ -81,7 +82,9 @@
   },
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "User with that username already exists",
+    "APPROVE_FORBIDDEN": "You cannot approve changes since you are not an admin",
     "WRONG_USER_PASSWORD": "Wrong password",
+    "CHANGES_PATCHING_FORBIDDEN": "You cannot patch changes since you are not an author of this changes",
     "NO_USER_WITH_SUCH_USERNAME": "No user with this username",
     "SOMETHING_WENT_WRONG": "Something went wrong"
   }

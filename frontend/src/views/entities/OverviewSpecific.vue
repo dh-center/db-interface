@@ -12,11 +12,20 @@
         v-if="changedEntity"
         ref="changedEntityInfo"
         :entity="changedEntity"
-        editable
+        :editable="isUserCanEditThisEntity"
       />
     </div>
-    <button @click="saveEntity">
+    <button
+      v-if="isUserCanEditThisEntity"
+      @click="saveEntity"
+    >
       {{ $t('entities.save') }}
+    </button>
+    <button
+      v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
+      @click="approve"
+    >
+      {{ $t('entities.approve') }}
     </button>
   </div>
 </template>
@@ -45,10 +54,28 @@
         infoComponent: null
       };
     },
+    computed: {
+      isUserCanEditThisEntity() {
+        return this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true;
+      }
+    },
     async mounted() {
       await this.fetchData();
     },
     methods: {
+      async approve() {
+        try {
+          await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
+          this.$router.push({ name: `${this.model.entityType}-overview` });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+        }
+      },
+
       async fetchData() {
         this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
 
@@ -75,7 +102,17 @@
       async saveEntity() {
         if (this.lastChangesRecord) {
           // Update existing changes record
-          await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
+          try {
+            await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
+
+            return;
+          }
         } else {
           // Create new changes record
           this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, this.changedEntity.data);

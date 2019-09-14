@@ -2,10 +2,13 @@
   <tr>
     <td>
       <button @click="$emit('onViewButtonClicked')">
-        View
+        {{ $t('entities.view') }}
       </button>
-      <button @click="$emit('onApproveButtonClicked')">
-        Approve
+      <button
+        v-if="$store.state.auth.user.isAdmin"
+        @click="$emit('onApproveButtonClicked')"
+      >
+        {{ $t('entities.approve') }}
       </button>
     </td>
     <td
