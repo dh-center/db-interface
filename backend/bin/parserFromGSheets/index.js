@@ -55,13 +55,14 @@ async function importPersons(cl) {
   };
 
   const response = await gsApi.spreadsheets.values.get(sheetInfo);
-  let dataArray = response.data.values.slice(2);
+  let personsArray = response.data.values.slice(2);
 
-  dataArray = dataArray.reduce(function (result, row) {
+  personsArray = personsArray.reduce(function (result, row) {
     if (row.length > 1) {
       while (row.length < 13) {
         row.push('');
       }
+      row = row.map(rowItem => rowItem.trim());
       result.push(row);
     }
     return result;
@@ -69,9 +70,7 @@ async function importPersons(cl) {
 
   let index = 1;
 
-  await Promise.all(dataArray.map(async function (row) {
-    row = row.map(rowItem => rowItem.trim());
-
+  await asyncForEach(personsArray, async function (row) {
     const personData = {};
 
     personData.lastName = row[0];
@@ -86,7 +85,7 @@ async function importPersons(cl) {
 
     await newPerson.save();
     console.log(`Person #${index++} was saved!`);
-  }));
+  });
 }
 
 /**
@@ -120,7 +119,7 @@ async function importAddresses(cl) {
   // Save addresses to mongoDB
   let index = 1;
 
-  await Promise.all(addressesArray.map(async function (addressRow) {
+  await asyncForEach(addressesArray, async function (addressRow) {
     const address = {
       street: addressRow[0],
       homeNumber: addressRow[1],
@@ -133,7 +132,7 @@ async function importAddresses(cl) {
     await newAddress.save();
     console.log(`Address #${index++} was saved!`);
     await Location.updateMany({ name: { ru: addressRow[5] } }, { $push: { addressesId: newAddress._id } });
-  }));
+  });
 }
 
 /**
@@ -167,14 +166,24 @@ async function importLocations(cl) {
   // Save locations to mongoDB
   let index = 1;
 
-  await Promise.all(locationsArray.map(async function (locationRow) {
+  await asyncForEach(locationsArray, async function (locationRow) {
     const location = {};
 
     location.name = locationRow[0];
     location.architects = locationRow[1].split(',').map(architect => architect.trim()).join(', ');
     location.constructionDate = locationRow[2];
     location.demolitionDate = locationRow[3];
-    location.buildingType = locationRow[4];
+    let locationType = await LocationType.findOne({ 'name.ru': { $regex: locationRow[4], $options: 'i' } });
+
+    if (locationType) {
+      location.locationTypeId = locationType._id;
+    } else {
+      locationType = new LocationType({ 'name.ru': locationRow[4] });
+      locationType = await locationType.save();
+      location.locationTypeId = locationType._id;
+      console.log(`LocationType ${locationType.name} was saved!`);
+      locationType = null;
+    }
     location.description = locationRow[5];
     location.coordinateX = locationRow[7];
     location.coordinateY = locationRow[8];
@@ -183,7 +192,7 @@ async function importLocations(cl) {
 
     await newLocation.save();
     console.log(`Location #${index++} was saved!`);
-  }));
+  });
 }
 
 /**
@@ -215,7 +224,7 @@ async function importRelationTypes(cl) {
   // Save relationTypes to mongoDB
   let index = 1;
 
-  await Promise.all(relationTypesArray.map(async function (relationRow) {
+  await asyncForEach(relationTypesArray, async function (relationRow) {
     const relationType = {};
 
     relationType.name = relationRow[0].trim();
@@ -230,7 +239,7 @@ async function importRelationTypes(cl) {
 
     await newRelationType.save();
     console.log(`RelationType #${index++} was saved!`);
-  }));
+  });
 }
 
 /**
@@ -253,7 +262,7 @@ async function importLocationTypes(cl) {
   // Save locationTypes to mongoDB
   let index = 1;
 
-  await Promise.all(locationTypesArray.map(async function (locationRow) {
+  await asyncForEach(locationTypesArray, async function (locationRow) {
     const locationType = {};
 
     locationType.name = locationRow[0].trim();
@@ -262,7 +271,7 @@ async function importLocationTypes(cl) {
 
     await newLocationType.save();
     console.log(`LocationType #${index++} was saved!`);
-  }));
+  });
 }
 
 /**
