@@ -18,13 +18,13 @@ export default class Location extends BaseModel {
     defineMultilingualProperties(this, this.data, [
       'name',
       'architects',
-      'buildingType',
       'description'
     ]);
 
     defineStandardProperties(this, this.data, [
       'constructionDate',
       'demolitionDate',
+      'locationTypeId',
       'coordinateX',
       'coordinateY'
     ]);
@@ -43,7 +43,7 @@ export default class Location extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'buildingType', 'description', 'coordinateX', 'coordinateY'];
+    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'locationTypeId', 'description', 'coordinateX', 'coordinateY'];
   }
 
   /**

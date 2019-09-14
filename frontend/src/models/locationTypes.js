@@ -32,4 +32,21 @@ export default class LocationType extends BaseModel {
   static get fields() {
     return [ 'name' ];
   }
+
+  /**
+   * String to display on select component
+   * @return {string}
+   */
+  get searchName() {
+    return this.name;
+  }
+
+  /**
+   * Returns true if search string satisfies the entity
+   * @param {String} searchString
+   * @return {boolean}
+   */
+  search(searchString) {
+    return this.name.toLowerCase().includes(searchString.toLowerCase());
+  }
 }
