@@ -17,21 +17,12 @@
       />
     </div>
     <div class="entity-info__section">
-      <label :for="$id('relationType')">{{ $t('form.relation') }}: </label>
-      <select
-        :id="$id('relationType')"
+      <CustomSelect
         v-model="entity.relationId"
         :disabled="!editable"
-        name="relationType"
-      >
-        <option
-          v-for="relationType in relationTypes"
-          :key="relationType.id"
-          :value="relationType.id"
-        >
-          {{ relationType.name }}
-        </option>
-      </select>
+        :options="relationTypesList"
+        :label="$t('form.relation')"
+      />
     </div>
     <div class="entity-info__section">
       <label :for="$id('quote')">{{ $t('form.quotes') }}: </label>
@@ -66,7 +57,7 @@
     },
     data() {
       return {
-        relationTypes: [],
+        relationTypesList: [],
         personsList: [],
         locationsList: []
       };
@@ -77,8 +68,8 @@
     methods: {
       async fetchData() {
         axios.get('/persons').then(persons => (this.personsList = persons.map(person => new PersonModel(person))));
-        axios.get('/locations').then(persons => (this.locationsList = persons.map(person => new LocationModel(person))));
-        axios.get('/relationTypes').then(persons => (this.relationTypes = persons.map(person => new RelationTypeModel(person))));
+        axios.get('/locations').then(locations => (this.locationsList = locations.map(location => new LocationModel(location))));
+        axios.get('/relationTypes').then(relationTypes => (this.relationTypesList = relationTypes.map(relationType => new RelationTypeModel(relationType))));
       }
     }
   };

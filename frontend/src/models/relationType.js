@@ -59,6 +59,23 @@ export default class RelationType extends BaseModel {
   static get fields() {
     return [ 'name' ];
   }
+
+  /**
+   * String to display on select component
+   * @return {string}
+   */
+  get searchName() {
+    return (this.name).trim();
+  }
+
+  /**
+   * Returns true if search string satisfies the entity
+   * @param {String} searchString
+   * @return {boolean}
+   */
+  search(searchString) {
+    return this.searchName.toLowerCase().includes(searchString.toLowerCase());
+  }
 }
 
 /**
