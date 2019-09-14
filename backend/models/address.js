@@ -12,7 +12,8 @@ const addressSchema = new Schema({
   build: {
     type: String,
     intl: true
-  }
+  },
+  link: String
 });
 
 addressSchema.plugin(getChangesListPlugin);

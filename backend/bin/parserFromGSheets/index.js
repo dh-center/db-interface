@@ -128,7 +128,8 @@ async function importAddresses(cl) {
       street: addressRow[0],
       homeNumber: addressRow[1],
       housing: addressRow[2],
-      build: addressRow[3]
+      build: addressRow[3],
+      link: addressRow[4]
     };
 
     const newAddress = new Address(address);
