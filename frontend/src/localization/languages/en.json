@@ -42,7 +42,7 @@
     "address": "Address",
     "constructionDate": "Construction date",
     "demolitionDate": "Demolition date",
-    "buildingType": "Building type",
+    "locationTypeId": "Building type",
     "description": "Description",
     "coordinateX": "Coordinate X",
     "coordinateY": "Coordinate Y"

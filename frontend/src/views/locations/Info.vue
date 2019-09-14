@@ -34,15 +34,12 @@
       >
     </div>
     <div class="entity-info__section">
-      <label :for="$id('buildingType')">
-        {{ $t('locations.buildingType') }}
-      </label>
-      <input
-        :id="$id('buildingType')"
-        v-model="entity.buildingType"
-        type="text"
+      <CustomSelect
+        v-model="entity.locationTypeId"
         :disabled="!editable"
-      >
+        :options="locationTypesList"
+        :label="$t('locations.buildingType')"
+      />
     </div>
     <div class="entity-info__section">
       <label :for="$id('description')">
@@ -59,14 +56,34 @@
 </template>
 
 <script>
+  import axios from 'axios';
+  import CustomSelect from '../../components/CustomSelect';
+  import LocationTypeModel from '../../models/locationTypes';
+
   export default {
     name: 'LocationsInfo',
+    components: {
+      CustomSelect
+    },
     props: {
       entity: {
         type: Object,
         required: true
       },
       editable: Boolean
+    },
+    data() {
+      return {
+        locationTypesList: []
+      };
+    },
+    async created() {
+      this.fetchData();
+    },
+    methods: {
+      async fetchData() {
+        axios.get('/locationTypes').then(locationTypes => (this.locationTypesList = locationTypes.map(locationType => new LocationTypeModel(locationType))));
+      }
     }
   };
 </script>
