@@ -43,8 +43,8 @@
     "demolitionDate": "Demolition date",
     "buildingType": "Building type",
     "description": "Description",
-    "coordinateX": "coordinate X",
-    "coordinateY": "coordinate Y"
+    "coordinateX": "Coordinate X",
+    "coordinateY": "Coordinate Y"
   },
   "relations": {
     "addNew": "Add new relation",
@@ -62,7 +62,12 @@
     "linkTitle": "Relation types",
     "addNew": "Add new relation type",
     "name": "Name",
-    "synonyms": "synonyms"
+    "synonyms": "Synonyms"
+  },
+  "locationTypes": {
+    "linkTitle": "Location types",
+    "addNew": "Add new location type",
+    "name": "Name"
   },
   "form": {
     "header": "Form",

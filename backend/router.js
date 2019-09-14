@@ -5,6 +5,7 @@ const Location = require('./models/location');
 const RelationType = require('./models/relationType');
 const Address = require('./models/address');
 const Relation = require('./models/relation');
+const LocationType = require('./models/locationType');
 
 /**
  * Auth routes
@@ -25,6 +26,7 @@ router.use(entityFactory('locations', Location));
 router.use(entityFactory('addresses', Address));
 router.use(entityFactory('relations', Relation));
 router.use(entityFactory('relationTypes', RelationType));
+router.use(entityFactory('locationTypes', LocationType));
 
 /**
  * Changes routes
@@ -36,5 +38,6 @@ router.use(changesFactory('locations', Location));
 router.use(changesFactory('addresses', Address));
 router.use(changesFactory('relations', Relation));
 router.use(changesFactory('relationTypes', RelationType));
+router.use(changesFactory('locationTypes', LocationType));
 
 module.exports = router;

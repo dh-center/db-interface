@@ -28,6 +28,7 @@ const router = new Router({
     generateRoutes('addresses'),
     generateRoutes('relations'),
     generateRoutes('relationTypes'),
+    generateRoutes('locationTypes'),
     {
       path: '*',
       redirect: '/home'
