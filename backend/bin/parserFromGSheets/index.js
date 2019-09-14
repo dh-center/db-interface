@@ -193,7 +193,7 @@ async function importLocations(cl) {
     location.wikiLink = locationRow[6].replace(/\(.*/, ''); // Remove part after '(...'
     location.coordinateX = locationRow[7];
     location.coordinateY = locationRow[8];
-    location.photoLinks = locationRow[9].split(',').map(link => link.trim()); // Remove spaces
+    location.photoLinks = locationRow[9].split(',').map(link => link.trim()).join(', '); // Remove spaces
     location.mainPhotoLink = locationRow[10].replace(/\(.*/, ''); // Remove part after '(...'
     location.addressesId = [];
     const newLocation = new Location(location);

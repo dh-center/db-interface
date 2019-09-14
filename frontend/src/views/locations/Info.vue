@@ -38,7 +38,7 @@
         v-model="entity.locationTypeId"
         :disabled="!editable"
         :options="locationTypesList"
-        :label="$t('locations.buildingType')"
+        :label="$t('locations.locationTypeId')"
       />
     </div>
     <div class="entity-info__section">
@@ -51,6 +51,39 @@
         class="entity-info__description"
         :disabled="!editable"
       />
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('wikiLink')">
+        {{ $t('locations.wikiLink') }}
+      </label>
+      <input
+        :id="$id('wikiLink')"
+        v-model="entity.wikiLink"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('photoLinks')">
+        {{ $t('locations.photoLinks') }}
+      </label>
+      <textarea
+        :id="$id('photoLinks')"
+        v-model="entity.photoLinks"
+        class="entity-info__description"
+        :disabled="!editable"
+      />
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('mainPhotoLink')">
+        {{ $t('locations.mainPhotoLink') }}
+      </label>
+      <input
+        :id="$id('mainPhotoLink')"
+        v-model="entity.mainPhotoLink"
+        type="text"
+        :disabled="!editable"
+      >
     </div>
   </div>
 </template>

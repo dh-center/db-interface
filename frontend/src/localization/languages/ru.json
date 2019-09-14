@@ -44,6 +44,9 @@
     "demolitionDate": "Дата сноса",
     "locationTypeId": "Тип строения",
     "description": "Описание",
+    "wikiLink": "Ссылка на Википедию",
+    "photoLinks": "Ссылки на фото (разделять ', ')",
+    "mainPhotoLink": "Ссылка на главное фото",
     "coordinateX": "Координата X",
     "coordinateY": "Координата Y"
   },

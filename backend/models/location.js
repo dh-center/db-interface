@@ -26,7 +26,7 @@ const locationSchema = new Schema({
     intl: true
   },
   wikiLink: String,
-  photoLinks: [ String ],
+  photoLinks: String,
   mainPhotoLink: String,
   coordinateX: Number,
   coordinateY: Number

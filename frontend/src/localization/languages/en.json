@@ -44,6 +44,9 @@
     "demolitionDate": "Demolition date",
     "locationTypeId": "Building type",
     "description": "Description",
+    "wikiLink": "Wiki link",
+    "photoLinks": "Photo links (split with ', ')",
+    "mainPhotoLink": "Main photo link",
     "coordinateX": "Coordinate X",
     "coordinateY": "Coordinate Y"
   },

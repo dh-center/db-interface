@@ -25,6 +25,9 @@ export default class Location extends BaseModel {
       'constructionDate',
       'demolitionDate',
       'locationTypeId',
+      'wikiLink',
+      'photoLinks',
+      'mainPhotoLink',
       'coordinateX',
       'coordinateY'
     ]);
