@@ -43,8 +43,8 @@
     "demolitionDate": "Дата сноса",
     "buildingType": "Тип строения",
     "description": "Описание",
-    "coordinateX": "координата X",
-    "coordinateY": "координата Y"
+    "coordinateX": "Координата X",
+    "coordinateY": "Координата Y"
   },
   "form": {
     "header": "Форма",
@@ -73,6 +73,11 @@
     "addNew": "Добавить новый тип",
     "name": "Название",
     "synonyms": "Синонимы"
+  },
+  "locationTypes": {
+    "linkTitle": "Типы локаций",
+    "addNew": "Добавить новый тип",
+    "name": "Название"
   },
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",
