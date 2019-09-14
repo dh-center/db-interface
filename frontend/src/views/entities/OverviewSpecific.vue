@@ -94,7 +94,17 @@
       async saveEntity() {
         if (this.lastChangesRecord) {
           // Update existing changes record
-          await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
+          try {
+            await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
+
+            return;
+          }
         } else {
           // Create new changes record
           this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, this.changedEntity.data);
