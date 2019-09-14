@@ -12,7 +12,18 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "notifications": {
+    "savedSuccessfully": "Успешно сохранено"
+  },
+  "entities": {
+    "viewChanges": "Посмотреть изменения",
+    "save": "Сохранить",
+    "actions": "Действия",
+    "view": "Обзор"
+  },
   "persons": {
+    "linkTitle": "Персоны",
+    "addNew": "Добавить новую персону",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "patronymic": "Отчество",
@@ -23,12 +34,17 @@
     "deathDate": "Дата смерти"
   },
   "locations": {
+    "linkTitle": "Локации",
+    "addNew": "Добавить новую локацию",
     "name": "Имя",
     "address": "Адрес",
+    "architects": "Архитекторы",
     "constructionDate": "Дата постройки",
     "demolitionDate": "Дата сноса",
     "buildingType": "Тип строения",
-    "description": "Описание"
+    "description": "Описание",
+    "coordinateX": "координата X",
+    "coordinateY": "координата Y"
   },
   "form": {
     "header": "Форма",
@@ -39,6 +55,24 @@
     "relation": "Связь",
     "quotes": "Цитата и ссылка на издание",
     "save": "Сохранить"
+  },
+  "relations": {
+    "addNew": "Добавить новую связь",
+    "linkTitle": "Связи"
+  },
+  "addresses": {
+    "addNew": "Добавить новый адрес",
+    "linkTitle": "Адреса",
+    "street": "Улица",
+    "homeNumber": "Номер дома",
+    "housing": "Корпус",
+    "build": "Строение"
+  },
+  "relationTypes": {
+    "linkTitle": "Типы связей",
+    "addNew": "Добавить новый тип",
+    "name": "Название",
+    "synonyms": "Синонимы"
   },
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",

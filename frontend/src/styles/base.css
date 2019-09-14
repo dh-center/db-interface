@@ -19,3 +19,21 @@ body {
   color: blue;
   text-decoration: none;
 }
+
+body .cdx-notifies {
+  right: 20px;
+  color: #fff;
+  left: auto;
+  z-index: 100;
+  box-sizing: content-box;
+}
+
+body .cdx-notify {
+  font-size: 13px;
+  background-color: #716971 !important;
+  box-shadow: 0 6px 17px -4px #0000009c;
+
+  &__btns-wrapper {
+    margin-top: 8px;
+  }
+}

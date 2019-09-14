@@ -8,7 +8,7 @@
       :entity="entity"
     />
     <button @click="saveEntity">
-      Save
+      {{ $t('entities.save') }}
     </button>
   </div>
 </template>
@@ -18,6 +18,7 @@
 
   import axios from 'axios';
   import jsonpatch from 'fast-json-patch';
+  import notifier from 'codex-notifier';
 
   export default {
     name: 'EntitiesOverviewSpecific',
@@ -63,6 +64,11 @@
             }
           });
         }
+
+        notifier.show({
+          message: this.$t('notifications.savedSuccessfully'),
+          time: 2000
+        });
       }
     }
   };

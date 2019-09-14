@@ -4,17 +4,16 @@
       <label
         class="entity-info__label"
         :for="$id('name')"
-      >Name</label>
+      >{{ $t('relationTypes.name') }}</label>
       <input
         :id="$id('name')"
         v-model="entity.name"
         type="text"
         :disabled="!editable"
-        placeholder="relation type name"
       >
     </div>
     <div class="entity-info__section">
-      <label>Synonym name</label>
+      <label>{{ $t('relationTypes.synonyms') }}</label>
       <table>
         <tbody>
           <tr

@@ -4,72 +4,67 @@
       <label
         class="entity-info__label"
         :for="$id('firstName')"
-      >First name</label>
+      >{{ $t('persons.firstName') }}</label>
       <input
         :id="$id('firstName')"
         v-model="entity.firstName"
         type="text"
         :disabled="!editable"
-        placeholder="person first name"
       >
     </div>
     <div class="entity-info__section">
       <label
         class="entity-info__label"
         :for="$id('lastName')"
-      >Last name</label>
+      >{{ $t('persons.lastName') }}</label>
       <input
         :id="$id('lastName')"
         v-model="entity.lastName"
         type="text"
         :disabled="!editable"
-        placeholder="person last name"
       >
     </div>
     <div class="entity-info__section">
       <label
         class="entity-info__label"
         :for="$id('patronymic')"
-      >Patronymic</label>
+      >{{ $t('persons.patronymic') }}</label>
       <input
         :id="$id('patronymic')"
         v-model="entity.patronymic"
         type="text"
         :disabled="!editable"
-        placeholder="person patronymic"
       >
     </div>
     <div class="entity-info__section">
       <label
         class="entity-info__label"
         :for="$id('birthDate')"
-      >Birth date</label>
+      >{{ $t('persons.birthDate') }}</label>
       <input
         :id="$id('birthDate')"
         v-model="entity.birthDate"
         type="text"
         :disabled="!editable"
-        placeholder="person birth date"
       >
     </div>
     <div class="entity-info__section">
       <label
         class="entity-info__label"
         :for="$id('deathDate')"
-      >Birth date</label>
+      >{{ $t('persons.deathDate') }}</label>
       <input
         :id="$id('deathDate')"
         v-model="entity.deathDate"
         type="text"
         :disabled="!editable"
-        placeholder="person death date"
       >
     </div>
     <div class="entity-info__section">
       <label
         class="entity-info__label"
         :for="$id('description')"
-      >Description</label>
+      >{{ $t('persons.description') }}</label>
       <textarea
         :id="$id('description')"
         v-model="entity.description"

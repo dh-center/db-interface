@@ -2,7 +2,7 @@
   <table class="data-table">
     <thead>
       <tr>
-        <th>Actions</th>
+        <th>{{ $t('entities.actions') }}</th>
         <th
           v-for="(fieldName, index) in model.fields"
           :key="index"
@@ -18,7 +18,7 @@
       >
         <td>
           <button @click="$router.push({name:`${model.entityType}-overview-specific`, params: {entityId: entity.id}})">
-            View
+            {{ $t('entities.view') }}
           </button>
         </td>
         <td
