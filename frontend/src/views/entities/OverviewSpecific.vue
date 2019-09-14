@@ -15,7 +15,10 @@
         :editable="isUserCanEditThisEntity"
       />
     </div>
-    <button @click="saveEntity" v-if="isUserCanEditThisEntity">
+    <button
+      v-if="isUserCanEditThisEntity"
+      @click="saveEntity"
+    >
       {{ $t('entities.save') }}
     </button>
     <button
@@ -53,7 +56,7 @@
     },
     computed: {
       isUserCanEditThisEntity() {
-        return this.lastChangesRecord? this.$store.state.auth.user.id === this.lastChangesRecord.user: true;
+        return this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true;
       }
     },
     async mounted() {
