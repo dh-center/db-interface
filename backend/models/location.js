@@ -7,16 +7,19 @@ const locationSchema = new Schema({
     type: String,
     intl: true
   },
-  addressesId: [ Schema.Types.ObjectId ],
+  addressesId: [ {
+    type: Schema.Types.ObjectId,
+    ref: 'addresses'
+  } ],
   architects: {
     type: String,
     intl: true
   },
   constructionDate: String,
   demolitionDate: String,
-  buildingType: {
-    type: String,
-    intl: true
+  locationTypeId: {
+    type: Schema.Types.ObjectId,
+    ref: 'locationTypes'
   },
   description: {
     type: String,
