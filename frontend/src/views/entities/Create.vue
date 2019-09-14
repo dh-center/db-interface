@@ -4,7 +4,7 @@
       :is="infoComponent"
       v-if="entity"
       ref="entityInfo"
-      editable
+      :editable="changeRecord && ($store.state.auth.user.id === changeRecord.user)"
       :entity="entity"
     />
     <button @click="saveEntity">
@@ -37,6 +37,7 @@
     data() {
       return {
         entity: null,
+        changeRecord: null,
         infoComponent: null
       };
     },
@@ -50,9 +51,9 @@
         const { changeRecordId } = this.$route.params;
 
         if (changeRecordId) {
-          const changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
+          this.changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
 
-          this.entity = new this.model(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument);
+          this.entity = new this.model(jsonpatch.applyPatch({}, this.changeRecord.changeList).newDocument);
         } else {
           this.entity = new this.model();
         }
@@ -87,12 +88,12 @@
             return;
           }
         } else {
-          const changesRecord = await axios.post(`/changes/${this.model.entityType}`, this.entity.data);
+          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, this.entity.data);
 
           this.$router.push({
             name: `${this.model.entityType}-create`,
             params: {
-              changeRecordId: changesRecord._id
+              changeRecordId: this.changesRecord._id
             }
           });
         }

@@ -12,7 +12,7 @@
         v-if="changedEntity"
         ref="changedEntityInfo"
         :entity="changedEntity"
-        editable
+        :editable="$store.state.auth.user.id === lastChangesRecord.user"
       />
     </div>
     <button @click="saveEntity">
