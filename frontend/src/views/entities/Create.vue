@@ -4,11 +4,20 @@
       :is="infoComponent"
       v-if="entity"
       ref="entityInfo"
-      editable
+      :editable="isUserCanEditThisEntity"
       :entity="entity"
     />
-    <button @click="saveEntity">
+    <button
+      v-if="isUserCanEditThisEntity"
+      @click="saveEntity"
+    >
       {{ $t('entities.save') }}
+    </button>
+    <button
+      v-if="$store.state.auth.user.isAdmin && $route.params.changeRecordId"
+      @click="approve"
+    >
+      {{ $t('entities.approve') }}
     </button>
   </div>
 </template>
@@ -31,8 +40,14 @@
     data() {
       return {
         entity: null,
+        changeRecord: null,
         infoComponent: null
       };
+    },
+    computed: {
+      isUserCanEditThisEntity() {
+        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
+      }
     },
     async mounted() {
       await this.fetchData();
@@ -44,23 +59,49 @@
         const { changeRecordId } = this.$route.params;
 
         if (changeRecordId) {
-          const changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
+          this.changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
 
-          this.entity = new this.model(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument);
+          this.entity = new this.model(jsonpatch.applyPatch({}, this.changeRecord.changeList).newDocument);
         } else {
           this.entity = new this.model();
         }
       },
+
+      async approve() {
+        const { changeRecordId } = this.$route.params;
+
+        try {
+          await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
+          this.$router.push({ name: `${this.model.entityType}-overview` });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+        }
+      },
+
       async saveEntity() {
         if (this.$route.params.changeRecordId) {
-          await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, this.entity.data);
+          try {
+            await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, this.entity.data);
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
+
+            return;
+          }
         } else {
-          const changesRecord = await axios.post(`/changes/${this.model.entityType}`, this.entity.data);
+          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, this.entity.data);
 
           this.$router.push({
             name: `${this.model.entityType}-create`,
             params: {
-              changeRecordId: changesRecord._id
+              changeRecordId: this.changesRecord._id
             }
           });
         }

@@ -54,9 +54,39 @@ class UsernameDuplicationError extends ApiError {
   }
 }
 
+/**
+ * Throws when non-admin user trying to approve changes
+ */
+class ApproveForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'APPROVE_FORBIDDEN';
+  }
+}
+
+/**
+ * Throws when user who did not create this change is trying to save the changes
+ */
+class ChangesPatchingForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'CHANGES_PATCHING_FORBIDDEN';
+  }
+}
+
 module.exports = {
   ApiError,
   NoUserWithSuchUsernameError,
   WrongUserPasswordError,
+  ApproveForbiddenError,
+  ChangesPatchingForbiddenError,
   UsernameDuplicationError
 };
