@@ -72,6 +72,50 @@
         :disabled="!editable"
       />
     </div>
+    <div class="entity-info__section">
+      <label :for="$id('source')">
+        {{ $t('persons.source') }}
+      </label>
+      <input
+        :id="$id('source')"
+        v-model="entity.source"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('wikiLink')">
+        {{ $t('persons.wikiLink') }}
+      </label>
+      <input
+        :id="$id('wikiLink')"
+        v-model="entity.wikiLink"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('photoLinks')">
+        {{ $t('persons.photoLinks') }}
+      </label>
+      <textarea
+        :id="$id('photoLinks')"
+        v-model="entity.photoLinks"
+        class="entity-info__description"
+        :disabled="!editable"
+      />
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('mainPhotoLink')">
+        {{ $t('persons.mainPhotoLink') }}
+      </label>
+      <input
+        :id="$id('mainPhotoLink')"
+        v-model="entity.mainPhotoLink"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
   </div>
 </template>
 

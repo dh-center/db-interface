@@ -26,7 +26,11 @@ export default class Person extends BaseModel {
 
     defineStandardProperties(this, this.data, [
       'birthDate',
-      'deathDate'
+      'deathDate',
+      'wikiLink',
+      'photoLinks',
+      'source',
+      'mainPhotoLink'
     ]);
   }
 

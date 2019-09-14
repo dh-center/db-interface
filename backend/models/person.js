@@ -30,9 +30,9 @@ const personSchema = new Schema({
     type: String,
     intl: true
   },
-  sourceLink: String,
+  source: String,
   wikiLink: String,
-  photoLinks: [ String ],
+  photoLinks: String,
   mainPhotoLink: String
 });
 

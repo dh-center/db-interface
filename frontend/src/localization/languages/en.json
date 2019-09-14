@@ -31,6 +31,10 @@
     "pseudonym": "Pseudonym",
     "profession": "Profession",
     "description": "Description",
+    "source": "Source",
+    "wikiLink": "Wiki link",
+    "photoLinks": "Photo links (split with ', ')",
+    "mainPhotoLink": "Main photo link",
     "birthDate": "Date of birth",
     "deathDate": "Date of death"
   },

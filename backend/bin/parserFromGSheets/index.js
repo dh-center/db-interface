@@ -81,9 +81,9 @@ async function importPersons(cl) {
     person.deathDate = personRow[5];
     person.profession = personRow[6];
     person.description = personRow[7];
-    person.sourceLink = personRow[8];
+    person.source = personRow[8];
     person.wikiLink = personRow[9];
-    person.photoLinks = personRow[10].split(',').map(link => link.trim());
+    person.photoLinks = personRow[10].split(',').map(link => link.trim()).join(', '); // Remove spaces
     person.mainPhotoLink = personRow[11];
     const newPerson = new Person(person);
 

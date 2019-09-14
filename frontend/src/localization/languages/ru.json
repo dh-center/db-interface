@@ -31,6 +31,10 @@
     "pseudonym": "Псевдоним",
     "profession": "Профессия",
     "description": "Описание",
+    "source": "Источник",
+    "wikiLink": "Ссылка на Википедию",
+    "photoLinks": "Ссылки на фото (разделять ', ')",
+    "mainPhotoLink": "Ссылка на главное фото",
     "birthDate": "Дата рождения",
     "deathDate": "Дата смерти"
   },
