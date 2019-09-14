@@ -61,13 +61,31 @@
       async approve() {
         const { changeRecordId } = this.$route.params;
 
-        await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
-        this.$router.push({ name: `${this.model.entityType}-overview` });
+        try {
+          await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
+          this.$router.push({ name: `${this.model.entityType}-overview` });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+        }
       },
 
       async saveEntity() {
         if (this.$route.params.changeRecordId) {
-          await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, this.entity.data);
+          try {
+            await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, this.entity.data);
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
+
+            return;
+          }
         } else {
           const changesRecord = await axios.post(`/changes/${this.model.entityType}`, this.entity.data);
 

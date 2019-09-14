@@ -3,7 +3,10 @@ const router = express.Router();
 const Change = require('../models/change');
 const jsonpatch = require('fast-json-patch');
 const mongoose = require('mongoose');
-const { ApproveForbiddenError } = require('../errorTypes');
+const {
+  ApproveForbiddenError,
+  ChangesPatchingForbiddenError
+} = require('../errorTypes');
 
 /**
  *
@@ -55,6 +58,10 @@ module.exports = function changesFactory(entityType, EntityModel) {
    */
   router.patch(`/changes/${entityType}/:changesRecordId`, async (req, res) => {
     const changeRecord = await Change.findById(req.params.changesRecordId);
+
+    if (res.locals.user._id !== changeRecord.user) {
+      throw new ChangesPatchingForbiddenError();
+    }
 
     changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body);
     await changeRecord.save();
