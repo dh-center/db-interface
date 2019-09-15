@@ -3,7 +3,6 @@ import {
   defineMultilingualProperties
 } from '../utils';
 import BaseModel from './base';
-import AddressModel from './address';
 
 /**
  * Class representing location
@@ -39,7 +38,7 @@ export default class Location extends BaseModel {
    * Inserts new address to the end of list
    */
   insertNewAddress() {
-    this.data.addressesId.push(new AddressModel());
+    this.data.addressesId.push('');
   }
 
   /**
@@ -47,7 +46,7 @@ export default class Location extends BaseModel {
    * @param {Address} address - address to delete
    */
   deleteAddress(address) {
-    const index = this.data.addressesId.findIndex(_addressId => address.id === _addressId);
+    const index = this.data.addressesId.findIndex(_addressId => address === _addressId);
 
     this.data.addressesId.splice(index, 1);
   }

@@ -43,16 +43,16 @@
     </div>
     <div class="entity-info__section">
       <label>{{ $t('locations.addressesId') }}</label>
-      <table v-if="locationAddresses">
+      <table>
         <tbody>
           <tr
-            v-for="(address, index) in locationAddresses"
+            v-for="(address, index) in entity.addressesId"
             :key="index"
             class="locations-info__addresses-list-item"
           >
             <td>
               <CustomSelect
-                v-model="locationAddresses[index].id"
+                v-model="entity.addressesId[index]"
                 :disabled="!editable"
                 :options="addressesList"
                 :label="(index + 1).toString()"
@@ -62,7 +62,7 @@
               <button
                 v-if="editable"
                 class="locations-info__address-delete-button"
-                @click="entity.deleteAddress(locationAddresses[index])"
+                @click="entity.deleteAddress(address)"
               >
                 -
               </button>
@@ -146,8 +146,7 @@
     data() {
       return {
         locationTypesList: [],
-        addressesList: [],
-        locationAddresses: []
+        addressesList: []
       };
     },
     async created() {
@@ -157,7 +156,6 @@
       async fetchData() {
         await axios.get('/locationTypes').then(locationTypes => (this.locationTypesList = locationTypes.map(locationType => new LocationTypeModel(locationType))));
         await axios.get('/addresses').then(addresses => (this.addressesList = addresses.map(address => new AddressModel(address))));
-        this.entity.addressesId.forEach(addressId => this.locationAddresses.push(this.addressesList.find(address => address.id === addressId)));
       }
     }
   };
