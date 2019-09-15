@@ -25,12 +25,30 @@ export default class Location extends BaseModel {
       'constructionDate',
       'demolitionDate',
       'locationTypeId',
+      'addressesId',
       'wikiLink',
       'photoLinks',
       'mainPhotoLink',
       'coordinateX',
       'coordinateY'
     ]);
+  }
+
+  /**
+   * Inserts new address to the end of list
+   */
+  insertNewAddress() {
+    this.data.addressesId.push('');
+  }
+
+  /**
+   * Delete address
+   * @param {Address} address - address to delete
+   */
+  deleteAddress(address) {
+    const index = this.data.addressesId.findIndex(_addressId => address === _addressId);
+
+    this.data.addressesId.splice(index, 1);
   }
 
   /**

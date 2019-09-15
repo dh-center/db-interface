@@ -42,6 +42,7 @@
     "linkTitle": "Локации",
     "addNew": "Добавить новую локацию",
     "name": "Имя",
+    "addressesId": "Адреса",
     "address": "Адрес",
     "architects": "Архитекторы",
     "constructionDate": "Дата постройки",
