@@ -56,7 +56,7 @@ export default class Relation extends BaseModel {
    * @returns {string}
    */
   get personName() {
-    return this.person.searchName;
+    return this.person && this.person.searchName;
   }
 
   /**
@@ -64,7 +64,7 @@ export default class Relation extends BaseModel {
    * @returns {string}
    */
   get locationName() {
-    return this.location.searchName;
+    return this.location && this.location.searchName;
   }
 
   /**
@@ -72,6 +72,6 @@ export default class Relation extends BaseModel {
    * @returns {string}
    */
   get relationName() {
-    return this.relation.name;
+    return this.relation && this.relation.name;
   }
 }

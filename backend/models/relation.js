@@ -40,24 +40,12 @@ relationSchema.statics.fetchAll = function (query) {
 };
 
 /**
- * Get relation with all data
- * @param entityId
- * @returns {Query}
- */
-relationSchema.statics.fetchById = function (entityId) {
-  return this.findById(entityId)
-    .populate('personId')
-    .populate('relationId')
-    .populate('locationId');
-};
-
-/**
  * Process changed entity before give a response to the client
  * @param {Object} changedEntity
  * @returns {Promise<void>}
  */
 relationSchema.statics.processChangedEntity = async function (changedEntity) {
-  if (changedEntity.personId){
+  if (changedEntity.personId) {
     changedEntity.personId = await Person.findById(changedEntity.personId);
   }
 
