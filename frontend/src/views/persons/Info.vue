@@ -3,18 +3,6 @@
     <div class="entity-info__section">
       <label
         class="entity-info__label"
-        :for="$id('firstName')"
-      >{{ $t('persons.firstName') }}</label>
-      <input
-        :id="$id('firstName')"
-        v-model="entity.firstName"
-        type="text"
-        :disabled="!editable"
-      >
-    </div>
-    <div class="entity-info__section">
-      <label
-        class="entity-info__label"
         :for="$id('lastName')"
       >{{ $t('persons.lastName') }}</label>
       <input
@@ -27,11 +15,35 @@
     <div class="entity-info__section">
       <label
         class="entity-info__label"
+        :for="$id('firstName')"
+      >{{ $t('persons.firstName') }}</label>
+      <input
+        :id="$id('firstName')"
+        v-model="entity.firstName"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
         :for="$id('patronymic')"
       >{{ $t('persons.patronymic') }}</label>
       <input
         :id="$id('patronymic')"
         v-model="entity.patronymic"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('pseudonym')"
+      >{{ $t('persons.pseudonym') }}</label>
+      <input
+        :id="$id('pseudonym')"
+        v-model="entity.pseudonym"
         type="text"
         :disabled="!editable"
       >
