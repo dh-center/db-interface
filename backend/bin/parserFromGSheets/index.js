@@ -70,18 +70,22 @@ async function importPersons(cl) {
 
   let index = 1;
 
-  await asyncForEach(personsArray, async function (row) {
-    const personData = {};
+  await asyncForEach(personsArray, async function (personRow) {
+    const person = {};
 
-    personData.lastName = row[0];
-    personData.firstName = row[1];
-    personData.patronymic = row[2];
-    personData.pseudonym = row[3];
-    personData.birthDate = row[4];
-    personData.deathDate = row[5];
-    personData.profession = row[6];
-    personData.description = row[7];
-    const newPerson = new Person(personData);
+    person.lastName = personRow[0];
+    person.firstName = personRow[1];
+    person.patronymic = personRow[2];
+    person.pseudonym = personRow[3];
+    person.birthDate = personRow[4];
+    person.deathDate = personRow[5];
+    person.profession = personRow[6];
+    person.description = personRow[7];
+    person.source = personRow[8];
+    person.wikiLink = personRow[9];
+    person.photoLinks = personRow[10].split(',').map(link => link.trim()).join('\n'); // Remove spaces
+    person.mainPhotoLink = personRow[11];
+    const newPerson = new Person(person);
 
     await newPerson.save();
     console.log(`Person #${index++} was saved!`);
@@ -124,14 +128,15 @@ async function importAddresses(cl) {
       street: addressRow[0],
       homeNumber: addressRow[1],
       housing: addressRow[2],
-      build: addressRow[3]
+      build: addressRow[3],
+      link: addressRow[4]
     };
 
     const newAddress = new Address(address);
 
     await newAddress.save();
     console.log(`Address #${index++} was saved!`);
-    await Location.updateMany({ name: { ru: addressRow[5] } }, { $push: { addressesId: newAddress._id } });
+    await Location.updateMany({ 'name.ru': addressRow[5] }, { $push: { addressesId: newAddress._id } });
   });
 }
 
@@ -185,8 +190,11 @@ async function importLocations(cl) {
       locationType = null;
     }
     location.description = locationRow[5];
+    location.wikiLink = locationRow[6].replace(/\(.*/, ''); // Remove part after '(...'
     location.coordinateX = locationRow[7];
     location.coordinateY = locationRow[8];
+    location.photoLinks = locationRow[9].split(',').map(link => link.trim()).join('\n'); // Remove spaces
+    location.mainPhotoLink = locationRow[10].replace(/\(.*/, ''); // Remove part after '(...'
     location.addressesId = [];
     const newLocation = new Location(location);
 
@@ -231,7 +239,7 @@ async function importRelationTypes(cl) {
     relationType.synonyms = [];
     synonymsArray.map((synonymRow) => {
       if (relationRow[0].trim() === synonymRow[0].trim()) {
-        relationType.synonyms.push({ name: { ru: synonymRow[1].trim() } });
+        relationType.synonyms.push({ 'name.ru': synonymRow[1].trim() });
       }
       return synonymRow;
     });

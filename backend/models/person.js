@@ -29,7 +29,11 @@ const personSchema = new Schema({
   description: {
     type: String,
     intl: true
-  }
+  },
+  source: String,
+  wikiLink: String,
+  photoLinks: String,
+  mainPhotoLink: String
 });
 
 personSchema.plugin(getChangesListPlugin);

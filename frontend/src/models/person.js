@@ -26,7 +26,11 @@ export default class Person extends BaseModel {
 
     defineStandardProperties(this, this.data, [
       'birthDate',
-      'deathDate'
+      'deathDate',
+      'wikiLink',
+      'photoLinks',
+      'source',
+      'mainPhotoLink'
     ]);
   }
 
@@ -43,7 +47,7 @@ export default class Person extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return ['firstName', 'lastName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession', 'description'];
+    return ['lastName', 'firstName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession', 'description'];
   }
 
   /**

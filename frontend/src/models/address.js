@@ -22,7 +22,8 @@ export default class Address extends BaseModel {
 
     defineStandardProperties(this, this.data, [
       'homeNumber',
-      'housing'
+      'housing',
+      'link'
     ]);
   }
 

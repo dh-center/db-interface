@@ -31,6 +31,10 @@
     "pseudonym": "Pseudonym",
     "profession": "Profession",
     "description": "Description",
+    "source": "Source",
+    "wikiLink": "Wiki link",
+    "photoLinks": "Photo links",
+    "mainPhotoLink": "Main photo link",
     "birthDate": "Date of birth",
     "deathDate": "Date of death"
   },
@@ -44,6 +48,9 @@
     "demolitionDate": "Demolition date",
     "locationTypeId": "Building type",
     "description": "Description",
+    "wikiLink": "Wiki link",
+    "photoLinks": "Photo links",
+    "mainPhotoLink": "Main photo link",
     "coordinateX": "Coordinate X",
     "coordinateY": "Coordinate Y"
   },
@@ -57,7 +64,8 @@
     "street": "Street",
     "homeNumber": "Home number",
     "housing": "Housing",
-    "build": "Build"
+    "build": "Build",
+    "link": "Link"
   },
   "relationTypes": {
     "linkTitle": "Relation types",

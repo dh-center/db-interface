@@ -31,6 +31,10 @@
     "pseudonym": "Псевдоним",
     "profession": "Профессия",
     "description": "Описание",
+    "source": "Источник",
+    "wikiLink": "Ссылка на Википедию",
+    "photoLinks": "Ссылки на фото",
+    "mainPhotoLink": "Ссылка на главное фото",
     "birthDate": "Дата рождения",
     "deathDate": "Дата смерти"
   },
@@ -44,6 +48,9 @@
     "demolitionDate": "Дата сноса",
     "locationTypeId": "Тип строения",
     "description": "Описание",
+    "wikiLink": "Ссылка на Википедию",
+    "photoLinks": "Ссылки на фото",
+    "mainPhotoLink": "Ссылка на главное фото",
     "coordinateX": "Координата X",
     "coordinateY": "Координата Y"
   },
@@ -67,7 +74,8 @@
     "street": "Улица",
     "homeNumber": "Номер дома",
     "housing": "Корпус",
-    "build": "Строение"
+    "build": "Строение",
+    "link": "Ссылка"
   },
   "relationTypes": {
     "linkTitle": "Типы связей",
