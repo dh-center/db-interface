@@ -47,7 +47,7 @@ export default class Address extends BaseModel {
    * Return full address
    * @return {String}
    */
-  get name(){
+  get name() {
     return `${this.street} ${this.homeNumber} ${this.housing} ${this.build}`;
   }
 

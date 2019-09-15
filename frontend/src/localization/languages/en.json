@@ -41,6 +41,7 @@
   "locations": {
     "linkTitle": "Locations",
     "addNew": "Add new location",
+    "addressesId": "Addresses",
     "name": "Name",
     "architects": "Architects",
     "address": "Address",
