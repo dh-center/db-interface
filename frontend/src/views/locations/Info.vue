@@ -42,6 +42,43 @@
       />
     </div>
     <div class="entity-info__section">
+      <label>{{ $t('locations.addressesId') }}</label>
+      <table v-if="locationAddresses">
+        <tbody>
+          <tr
+            v-for="(address, index) in locationAddresses"
+            :key="index"
+            class="locations-info__addresses-list-item"
+          >
+            <td>
+              <CustomSelect
+                v-model="locationAddresses[index].id"
+                :disabled="!editable"
+                :options="addressesList"
+                :label="(index + 1).toString()"
+              />
+            </td>
+            <td>
+              <button
+                v-if="editable"
+                class="locations-info__address-delete-button"
+                @click="entity.deleteAddress(locationAddresses[index])"
+              >
+                -
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button
+        v-if="editable"
+        @click="entity.insertNewAddress()"
+      >
+        +
+      </button>
+    </div>
+    <div class="entity-info__section">
       <label :for="$id('description')">
         {{ $t('locations.description') }}
       </label>
@@ -92,6 +129,7 @@
   import axios from 'axios';
   import CustomSelect from '../../components/CustomSelect';
   import LocationTypeModel from '../../models/locationTypes';
+  import AddressModel from '../../models/address';
 
   export default {
     name: 'LocationsInfo',
@@ -107,7 +145,9 @@
     },
     data() {
       return {
-        locationTypesList: []
+        locationTypesList: [],
+        addressesList: [],
+        locationAddresses: []
       };
     },
     async created() {
@@ -115,7 +155,9 @@
     },
     methods: {
       async fetchData() {
-        axios.get('/locationTypes').then(locationTypes => (this.locationTypesList = locationTypes.map(locationType => new LocationTypeModel(locationType))));
+        await axios.get('/locationTypes').then(locationTypes => (this.locationTypesList = locationTypes.map(locationType => new LocationTypeModel(locationType))));
+        await axios.get('/addresses').then(addresses => (this.addressesList = addresses.map(address => new AddressModel(address))));
+        this.entity.addressesId.forEach(addressId => this.locationAddresses.push(this.addressesList.find(address => address.id === addressId)));
       }
     }
   };
