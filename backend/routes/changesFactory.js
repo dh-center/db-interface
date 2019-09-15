@@ -25,6 +25,11 @@ module.exports = function changesFactory(entityType, EntityModel) {
       .populate('entity')
       .lean();
 
+    await Promise.all(changes.map(async changeRecord => {
+      changeRecord.changedEntity = jsonpatch.applyPatch(changeRecord.entity || {}, changeRecord.changeList).newDocument;
+      (EntityModel.processChangedEntity && await EntityModel.processChangedEntity(changeRecord.changedEntity));
+    }));
+
     res.json({ payload: changes });
   });
 
