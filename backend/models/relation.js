@@ -24,6 +24,30 @@ const relationSchema = new Schema({
   }
 });
 
+/**
+ * Get all relations with all their data
+ * @param {Object} query - mongodb query
+ * @returns {Object}
+ */
+relationSchema.statics.fetchAll = function (query) {
+  return this.find(query)
+    .populate('personId')
+    .populate('relationId')
+    .populate('locationId');
+};
+
+/**
+ * Get relation with all data
+ * @param entityId
+ * @returns {Query}
+ */
+relationSchema.statics.fetchById = function (entityId) {
+  return this.findById(entityId)
+    .populate('personId')
+    .populate('relationId')
+    .populate('locationId');
+};
+
 relationSchema.plugin(getChangesListPlugin);
 
 module.exports = mongoose.model('relations', relationSchema);
