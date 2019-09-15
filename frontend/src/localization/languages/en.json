@@ -56,7 +56,10 @@
   },
   "relations": {
     "addNew": "Add new relation",
-    "linkTitle": "Relations"
+    "linkTitle": "Relations",
+    "locationName": "Location name",
+    "personName": "Person name",
+    "relationName": "Relation name"
   },
   "addresses": {
     "addNew": "Add new address",
