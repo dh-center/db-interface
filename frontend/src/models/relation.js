@@ -18,9 +18,11 @@ export default class Relation extends BaseModel {
   constructor(_relationData) {
     super(_relationData);
 
-    this.person = new PersonModel(this.data.personId);
-    this.location = new LocationModel(this.data.locationId);
-    this.relation = new RelationTypeModel(this.data.relationId);
+    if (typeof this.data.personId !== 'string') {
+      this.person = new PersonModel(this.data.personId);
+      this.location = new LocationModel(this.data.locationId);
+      this.relation = new RelationTypeModel(this.data.relationId);
+    }
 
     defineMultilingualProperties(this, this.data, [
       'quote'

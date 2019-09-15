@@ -29,7 +29,7 @@
     name: 'ChangesTableRow',
     props: {
       changeList: {
-        type: Array,
+        type: Object,
         required: true
       },
       entityData: {
@@ -43,7 +43,8 @@
     },
     computed: {
       entity() {
-        return new this.model(jsonpatch.applyPatch(this.entityData, this.changeList).newDocument);
+        console.log(this.changeList)
+        return new this.model(this.changeList);
       }
     }
   };
