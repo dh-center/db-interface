@@ -13,7 +13,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
     const dbQuery = req.query.name ? { name: { $regex: new RegExp(`${req.query.name}`, 'i') } } : {};
 
     try {
-      const data = await EntityModel.find(dbQuery);
+      const data = await (EntityModel.fetchAll ? EntityModel.fetchAll(dbQuery) : EntityModel.find(dbQuery).lean());
 
       res.json({ payload: data });
     } catch (error) {

@@ -3,6 +3,9 @@ import {
   defineMultilingualProperties
 } from '../utils';
 import BaseModel from './base';
+import PersonModel from './person';
+import LocationModel from './location';
+import RelationTypeModel from './relationType';
 
 /**
  * Class representing person
@@ -14,6 +17,12 @@ export default class Relation extends BaseModel {
    */
   constructor(_relationData) {
     super(_relationData);
+
+    if (typeof this.data.personId !== 'string') {
+      this.person = new PersonModel(this.data.personId);
+      this.location = new LocationModel(this.data.locationId);
+      this.relation = new RelationTypeModel(this.data.relationId);
+    }
 
     defineMultilingualProperties(this, this.data, [
       'quote'
@@ -39,6 +48,30 @@ export default class Relation extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return [ 'id' ];
+    return ['personName', 'relationName', 'locationName'];
+  }
+
+  /**
+   * Person name to display
+   * @returns {string}
+   */
+  get personName() {
+    return this.person && this.person.searchName;
+  }
+
+  /**
+   * Location name to display
+   * @returns {string}
+   */
+  get locationName() {
+    return this.location && this.location.searchName;
+  }
+
+  /**
+   * Relation type name to display
+   * @returns {string}
+   */
+  get relationName() {
+    return this.relation && this.relation.name;
   }
 }

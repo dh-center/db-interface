@@ -23,16 +23,10 @@
 <script>
   /* eslint-disable new-cap */
 
-  import jsonpatch from 'fast-json-patch';
-
   export default {
     name: 'ChangesTableRow',
     props: {
-      changeList: {
-        type: Array,
-        required: true
-      },
-      entityData: {
+      changedEntity: {
         type: Object,
         required: true
       },
@@ -43,7 +37,7 @@
     },
     computed: {
       entity() {
-        return new this.model(jsonpatch.applyPatch(this.entityData, this.changeList).newDocument);
+        return new this.model(this.changedEntity);
       }
     }
   };
