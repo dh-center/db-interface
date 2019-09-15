@@ -5,7 +5,8 @@ const jsonpatch = require('fast-json-patch');
 const mongoose = require('mongoose');
 const {
   ApproveForbiddenError,
-  ChangesPatchingForbiddenError
+  ChangesPatchingForbiddenError,
+  SavingApprovedChangesError
 } = require('../errorTypes');
 
 /**
@@ -61,6 +62,10 @@ module.exports = function changesFactory(entityType, EntityModel) {
 
     if (res.locals.user._id.toString() !== changeRecord.user.toString()) {
       throw new ChangesPatchingForbiddenError();
+    }
+
+    if (changeRecord.approved) {
+      throw new SavingApprovedChangesError();
     }
 
     changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body);
