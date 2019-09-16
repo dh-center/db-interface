@@ -18,7 +18,7 @@
         :key="entity._id"
       >
         <td>
-          {{index +1 }}
+          {{ index +1 }}
         </td>
         <td>
           <button @click="$router.push({name:`${model.entityType}-overview-specific`, params: {entityId: entity.id}})">
@@ -26,8 +26,8 @@
           </button>
         </td>
         <td
-          v-for="(fieldName, index) in model.fields"
-          :key="index"
+          v-for="(fieldName, _index) in model.fields"
+          :key="_index"
         >
           {{ entity[fieldName] }}
         </td>

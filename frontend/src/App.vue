@@ -80,6 +80,13 @@
           }
         }
       );
+
+      this.$store.watch(
+        state => state.app.interfaceLanguage,
+        newLang => {
+          this.$i18n.i18next.changeLanguage(newLang);
+        }
+      );
     }
   };
 </script>
