@@ -22,6 +22,7 @@
   "entities": {
     "viewChanges": "Посмотреть изменения",
     "save": "Сохранить",
+    "successfulApprove": "Approved successfully",
     "markForDeletion": "Пометить для удаления",
     "cancelDeletion": "Отменить удаление",
     "beforeChanges": "До изменений",

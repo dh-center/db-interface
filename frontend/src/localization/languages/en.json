@@ -25,6 +25,7 @@
     "actions": "Actions",
     "beforeChanges": "Before changes",
     "afterChanges": "After changes",
+    "successfulApprove": "Approved successfully",
     "edit": "Edit",
     "view": "View",
     "markForDeletion": "Mark for deletion",

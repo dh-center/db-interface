@@ -12,8 +12,9 @@
     >
       {{ $t('entities.approve') }}
     </button>
-    <div class="entities-overview-create__info">
+    <div class="entities-overview-create__info-wrapper">
       <component
+        class="entities-overview-create__info"
         :is="infoComponent"
         v-if="entity"
         ref="entityInfo"
@@ -119,9 +120,13 @@
 
 <style>
   .entities-overview-create {
-    &__info {
+    &__info-wrapper {
       display: flex;
       justify-content: space-around;
+    }
+
+    &__info {
+      width: 400px;
     }
   }
 </style>
