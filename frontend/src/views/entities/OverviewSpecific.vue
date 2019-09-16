@@ -1,6 +1,9 @@
 <template>
   <div class="entities-overview-specific">
-    <button @click="isEditMode = true">
+    <button
+      v-if="!isChangedEntityShowed"
+      @click="isEditMode = true"
+    >
       {{ $t('entities.edit') }}
     </button>
     <button
