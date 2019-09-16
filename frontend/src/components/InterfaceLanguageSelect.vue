@@ -1,6 +1,6 @@
 <template>
   <div class="interface-language-select">
-    <h2>Interface language</h2>
+    <h2>{{ $t('home.interfaceLanguage') }}</h2>
     <div>
       <label :for="$id('radioButtonRu')">ru</label>
       <input

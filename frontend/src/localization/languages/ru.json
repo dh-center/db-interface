@@ -12,6 +12,10 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "home": {
+    "linkTitle": "Главная",
+    "interfaceLanguage": "Язык интерфейса"
+  },
   "notifications": {
     "savedSuccessfully": "Успешно сохранено"
   },

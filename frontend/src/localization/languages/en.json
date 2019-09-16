@@ -12,6 +12,10 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "home": {
+    "linkTitle": "Home",
+    "interfaceLanguage": "Interface language"
+  },
   "notifications": {
     "savedSuccessfully": "Saved successfully"
   },

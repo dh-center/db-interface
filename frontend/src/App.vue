@@ -11,7 +11,7 @@
         class="app__header-link"
         :to="{name: 'home'}"
       >
-        Home
+        {{ $t('home.linkTitle') }}
       </router-link>
       <router-link
         class="app__header-link"
@@ -85,6 +85,9 @@
         state => state.app.interfaceLanguage,
         newLang => {
           this.$i18n.i18next.changeLanguage(newLang);
+        },
+        {
+          immediate: true
         }
       );
     }
