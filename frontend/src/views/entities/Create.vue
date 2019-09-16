@@ -1,12 +1,5 @@
 <template>
   <div class="entities-overview-create">
-    <component
-      :is="infoComponent"
-      v-if="entity"
-      ref="entityInfo"
-      :editable="isUserCanEditThisEntity"
-      :entity="entity"
-    />
     <button
       v-if="isUserCanEditThisEntity"
       @click="saveEntity"
@@ -19,6 +12,15 @@
     >
       {{ $t('entities.approve') }}
     </button>
+    <div class="entities-overview-create__info">
+      <component
+        :is="infoComponent"
+        v-if="entity"
+        ref="entityInfo"
+        :editable="isUserCanEditThisEntity"
+        :entity="entity"
+      />
+    </div>
   </div>
 </template>
 
@@ -114,3 +116,12 @@
     }
   };
 </script>
+
+<style>
+  .entities-overview-create {
+    &__info {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+</style>

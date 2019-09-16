@@ -39,7 +39,6 @@
           :entity="originalEntity"
         />
       </div>
-
       <div
         v-if="isChangedEntityShowed"
         class="entities-overview-specific__delimiter"
