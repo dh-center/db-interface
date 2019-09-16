@@ -1,12 +1,5 @@
 <template>
   <div class="entities-overview-create">
-    <component
-      :is="infoComponent"
-      v-if="entity"
-      ref="entityInfo"
-      :editable="isUserCanEditThisEntity"
-      :entity="entity"
-    />
     <button
       v-if="isUserCanEditThisEntity"
       @click="saveEntity"
@@ -19,6 +12,16 @@
     >
       {{ $t('entities.approve') }}
     </button>
+    <div class="entities-overview-create__info-wrapper">
+      <component
+        :is="infoComponent"
+        v-if="entity"
+        ref="entityInfo"
+        class="entities-overview-create__info"
+        :editable="isUserCanEditThisEntity"
+        :entity="entity"
+      />
+    </div>
   </div>
 </template>
 
@@ -72,6 +75,10 @@
 
         try {
           await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
+          notifier.show({
+            message: this.$t('entities.successfulApprove'),
+            time: 2000
+          });
           this.$router.push({ name: `${this.model.entityType}-overview` });
         } catch (e) {
           notifier.show({
@@ -114,3 +121,16 @@
     }
   };
 </script>
+
+<style>
+  .entities-overview-create {
+    &__info-wrapper {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    &__info {
+      width: 400px;
+    }
+  }
+</style>

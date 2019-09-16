@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
 import i18n from './localization/i18next';
+import store from './store';
 import './httpClient';
 import UniqueId from 'vue-unique-id';
 import * as Sentry from '@sentry/browser';

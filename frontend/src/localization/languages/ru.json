@@ -12,14 +12,22 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "home": {
+    "linkTitle": "Главная",
+    "interfaceLanguage": "Язык интерфейса"
+  },
   "notifications": {
     "savedSuccessfully": "Успешно сохранено"
   },
   "entities": {
     "viewChanges": "Посмотреть изменения",
     "save": "Сохранить",
+    "successfulApprove": "Approved successfully",
     "markForDeletion": "Пометить для удаления",
     "cancelDeletion": "Отменить удаление",
+    "beforeChanges": "До изменений",
+    "afterChanges": "После изменений",
+    "edit": "Редактировать",
     "deletedMessage": "Сущность помечена для удаления",
     "actions": "Действия",
     "view": "Обзор",

@@ -1,27 +1,11 @@
 <template>
   <div class="entities-overview-specific">
-    <div
-      v-if="deleted"
-      class="entities-overview-specific__deleted-message"
+    <button
+      v-if="!isChangedEntityShowed"
+      @click="isEditMode = true"
     >
-      {{$t('entities.deletedMessage')}}
-    </div>
-    <div class="entities-overview-specific__container">
-      <component
-        :is="infoComponent"
-        v-if="originalEntity"
-        ref="originalEntityInfo"
-        :entity="originalEntity"
-      />
-      <component
-        :is="infoComponent"
-        v-if="changedEntity"
-        ref="changedEntityInfo"
-        :class="{'entities-overview-specific__changed-entity--deleted': deleted}"
-        :entity="changedEntity"
-        :editable="isUserCanEditThisEntity"
-      />
-    </div>
+      {{ $t('entities.edit') }}
+    </button>
     <button
       v-if="isUserCanEditThisEntity"
       @click="saveEntity"
@@ -46,6 +30,39 @@
     >
       {{ $t('entities.approve') }}
     </button>
+    <div class="entities-overview-specific__container">
+      <div>
+        <h2 v-if="isChangedEntityShowed">
+          {{ $t('entities.beforeChanges') }}
+        </h2>
+        <component
+          :is="infoComponent"
+          v-if="originalEntity"
+          class="entities-overview-specific__original-entity"
+          :entity="originalEntity"
+        />
+      </div>
+      <div
+        v-if="isChangedEntityShowed"
+        class="entities-overview-specific__delimiter"
+      />
+      <div v-if="isChangedEntityShowed">
+        <h2>{{ $t('entities.afterChanges') }}</h2>
+        <div
+          v-if="deleted"
+          class="entities-overview-specific__deleted-message"
+        >
+          {{ $t('entities.deletedMessage') }}
+        </div>
+        <component
+          :is="infoComponent"
+          v-if="changedEntity"
+          class="entities-overview-specific__changed-entity"
+          :entity="changedEntity"
+          :editable="isUserCanEditThisEntity"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,10 +88,15 @@
         lastChangesRecord: null,
         changedEntity: null,
         infoComponent: null,
-        deleted: false
+        deleted: false,
+        isEditMode: false
       };
     },
     computed: {
+      isChangedEntityShowed() {
+        return this.lastChangesRecord || this.isEditMode;
+      },
+
       isUserCanEditThisEntity() {
         return this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true;
       }
@@ -96,6 +118,10 @@
       async approve() {
         try {
           await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
+          notifier.show({
+            message: this.$t('entities.successfulApprove'),
+            time: 2000
+          });
           this.$router.push({ name: `${this.model.entityType}-overview` });
         } catch (e) {
           notifier.show({
@@ -168,6 +194,17 @@
   .entities-overview-specific {
     &__container {
       display: flex;
+      justify-content: space-around;
+    }
+
+    &__original-entity,
+    &__changed-entity {
+      min-width: 400px;
+    }
+
+    &__delimiter {
+      margin: 10px;
+      border-left: 1px solid black;
     }
 
     &__deleted-message {
@@ -175,7 +212,6 @@
       padding: 5px;
       margin: 5px;
       background-color: rgba(255, 32, 0, 0.63);
-
     }
   }
 </style>

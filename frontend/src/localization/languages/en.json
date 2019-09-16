@@ -12,6 +12,10 @@
     "login": "Log in",
     "logout": "Log out"
   },
+  "home": {
+    "linkTitle": "Home",
+    "interfaceLanguage": "Interface language"
+  },
   "notifications": {
     "savedSuccessfully": "Saved successfully"
   },
@@ -19,6 +23,10 @@
     "viewChanges": "View changes",
     "save": "Save",
     "actions": "Actions",
+    "beforeChanges": "Before changes",
+    "afterChanges": "After changes",
+    "successfulApprove": "Approved successfully",
+    "edit": "Edit",
     "view": "View",
     "markForDeletion": "Mark for deletion",
     "cancelDeletion": "Cancel deletion",

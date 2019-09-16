@@ -2,6 +2,7 @@
   <table class="data-table">
     <thead>
       <tr>
+        <th>№</th>
         <th>Actions</th>
         <th
           v-for="(fieldName, index) in model.fields"
@@ -13,9 +14,10 @@
     </thead>
     <tbody>
       <ChangesTableRow
-        v-for="changeRecord in changesRecordList"
+        v-for="(changeRecord, index) in changesRecordList"
         :key="changeRecord._id"
         :deleted="changeRecord.deleted"
+        :row-index="index + 1"
         :changed-entity="changeRecord.changedEntity"
         :model="model"
         @onApproveButtonClicked="approve(changeRecord)"
@@ -27,7 +29,7 @@
 
 <script>
   import axios from 'axios';
-
+  import notifier from 'codex-notifier';
   import ChangesTableRow from '../../components/ChangesTableRow';
 
   export default {
@@ -51,8 +53,20 @@
     },
     methods: {
       async approve(changeRecord) {
-        await axios.put(`/changes/${this.model.entityType}/${changeRecord._id}/approval`);
-        this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
+        try {
+          await axios.put(`/changes/${this.model.entityType}/${changeRecord._id}/approval`);
+          this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
+          notifier.show({
+            message: this.$t('entities.successfulApprove'),
+            time: 2000
+          });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+        }
       },
 
       openView(changeRecord) {
