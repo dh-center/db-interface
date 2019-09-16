@@ -13,7 +13,7 @@ const mutationTypes = {
  * Module state
  * @typedef {object} AppModuleState
  * @property {string} dataLanguage - language in which data from the database will be displayed
- * @property {string} interfaceLanguage -
+ * @property {string} interfaceLanguage - language in which user interface will be displayed
  */
 
 /**
