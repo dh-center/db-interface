@@ -35,7 +35,7 @@
         <component
           :is="infoComponent"
           v-if="originalEntity"
-          ref="originalEntityInfo"
+          class="entities-overview-specific__original-entity"
           :entity="originalEntity"
         />
       </div>
@@ -54,7 +54,6 @@
         <component
           :is="infoComponent"
           v-if="changedEntity"
-          ref="changedEntityInfo"
           class="entities-overview-specific__changed-entity"
           :entity="changedEntity"
           :editable="isUserCanEditThisEntity"
@@ -191,7 +190,13 @@
       justify-content: space-around;
     }
 
+    &__original-entity,
+    &__changed-entity {
+      min-width: 400px;
+    }
+
     &__delimiter {
+      margin: 10px;
       border-left: 1px solid black;
     }
 

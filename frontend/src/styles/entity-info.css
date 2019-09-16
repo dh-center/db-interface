@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 400px;
 
   &__section {
     margin-bottom: 15px;
@@ -13,5 +12,6 @@
 
   &__description {
     height: 400px;
+    max-width: 100%;
   }
 }
