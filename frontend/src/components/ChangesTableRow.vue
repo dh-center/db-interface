@@ -1,5 +1,6 @@
 <template>
   <tr :class="{'changes-table-row--deleted': deleted}">
+    <td>{{ rowIndex }}</td>
     <td>
       <button @click="$emit('onViewButtonClicked')">
         {{ $t('entities.view') }}
@@ -28,6 +29,10 @@
     props: {
       changedEntity: {
         type: Object,
+        required: true
+      },
+      rowIndex: {
+        type: Number,
         required: true
       },
       model: {
