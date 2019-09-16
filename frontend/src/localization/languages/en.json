@@ -53,7 +53,7 @@
     "address": "Address",
     "constructionDate": "Construction date",
     "demolitionDate": "Demolition date",
-    "locationTypeId": "Building type",
+    "locationTypeName": "Building type",
     "description": "Description",
     "wikiLink": "Wiki link",
     "photoLinks": "Photo links",

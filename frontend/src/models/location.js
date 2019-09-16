@@ -3,6 +3,7 @@ import {
   defineMultilingualProperties
 } from '../utils';
 import BaseModel from './base';
+import LocationTypeModel from './locationTypes';
 
 /**
  * Class representing location
@@ -14,6 +15,10 @@ export default class Location extends BaseModel {
    */
   constructor(_locationData) {
     super(_locationData);
+
+    if (typeof this.data.locationTypeId !== 'string') {
+      this.locationType = new LocationTypeModel(this.data.locationTypeId);
+    }
 
     defineMultilingualProperties(this, this.data, [
       'name',
@@ -64,7 +69,7 @@ export default class Location extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'locationTypeId', 'description', 'coordinateX', 'coordinateY'];
+    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'locationTypeName', 'description', 'coordinateX', 'coordinateY'];
   }
 
   /**
@@ -82,5 +87,13 @@ export default class Location extends BaseModel {
    */
   search(searchString) {
     return this.name.toLowerCase().includes(searchString.toLowerCase());
+  }
+
+  /**
+   * Location name to display in the table
+   * @returns {String}
+   */
+  get locationTypeName() {
+    return this.locationType && this.locationType.name;
   }
 }
