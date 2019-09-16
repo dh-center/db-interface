@@ -36,7 +36,7 @@ const locationSchema = new Schema({
 locationSchema.plugin(getChangesListPlugin);
 
 /**
- * Get all relations with all their data
+ * Get all locations with all their data
  * @param {Object} query - mongodb query
  * @returns {Object}
  */
