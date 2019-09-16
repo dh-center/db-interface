@@ -18,6 +18,9 @@
   "entities": {
     "viewChanges": "Посмотреть изменения",
     "save": "Сохранить",
+    "markForDeletion": "Пометить для удаления",
+    "cancelDeletion": "Отменить удаление",
+    "deletedMessage": "Сущность помечена для удаления",
     "actions": "Действия",
     "view": "Обзор",
     "approve": "Подтвердить"

@@ -52,7 +52,8 @@ module.exports = function changesFactory(entityType, EntityModel) {
       entityType: entityType,
       user: res.locals.user._id,
       ...(req.params.entityId && { entity: req.params.entityId }),
-      changeList: await EntityModel.getChangesList(req.params.entityId, req.body)
+      deleted: req.body.deleted,
+      changeList: await EntityModel.getChangesList(req.params.entityId, req.body.changedEntity)
     });
     const result = await changeRecord.save();
 
@@ -73,7 +74,8 @@ module.exports = function changesFactory(entityType, EntityModel) {
       throw new SavingApprovedChangesError();
     }
 
-    changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body);
+    changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body.changedEntity);
+    changeRecord.deleted = req.body.deleted;
     await changeRecord.save();
     res.sendStatus(200);
   });
@@ -114,19 +116,6 @@ module.exports = function changesFactory(entityType, EntityModel) {
       await Promise.all([entity.save(), changeRecord.save()]);
     }
     res.sendStatus(200);
-  });
-
-  router.post(`/changes/${entityType}/:entityId/deleted`, async (req, res) => {
-    const changeRecord = new Change({
-      entityType: entityType,
-      user: res.locals.user._id,
-      entity: req.params.entityId,
-      changeList: [],
-      deleted: true
-    });
-    const result = await changeRecord.save();
-
-    res.status(201).json({ payload: result });
   });
 
   return router;

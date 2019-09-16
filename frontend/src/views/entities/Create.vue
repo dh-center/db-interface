@@ -85,7 +85,7 @@
       async saveEntity() {
         if (this.$route.params.changeRecordId) {
           try {
-            await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, this.entity.data);
+            await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, { changedEntity: this.entity.data });
           } catch (e) {
             notifier.show({
               message: e.message,
@@ -96,7 +96,7 @@
             return;
           }
         } else {
-          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, this.entity.data);
+          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
 
           this.$router.push({
             name: `${this.model.entityType}-create`,

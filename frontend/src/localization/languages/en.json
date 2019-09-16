@@ -20,6 +20,9 @@
     "save": "Save",
     "actions": "Actions",
     "view": "View",
+    "markForDeletion": "Mark for deletion",
+    "cancelDeletion": "Cancel deletion",
+    "deletedMessage": "Entity marked as deleted",
     "approve": "Approve"
   },
   "persons": {

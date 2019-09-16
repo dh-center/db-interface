@@ -1,5 +1,11 @@
 <template>
   <div class="entities-overview-specific">
+    <div
+      v-if="deleted"
+      class="entities-overview-specific__deleted-message"
+    >
+      {{$t('entities.deletedMessage')}}
+    </div>
     <div class="entities-overview-specific__container">
       <component
         :is="infoComponent"
@@ -11,6 +17,7 @@
         :is="infoComponent"
         v-if="changedEntity"
         ref="changedEntityInfo"
+        :class="{'entities-overview-specific__changed-entity--deleted': deleted}"
         :entity="changedEntity"
         :editable="isUserCanEditThisEntity"
       />
@@ -22,9 +29,16 @@
       {{ $t('entities.save') }}
     </button>
     <button
+      v-if="isUserCanEditThisEntity && !deleted"
       @click="deleteEntity"
     >
-      {{ $t('entities.delete') }}
+      {{ $t('entities.markForDeletion') }}
+    </button>
+    <button
+      v-if="isUserCanEditThisEntity && deleted"
+      @click="cancelDeletion"
+    >
+      {{ $t('entities.cancelDeletion') }}
     </button>
     <button
       v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
@@ -56,7 +70,8 @@
         originalEntity: null, // entity data before modification
         lastChangesRecord: null,
         changedEntity: null,
-        infoComponent: null
+        infoComponent: null,
+        deleted: false
       };
     },
     computed: {
@@ -69,7 +84,13 @@
     },
     methods: {
       deleteEntity() {
-        axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}/deleted`);
+        this.deleted = true;
+        this.saveEntity();
+      },
+
+      cancelDeletion() {
+        this.deleted = false;
+        this.saveEntity();
       },
 
       async approve() {
@@ -98,6 +119,7 @@
         if (entityData.lastChangesRecord) {
           this.lastChangesRecord = entityData.lastChangesRecord;
           delete entityData.lastChangesRecord;
+          this.deleted = this.lastChangesRecord.deleted;
 
           this.changedEntity = new this.model(jsonpatch.applyPatch(cloneDeep(entityData), this.lastChangesRecord.changeList).newDocument);
         } else {
@@ -112,7 +134,10 @@
         if (this.lastChangesRecord) {
           // Update existing changes record
           try {
-            await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, this.changedEntity.data);
+            await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, {
+              changedEntity: this.changedEntity.data,
+              deleted: this.deleted
+            });
           } catch (e) {
             notifier.show({
               message: e.message,
@@ -124,7 +149,10 @@
           }
         } else {
           // Create new changes record
-          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, this.changedEntity.data);
+          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, {
+            changedEntity: this.changedEntity.data,
+            deleted: this.deleted
+          });
         }
 
         notifier.show({
@@ -140,6 +168,14 @@
   .entities-overview-specific {
     &__container {
       display: flex;
+    }
+
+    &__deleted-message {
+      border: 1px solid black;
+      padding: 5px;
+      margin: 5px;
+      background-color: rgba(255, 32, 0, 0.63);
+
     }
   }
 </style>

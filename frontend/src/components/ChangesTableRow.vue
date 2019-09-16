@@ -46,6 +46,6 @@
 
 <style>
   .changes-table-row--deleted {
-    background-color: rgba(255, 32, 0, 0.63);
+    background-color: rgba(255, 32, 0, 0.63) !important;
   }
 </style>
