@@ -88,6 +88,14 @@ module.exports = function changesFactory(entityType, EntityModel) {
       throw new ApproveForbiddenError();
     }
 
+    if (changeRecord.deleted) {
+      await EntityModel.deleteOne({ _id: changeRecord.entity });
+
+      changeRecord.approved = true;
+      await changeRecord.save();
+      return res.sendStatus(200);
+    }
+
     if (changeRecord.entity) {
       const updatedDocument = jsonpatch.applyPatch(JSON.parse(JSON.stringify(changeRecord.entity)), changeRecord.changeList).newDocument;
 
@@ -106,6 +114,19 @@ module.exports = function changesFactory(entityType, EntityModel) {
       await Promise.all([entity.save(), changeRecord.save()]);
     }
     res.sendStatus(200);
+  });
+
+  router.post(`/changes/${entityType}/:entityId/deleted`, async (req, res) => {
+    const changeRecord = new Change({
+      entityType: entityType,
+      user: res.locals.user._id,
+      entity: req.params.entityId,
+      changeList: [],
+      deleted: true
+    });
+    const result = await changeRecord.save();
+
+    res.status(201).json({ payload: result });
   });
 
   return router;

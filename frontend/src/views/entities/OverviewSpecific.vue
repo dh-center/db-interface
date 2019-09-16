@@ -22,6 +22,11 @@
       {{ $t('entities.save') }}
     </button>
     <button
+      @click="deleteEntity"
+    >
+      {{ $t('entities.delete') }}
+    </button>
+    <button
       v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
       @click="approve"
     >
@@ -63,6 +68,10 @@
       await this.fetchData();
     },
     methods: {
+      deleteEntity() {
+        axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}/deleted`);
+      },
+
       async approve() {
         try {
           await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
