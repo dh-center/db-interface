@@ -115,6 +115,10 @@
       async approve() {
         try {
           await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
+          notifier.show({
+            message: this.$t('entities.successfulApprove'),
+            time: 2000
+          });
           this.$router.push({ name: `${this.model.entityType}-overview` });
         } catch (e) {
           notifier.show({

@@ -14,10 +14,10 @@
     </button>
     <div class="entities-overview-create__info-wrapper">
       <component
-        class="entities-overview-create__info"
         :is="infoComponent"
         v-if="entity"
         ref="entityInfo"
+        class="entities-overview-create__info"
         :editable="isUserCanEditThisEntity"
         :entity="entity"
       />
@@ -75,6 +75,10 @@
 
         try {
           await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
+          notifier.show({
+            message: this.$t('entities.successfulApprove'),
+            time: 2000
+          });
           this.$router.push({ name: `${this.model.entityType}-overview` });
         } catch (e) {
           notifier.show({
