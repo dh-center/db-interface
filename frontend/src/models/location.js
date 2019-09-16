@@ -69,7 +69,7 @@ export default class Location extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'locationTypeName', 'description', 'coordinateX', 'coordinateY'];
+    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'locationTypeName', 'description'];
   }
 
   /**
