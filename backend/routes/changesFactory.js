@@ -52,7 +52,8 @@ module.exports = function changesFactory(entityType, EntityModel) {
       entityType: entityType,
       user: res.locals.user._id,
       ...(req.params.entityId && { entity: req.params.entityId }),
-      changeList: await EntityModel.getChangesList(req.params.entityId, req.body)
+      deleted: req.body.deleted,
+      changeList: await EntityModel.getChangesList(req.params.entityId, req.body.changedEntity)
     });
     const result = await changeRecord.save();
 
@@ -73,7 +74,8 @@ module.exports = function changesFactory(entityType, EntityModel) {
       throw new SavingApprovedChangesError();
     }
 
-    changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body);
+    changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body.changedEntity);
+    changeRecord.deleted = req.body.deleted;
     await changeRecord.save();
     res.sendStatus(200);
   });
@@ -86,6 +88,14 @@ module.exports = function changesFactory(entityType, EntityModel) {
 
     if (!res.locals.user.isAdmin) {
       throw new ApproveForbiddenError();
+    }
+
+    if (changeRecord.deleted) {
+      await EntityModel.deleteOne({ _id: changeRecord.entity });
+
+      changeRecord.approved = true;
+      await changeRecord.save();
+      return res.sendStatus(200);
     }
 
     if (changeRecord.entity) {

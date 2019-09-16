@@ -16,6 +16,10 @@ const changeSchema = new Schema({
     type: Schema.Types.ObjectId,
     refPath: 'entityType'
   },
+  deleted: {
+    type: Boolean,
+    default: false
+  },
   changeList: {
     required: true,
     type: Schema.Types.Mixed

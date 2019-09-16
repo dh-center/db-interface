@@ -15,6 +15,7 @@
       <ChangesTableRow
         v-for="changeRecord in changesRecordList"
         :key="changeRecord._id"
+        :deleted="changeRecord.deleted"
         :changed-entity="changeRecord.changedEntity"
         :model="model"
         @onApproveButtonClicked="approve(changeRecord)"

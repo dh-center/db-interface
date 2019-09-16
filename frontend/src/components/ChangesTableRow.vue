@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr :class="{'changes-table-row--deleted': deleted}">
     <td>
       <button @click="$emit('onViewButtonClicked')">
         {{ $t('entities.view') }}
@@ -33,7 +33,8 @@
       model: {
         type: Function,
         required: true
-      }
+      },
+      deleted: Boolean
     },
     computed: {
       entity() {
@@ -42,3 +43,9 @@
     }
   };
 </script>
+
+<style>
+  .changes-table-row--deleted {
+    background-color: rgba(255, 32, 0, 0.63) !important;
+  }
+</style>
