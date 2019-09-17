@@ -69,6 +69,20 @@ class ApproveForbiddenError extends ApiError {
 }
 
 /**
+ * Throws when non-admin user trying to approve changes
+ */
+class RejectForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'REJECT_FORBIDDEN';
+  }
+}
+
+/**
  * Throws when user who did not create this change is trying to save the changes
  */
 class ChangesPatchingForbiddenError extends ApiError {
@@ -102,6 +116,7 @@ module.exports = {
   WrongUserPasswordError,
   ApproveForbiddenError,
   ChangesPatchingForbiddenError,
+  RejectForbiddenError,
   SavingApprovedChangesError,
   UsernameDuplicationError
 };

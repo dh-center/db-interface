@@ -11,6 +11,9 @@
       >
         {{ $t('entities.approve') }}
       </button>
+      <button @click="$emit('onDeleteChangesButtonClicked')">
+        {{ $t('entities.deleteChanges') }}
+      </button>
     </td>
     <td
       v-for="(fieldName, index) in model.fields"

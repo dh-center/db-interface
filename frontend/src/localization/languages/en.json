@@ -21,6 +21,7 @@
   },
   "entities": {
     "viewChanges": "View changes",
+    "deleteChanges": "Delete changes",
     "save": "Save",
     "actions": "Actions",
     "beforeChanges": "Before changes",

@@ -22,6 +22,7 @@
         :model="model"
         @onApproveButtonClicked="approve(changeRecord)"
         @onViewButtonClicked="openView(changeRecord)"
+        @onDeleteChangesButtonClicked="deleteChanges(changeRecord)"
       />
     </tbody>
   </table>
@@ -55,6 +56,23 @@
       async approve(changeRecord) {
         try {
           await axios.put(`/changes/${this.model.entityType}/${changeRecord._id}/approval`);
+          this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
+          notifier.show({
+            message: this.$t('entities.successfulApprove'),
+            time: 2000
+          });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+        }
+      },
+
+      async deleteChanges(changeRecord) {
+        try {
+          await axios.put(`/changes/${this.model.entityType}/${changeRecord._id}/rejection`);
           this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
           notifier.show({
             message: this.$t('entities.successfulApprove'),
