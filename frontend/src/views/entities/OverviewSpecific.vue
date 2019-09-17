@@ -2,33 +2,45 @@
   <div class="entities-overview-specific">
     <button
       v-if="!isChangedEntityShowed"
+      class="button button--secondary"
       @click="isEditMode = true"
     >
       {{ $t('entities.edit') }}
     </button>
     <button
       v-if="isUserCanEditThisEntity"
+      class="button button--primary"
       @click="saveEntity"
     >
       {{ $t('entities.save') }}
     </button>
     <button
       v-if="isUserCanEditThisEntity && !deleted"
+      class="button button--danger"
       @click="deleteEntity"
     >
       {{ $t('entities.markForDeletion') }}
     </button>
     <button
       v-if="isUserCanEditThisEntity && deleted"
+      class="button"
       @click="cancelDeletion"
     >
       {{ $t('entities.cancelDeletion') }}
     </button>
     <button
       v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
+      class="button button--approve"
       @click="approve"
     >
       {{ $t('entities.approve') }}
+    </button>
+    <button
+      v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
+      class="button button--danger"
+      @click="approve"
+    >
+      {{ $t('entities.reject') }}
     </button>
     <div class="entities-overview-specific__container">
       <div>

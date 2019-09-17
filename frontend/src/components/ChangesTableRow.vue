@@ -2,16 +2,23 @@
   <tr :class="{'changes-table-row--deleted': deleted}">
     <td>{{ rowIndex }}</td>
     <td>
-      <button @click="$emit('onViewButtonClicked')">
+      <button
+        class="button button--primary"
+        @click="$emit('onViewButtonClicked')"
+      >
         {{ $t('entities.view') }}
       </button>
       <button
         v-if="$store.state.auth.user.isAdmin"
+        class="button button--approve"
         @click="$emit('onApproveButtonClicked')"
       >
         {{ $t('entities.approve') }}
       </button>
-      <button @click="$emit('onDeleteChangesButtonClicked')">
+      <button
+        class="button button--danger"
+        @click="$emit('onDeleteChangesButtonClicked')"
+      >
         {{ $t('entities.deleteChanges') }}
       </button>
     </td>
