@@ -1,7 +1,7 @@
 <template>
   <tr :class="{'changes-table-row--deleted': changeRecord.deleted}">
     <td>{{ rowIndex }}</td>
-    <td>
+    <td class="data-table__actions-cell">
       <button
         class="button button--primary"
         @click="openView"
@@ -73,7 +73,9 @@
 </script>
 
 <style>
-  .changes-table-row--deleted {
-    background-color: rgba(255, 32, 0, 0.63) !important;
+  .changes-table-row {
+    &--deleted {
+      background-color: rgba(255, 32, 0, 0.63) !important;
+    }
   }
 </style>
