@@ -30,7 +30,7 @@
     },
     computed: {
       isUserCanEditThisEntity() {
-        return this.$store.state.auth.user.isAdmin && (this.$store.state.auth.user.id === this.userId);
+        return this.$store.state.auth.user.isAdmin || (this.$store.state.auth.user.id === this.userId);
       }
     },
     methods: {
@@ -53,7 +53,3 @@
     }
   };
 </script>
-
-<style scoped>
-
-</style>
