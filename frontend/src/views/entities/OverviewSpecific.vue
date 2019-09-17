@@ -106,16 +106,17 @@
         changedEntity: null,
         infoComponent: null,
         deleted: false,
+        loaded: false,
         isEditMode: false
       };
     },
     computed: {
       isChangedEntityShowed() {
-        return this.lastChangesRecord || this.isEditMode;
+        return this.loaded && (this.lastChangesRecord || this.isEditMode);
       },
 
       isUserCanEditThisEntity() {
-        return this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true;
+        return this.loaded && (this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true);
       }
     },
     async mounted() {
@@ -154,6 +155,7 @@
         }
 
         this.originalEntity = new this.model(entityData);
+        this.loaded = true;
       },
 
       async saveEntity() {

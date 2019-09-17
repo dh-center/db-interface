@@ -56,6 +56,7 @@
     },
     data() {
       return {
+        loaded: false,
         entity: null,
         changeRecord: null,
         infoComponent: null
@@ -63,7 +64,7 @@
     },
     computed: {
       isUserCanEditThisEntity() {
-        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
+        return this.loaded && (this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true);
       }
     },
     async mounted() {
@@ -82,6 +83,7 @@
         } else {
           this.entity = new this.model();
         }
+        this.loaded = true;
       },
 
       async saveEntity() {
