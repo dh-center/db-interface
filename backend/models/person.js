@@ -36,6 +36,16 @@ const personSchema = new Schema({
   mainPhotoLink: String
 });
 
+/**
+ * Get all persons without description
+ * @param {Object} query - mongodb query
+ * @returns {Object}
+ */
+personSchema.statics.fetchAll = function (query) {
+  return this.find(query)
+    .select('-description');
+};
+
 personSchema.plugin(getChangesListPlugin);
 
 module.exports = mongoose.model('persons', personSchema);
