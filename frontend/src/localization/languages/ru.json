@@ -24,7 +24,8 @@
     "save": "Сохранить",
     "reject": "Удалить изменения",
     "deleteChanges": "Удалить изменения",
-    "successfulApprove": "Approved successfully",
+    "successfulApprove": "Изменения успешно подтверждены",
+    "successfulReject": "Успешно удалено",
     "markForDeletion": "Пометить для удаления",
     "cancelDeletion": "Отменить удаление",
     "beforeChanges": "До изменений",
@@ -108,6 +109,7 @@
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",
     "APPROVE_FORBIDDEN": "Вы не можете подтвержать изменения, так как вы не админ",
+    "REJECT_FORBIDDEN": "Вы не можете удалять изменения, так как вы не админ",
     "CHANGES_PATCHING_FORBIDDEN": "Вы не можете изменять эту сущность, потому что её изменял другой пользователь и изменения не подтверждены",
     "SAVING_APPROVED_CHANGES": "Изменения были одобрены администратором. Пожалуйста, обновите страницу.",
     "WRONG_USER_PASSWORD": "Неверный пароль",

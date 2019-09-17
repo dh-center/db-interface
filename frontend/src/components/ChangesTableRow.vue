@@ -14,8 +14,10 @@
         @success="$emit('successfulApprove')"
       />
       <RejectButton
-        :change-record-id="changeRecord && changeRecord._id"
+        v-if="changeRecord"
+        :change-record-id="changeRecord._id"
         :entity-type="model.entityType"
+        :user-id="changeRecord.user"
         @success="$emit('successfulApprove')"
       />
     </td>

@@ -28,6 +28,7 @@
     "beforeChanges": "Before changes",
     "afterChanges": "After changes",
     "successfulApprove": "Approved successfully",
+    "successfulReject": "Rejected successfully",
     "edit": "Edit",
     "view": "View",
     "markForDeletion": "Mark for deletion",
@@ -108,6 +109,7 @@
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "User with that username already exists",
     "APPROVE_FORBIDDEN": "You cannot approve changes since you are not an admin",
+    "REJECT_FORBIDDEN": "You cannot reject changes since you are not an admin",
     "WRONG_USER_PASSWORD": "Wrong password",
     "CHANGES_PATCHING_FORBIDDEN": "You cannot patch changes since you are not an author of this changes",
     "SAVING_APPROVED_CHANGES": "Changes was approved by administrator. Please, refresh the page.",

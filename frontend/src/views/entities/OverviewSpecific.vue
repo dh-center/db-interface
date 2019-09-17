@@ -29,12 +29,15 @@
       {{ $t('entities.cancelDeletion') }}
     </button>
     <ApproveButton
-      :change-record-id="lastChangesRecord && lastChangesRecord._id"
+      v-if="lastChangesRecord"
+      :change-record-id="lastChangesRecord._id"
       :entity-type="model.entityType"
       @success="$router.push({ name: `${model.entityType}-overview` })"
     />
     <RejectButton
-      :change-record-id="lastChangesRecord && lastChangesRecord._id"
+      v-if="lastChangesRecord"
+      :user-id="lastChangesRecord.user"
+      :change-record-id="lastChangesRecord._id"
       :entity-type="model.entityType"
       @success="$router.push({ name: `${model.entityType}-overview` })"
     />
