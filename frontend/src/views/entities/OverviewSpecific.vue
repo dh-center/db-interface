@@ -28,20 +28,16 @@
     >
       {{ $t('entities.cancelDeletion') }}
     </button>
-    <button
-      v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
-      class="button button--approve"
-      @click="approve"
-    >
-      {{ $t('entities.approve') }}
-    </button>
-    <button
-      v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
-      class="button button--danger"
-      @click="approve"
-    >
-      {{ $t('entities.reject') }}
-    </button>
+    <ApproveButton
+      :change-record-id="lastChangesRecord && lastChangesRecord._id"
+      :entity-type="model.entityType"
+      @success="$router.push({ name: `${model.entityType}-overview` })"
+    />
+    <RejectButton
+      :change-record-id="lastChangesRecord && lastChangesRecord._id"
+      :entity-type="model.entityType"
+      @success="$router.push({ name: `${model.entityType}-overview` })"
+    />
     <div class="entities-overview-specific__container">
       <div>
         <h2 v-if="isChangedEntityShowed">
@@ -85,9 +81,15 @@
   import jsonpatch from 'fast-json-patch';
   import cloneDeep from 'lodash.clonedeep';
   import notifier from 'codex-notifier';
+  import ApproveButton from '../../components/ApproveButton';
+  import RejectButton from '../../components/RejectButton';
 
   export default {
     name: 'EntitiesOverviewSpecific',
+    components: {
+      ApproveButton,
+      RejectButton
+    },
     props: {
       model: {
         type: Function,
@@ -125,23 +127,6 @@
       cancelDeletion() {
         this.deleted = false;
         this.saveEntity();
-      },
-
-      async approve() {
-        try {
-          await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
-          notifier.show({
-            message: this.$t('entities.successfulApprove'),
-            time: 2000
-          });
-          this.$router.push({ name: `${this.model.entityType}-overview` });
-        } catch (e) {
-          notifier.show({
-            message: e.message,
-            style: 'error',
-            time: 2000
-          });
-        }
       },
 
       async fetchData() {

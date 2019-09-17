@@ -16,13 +16,10 @@
       <ChangesTableRow
         v-for="(changeRecord, index) in changesRecordList"
         :key="changeRecord._id"
-        :deleted="changeRecord.deleted"
         :row-index="index + 1"
-        :changed-entity="changeRecord.changedEntity"
         :model="model"
-        @onApproveButtonClicked="approve(changeRecord)"
-        @onViewButtonClicked="openView(changeRecord)"
-        @onDeleteChangesButtonClicked="deleteChanges(changeRecord)"
+        :change-record="changeRecord"
+        @successfulApprove="deleteChangeRecord(changeRecord)"
       />
     </tbody>
   </table>
@@ -30,7 +27,6 @@
 
 <script>
   import axios from 'axios';
-  import notifier from 'codex-notifier';
   import ChangesTableRow from '../../components/ChangesTableRow';
 
   export default {
@@ -53,46 +49,8 @@
       this.changesRecordList = await axios.get(`/changes/${this.model.entityType}`);
     },
     methods: {
-      async approve(changeRecord) {
-        try {
-          await axios.put(`/changes/${this.model.entityType}/${changeRecord._id}/approval`);
-          this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
-          notifier.show({
-            message: this.$t('entities.successfulApprove'),
-            time: 2000
-          });
-        } catch (e) {
-          notifier.show({
-            message: e.message,
-            style: 'error',
-            time: 2000
-          });
-        }
-      },
-
-      async deleteChanges(changeRecord) {
-        try {
-          await axios.put(`/changes/${this.model.entityType}/${changeRecord._id}/rejection`);
-          this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
-          notifier.show({
-            message: this.$t('entities.successfulApprove'),
-            time: 2000
-          });
-        } catch (e) {
-          notifier.show({
-            message: e.message,
-            style: 'error',
-            time: 2000
-          });
-        }
-      },
-
-      openView(changeRecord) {
-        if (changeRecord.entity) {
-          this.$router.push({ name: `${this.model.entityType}-overview-specific`, params: { entityId: changeRecord.entity._id } });
-        } else {
-          this.$router.push({ name: `${this.model.entityType}-create`, params: { changeRecordId: changeRecord._id } });
-        }
+      async deleteChangeRecord(changeRecord) {
+        this.$delete(this.changesRecordList, this.changesRecordList.indexOf(changeRecord));
       }
     }
   };
