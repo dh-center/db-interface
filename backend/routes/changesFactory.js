@@ -126,6 +126,10 @@ module.exports = function changesFactory(entityType, EntityModel) {
       throw new RejectForbiddenError();
     }
 
+    if (res.locals.user._id.toString() !== changeRecord.user.toString()) {
+      throw new RejectForbiddenError();
+    }
+
     changeRecord.approved = false;
 
     await changeRecord.save();

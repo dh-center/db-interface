@@ -109,7 +109,7 @@
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "User with that username already exists",
     "APPROVE_FORBIDDEN": "You cannot approve changes since you are not an admin",
-    "REJECT_FORBIDDEN": "You cannot reject changes since you are not an admin",
+    "REJECT_FORBIDDEN": "You cannot reject changes since you are not an admin or changes author",
     "WRONG_USER_PASSWORD": "Wrong password",
     "CHANGES_PATCHING_FORBIDDEN": "You cannot patch changes since you are not an author of this changes",
     "SAVING_APPROVED_CHANGES": "Changes was approved by administrator. Please, refresh the page.",
