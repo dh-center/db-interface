@@ -17,7 +17,8 @@
     "interfaceLanguage": "Язык интерфейса"
   },
   "notifications": {
-    "savedSuccessfully": "Успешно сохранено"
+    "savedSuccessfully": "Успешно сохранено",
+    "areYouSure": "Вы уверены?"
   },
   "entities": {
     "viewChanges": "Посмотреть изменения",

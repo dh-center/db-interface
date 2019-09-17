@@ -26,6 +26,10 @@
     },
     methods: {
       async approve() {
+        if (!window.confirm(this.$t('notifications.areYouSure'))) {
+          return;
+        }
+
         try {
           await axios.put(`/changes/${this.entityType}/${this.changeRecordId}/approval`);
           this.$emit('success');

@@ -17,7 +17,8 @@
     "interfaceLanguage": "Interface language"
   },
   "notifications": {
-    "savedSuccessfully": "Saved successfully"
+    "savedSuccessfully": "Saved successfully",
+    "areYouSure": "Are you sure?"
   },
   "entities": {
     "viewChanges": "View changes",
