@@ -192,7 +192,12 @@
 
 <style>
   .entities-overview-specific {
+    .button {
+      margin-left: 5px;
+    }
+
     &__container {
+      margin-top: 10px;
       display: flex;
       justify-content: space-around;
     }

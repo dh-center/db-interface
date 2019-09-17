@@ -119,7 +119,13 @@
 
 <style>
   .entities-overview-create {
+
+    .button {
+      margin-left: 5px;
+    }
+
     &__info-wrapper {
+      margin-top: 10px;
       display: flex;
       justify-content: space-around;
     }
