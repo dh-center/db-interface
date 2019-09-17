@@ -1,7 +1,7 @@
 <template>
   <div class="entities-overview-specific">
     <button
-      v-if="!isChangedEntityShowed"
+      v-if="loaded && !isChangedEntityShowed"
       class="button button--secondary"
       @click="isEditMode = true"
     >
@@ -112,7 +112,7 @@
     },
     computed: {
       isChangedEntityShowed() {
-        return this.loaded && (this.lastChangesRecord || this.isEditMode);
+        return (this.lastChangesRecord || this.isEditMode);
       },
 
       isUserCanEditThisEntity() {
