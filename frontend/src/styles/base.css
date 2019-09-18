@@ -37,3 +37,24 @@ body .cdx-notify {
     margin-top: 8px;
   }
 }
+
+.button {
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  padding: 2px 7px;
+  background-color: #F3A72E;
+  font-size: 15px;
+
+  &--primary {
+    background-color: #367BF5;
+  }
+
+  &--approve {
+    background-color: #19D938;
+  }
+
+  &--danger {
+    background-color: #FF0545;
+  }
+}
