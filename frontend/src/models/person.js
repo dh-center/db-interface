@@ -47,7 +47,7 @@ export default class Person extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return ['lastName', 'firstName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession', 'description'];
+    return ['lastName', 'firstName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession'];
   }
 
   /**

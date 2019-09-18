@@ -5,6 +5,10 @@
   text-align: left;
   border-collapse: collapse;
 
+  &__actions-cell .button {
+    margin: 3px;
+  }
+
   td, th {
     border: 1px solid #AAAAAA;
     padding: 3px 2px;

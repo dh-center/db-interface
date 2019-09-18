@@ -2,16 +2,24 @@
   <div class="entities-overview-create">
     <button
       v-if="isUserCanEditThisEntity"
+      class="button button--primary"
       @click="saveEntity"
     >
       {{ $t('entities.save') }}
     </button>
-    <button
-      v-if="$store.state.auth.user.isAdmin && $route.params.changeRecordId"
-      @click="approve"
-    >
-      {{ $t('entities.approve') }}
-    </button>
+    <ApproveButton
+      v-if="changeRecord"
+      :change-record-id="changeRecord._id"
+      :entity-type="model.entityType"
+      @success="$router.push({ name: `${model.entityType}-overview` })"
+    />
+    <RejectButton
+      v-if="changeRecord"
+      :user-id="changeRecord.user"
+      :change-record-id="changeRecord._id"
+      :entity-type="model.entityType"
+      @success="$router.push({ name: `${model.entityType}-overview` })"
+    />
     <div class="entities-overview-create__info-wrapper">
       <component
         :is="infoComponent"
@@ -31,9 +39,15 @@
   import axios from 'axios';
   import jsonpatch from 'fast-json-patch';
   import notifier from 'codex-notifier';
+  import ApproveButton from '../../components/ApproveButton';
+  import RejectButton from '../../components/RejectButton';
 
   export default {
     name: 'EntitiesOverviewSpecific',
+    components: {
+      RejectButton,
+      ApproveButton
+    },
     props: {
       model: {
         type: Function,
@@ -42,6 +56,7 @@
     },
     data() {
       return {
+        loaded: false,
         entity: null,
         changeRecord: null,
         infoComponent: null
@@ -49,7 +64,7 @@
     },
     computed: {
       isUserCanEditThisEntity() {
-        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
+        return this.loaded && (this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true);
       }
     },
     async mounted() {
@@ -68,25 +83,7 @@
         } else {
           this.entity = new this.model();
         }
-      },
-
-      async approve() {
-        const { changeRecordId } = this.$route.params;
-
-        try {
-          await axios.put(`/changes/${this.model.entityType}/${changeRecordId}/approval`);
-          notifier.show({
-            message: this.$t('entities.successfulApprove'),
-            time: 2000
-          });
-          this.$router.push({ name: `${this.model.entityType}-overview` });
-        } catch (e) {
-          notifier.show({
-            message: e.message,
-            style: 'error',
-            time: 2000
-          });
-        }
+        this.loaded = true;
       },
 
       async saveEntity() {
@@ -124,7 +121,13 @@
 
 <style>
   .entities-overview-create {
+
+    .button {
+      margin-left: 5px;
+    }
+
     &__info-wrapper {
+      margin-top: 10px;
       display: flex;
       justify-content: space-around;
     }

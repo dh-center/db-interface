@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const {
   ApproveForbiddenError,
   ChangesPatchingForbiddenError,
-  SavingApprovedChangesError
+  SavingApprovedChangesError,
+  RejectForbiddenError
 } = require('../errorTypes');
 
 /**
@@ -115,6 +116,21 @@ module.exports = function changesFactory(entityType, EntityModel) {
 
       await Promise.all([entity.save(), changeRecord.save()]);
     }
+    res.sendStatus(200);
+  });
+
+  router.put(`/changes/${entityType}/:changeId/rejection`, async (req, res) => {
+    const changeRecord = await Change.findById(req.params.changeId);
+    const isAuthor = res.locals.user._id.toString() === changeRecord.user.toString();
+
+    // if user is not admin or author
+    if (!res.locals.user.isAdmin && !isAuthor) {
+      throw new RejectForbiddenError();
+    }
+
+    changeRecord.approved = false;
+
+    await changeRecord.save();
     res.sendStatus(200);
   });
 

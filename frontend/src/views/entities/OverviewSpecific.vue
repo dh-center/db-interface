@@ -1,35 +1,46 @@
 <template>
   <div class="entities-overview-specific">
     <button
-      v-if="!isChangedEntityShowed"
+      v-if="loaded && !isChangedEntityShowed"
+      class="button button--secondary"
       @click="isEditMode = true"
     >
       {{ $t('entities.edit') }}
     </button>
     <button
       v-if="isUserCanEditThisEntity"
+      class="button button--primary"
       @click="saveEntity"
     >
       {{ $t('entities.save') }}
     </button>
     <button
       v-if="isUserCanEditThisEntity && !deleted"
+      class="button button--danger"
       @click="deleteEntity"
     >
       {{ $t('entities.markForDeletion') }}
     </button>
     <button
       v-if="isUserCanEditThisEntity && deleted"
+      class="button"
       @click="cancelDeletion"
     >
       {{ $t('entities.cancelDeletion') }}
     </button>
-    <button
-      v-if="$store.state.auth.user.isAdmin && lastChangesRecord"
-      @click="approve"
-    >
-      {{ $t('entities.approve') }}
-    </button>
+    <ApproveButton
+      v-if="lastChangesRecord"
+      :change-record-id="lastChangesRecord._id"
+      :entity-type="model.entityType"
+      @success="$router.push({ name: `${model.entityType}-overview` })"
+    />
+    <RejectButton
+      v-if="lastChangesRecord"
+      :user-id="lastChangesRecord.user"
+      :change-record-id="lastChangesRecord._id"
+      :entity-type="model.entityType"
+      @success="$router.push({ name: `${model.entityType}-overview` })"
+    />
     <div class="entities-overview-specific__container">
       <div>
         <h2 v-if="isChangedEntityShowed">
@@ -73,9 +84,15 @@
   import jsonpatch from 'fast-json-patch';
   import cloneDeep from 'lodash.clonedeep';
   import notifier from 'codex-notifier';
+  import ApproveButton from '../../components/ApproveButton';
+  import RejectButton from '../../components/RejectButton';
 
   export default {
     name: 'EntitiesOverviewSpecific',
+    components: {
+      ApproveButton,
+      RejectButton
+    },
     props: {
       model: {
         type: Function,
@@ -89,16 +106,17 @@
         changedEntity: null,
         infoComponent: null,
         deleted: false,
+        loaded: false,
         isEditMode: false
       };
     },
     computed: {
       isChangedEntityShowed() {
-        return this.lastChangesRecord || this.isEditMode;
+        return (this.lastChangesRecord || this.isEditMode);
       },
 
       isUserCanEditThisEntity() {
-        return this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true;
+        return this.loaded && (this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true);
       }
     },
     async mounted() {
@@ -113,23 +131,6 @@
       cancelDeletion() {
         this.deleted = false;
         this.saveEntity();
-      },
-
-      async approve() {
-        try {
-          await axios.put(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}/approval`);
-          notifier.show({
-            message: this.$t('entities.successfulApprove'),
-            time: 2000
-          });
-          this.$router.push({ name: `${this.model.entityType}-overview` });
-        } catch (e) {
-          notifier.show({
-            message: e.message,
-            style: 'error',
-            time: 2000
-          });
-        }
       },
 
       async fetchData() {
@@ -154,6 +155,7 @@
         }
 
         this.originalEntity = new this.model(entityData);
+        this.loaded = true;
       },
 
       async saveEntity() {
@@ -192,7 +194,12 @@
 
 <style>
   .entities-overview-specific {
+    .button {
+      margin-left: 5px;
+    }
+
     &__container {
+      margin-top: 10px;
       display: flex;
       justify-content: space-around;
     }

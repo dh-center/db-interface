@@ -20,8 +20,11 @@
         <td>
           {{ index +1 }}
         </td>
-        <td>
-          <button @click="$router.push({name:`${model.entityType}-overview-specific`, params: {entityId: entity.id}})">
+        <td class="data-table__actions-cell">
+          <button
+            class="button button--primary"
+            @click="$router.push({name:`${model.entityType}-overview-specific`, params: {entityId: entity.id}})"
+          >
             {{ $t('entities.view') }}
           </button>
         </td>
