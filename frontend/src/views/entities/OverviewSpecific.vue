@@ -8,7 +8,7 @@
       {{ $t('entities.edit') }}
     </button>
     <button
-      v-if="isUserCanEditThisEntity"
+      v-if="loaded && isChangedEntityShowed && isUserCanEditThisEntity"
       class="button button--primary"
       @click="saveEntity"
     >
