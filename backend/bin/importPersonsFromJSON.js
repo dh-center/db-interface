@@ -1,7 +1,6 @@
 const persons = require('./data/peopleDetails');
 const asyncForEach = require('./parserFromGSheets/asyncForEach');
 const path = require('path');
-const Person = require('../models/person');
 
 /**
  * Read environment settings
@@ -12,6 +11,8 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
  * Setup DB
  */
 require('../modules/db');
+
+const Person = require('../models/person');
 
 /**
  *
@@ -33,7 +34,6 @@ async function main() {
       firstName = name.split(' ')[0];
       lastName = name.split(' ')[1];
     }
-    console.log(lastName + firstName + patronymic);
     if (!await Person.findOne({ lastName: lastName, firstName: firstName })) {
       const birthDate = person.lifeDates[0];
       let deathDate;
@@ -50,7 +50,7 @@ async function main() {
         profession: person.shortInfo
       };
       const newPerson = new Person(personObject);
-      console.log(newPerson);
+
       await newPerson.save();
       console.log(`Person ${lastName} was saved!`);
     }
