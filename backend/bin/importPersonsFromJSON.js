@@ -15,8 +15,8 @@ require('../modules/db');
 const Person = require('../models/person');
 
 /**
- *
- * @returns {Promise<void>}
+ * Import persons from JSON file
+ * @return {Promise<void>}
  */
 async function main() {
   await asyncForEach(persons, async function (person) {
