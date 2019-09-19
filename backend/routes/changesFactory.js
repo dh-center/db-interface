@@ -51,9 +51,9 @@ module.exports = function changesFactory(entityType, EntityModel) {
    */
   router.post(`/changes/${entityType}/:entityId?`, async (req, res) => {
     if (req.params.entityId) {
-      const isAlreadyChanged = Change.findOne({
-        entityType: entityType,
-        entityId: req.params.entityId,
+      const isAlreadyChanged = await Change.findOne({
+        entityType,
+        entity: req.params.entityId,
         approved: null
       }).lean();
 
@@ -63,7 +63,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
     }
 
     const changeRecord = new Change({
-      entityType: entityType,
+      entityType,
       user: res.locals.user._id,
       ...(req.params.entityId && { entity: req.params.entityId }),
       deleted: req.body.deleted,
