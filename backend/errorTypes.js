@@ -102,11 +102,25 @@ class ChangesPatchingForbiddenError extends ApiError {
 class SavingApprovedChangesError extends ApiError {
   /**
    * Creates error instance
-   * @param {Number} [httpCode=403] - http code to send to user
+   * @param {Number} [httpCode=409] - http code to send to user
    */
-  constructor(httpCode = 403) {
+  constructor(httpCode = 409) {
     super(httpCode);
     this.code = 'SAVING_APPROVED_CHANGES';
+  }
+}
+
+/**
+ * Throws when user saves entity that was already changed by other user
+ */
+class AlreadyChangedError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=409] - http code to send to user
+   */
+  constructor(httpCode = 409) {
+    super(httpCode);
+    this.code = 'ALREADY_CHANGED';
   }
 }
 
@@ -118,5 +132,6 @@ module.exports = {
   ChangesPatchingForbiddenError,
   RejectForbiddenError,
   SavingApprovedChangesError,
+  AlreadyChangedError,
   UsernameDuplicationError
 };

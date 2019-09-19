@@ -115,6 +115,7 @@
     "CHANGES_PATCHING_FORBIDDEN": "You cannot patch changes since you are not an author of this changes",
     "SAVING_APPROVED_CHANGES": "Changes was approved by administrator. Please, refresh the page.",
     "NO_USER_WITH_SUCH_USERNAME": "No user with this username",
-    "SOMETHING_WENT_WRONG": "Something went wrong"
+    "SOMETHING_WENT_WRONG": "Something went wrong",
+    "ALREADY_CHANGED": "This entity was already changed by other user. Please, refresh the page"
   }
 }
