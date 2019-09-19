@@ -5,8 +5,12 @@
   text-align: left;
   border-collapse: collapse;
 
-  &__actions-cell .button {
-    margin: 3px;
+  &__actions-cell {
+    text-align: center;
+
+    .button {
+      margin: 3px;
+    }
   }
 
   td, th {
