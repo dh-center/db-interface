@@ -122,6 +122,28 @@
         :disabled="!editable"
       >
     </div>
+    <div class="entity-info__section">
+      <label :for="$id('coordinateX')">
+        {{ $t('locations.coordinateX') }}
+      </label>
+      <input
+        :id="$id('coordinateX')"
+        v-model="entity.coordinateX"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('coordinateY')">
+        {{ $t('locations.coordinateY') }}
+      </label>
+      <input
+        :id="$id('coordinateY')"
+        v-model="entity.coordinateY"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
   </div>
 </template>
 
