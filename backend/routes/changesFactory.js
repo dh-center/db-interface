@@ -7,7 +7,8 @@ const {
   ApproveForbiddenError,
   ChangesPatchingForbiddenError,
   SavingApprovedChangesError,
-  RejectForbiddenError
+  RejectForbiddenError,
+  AlreadyChangedError
 } = require('../errorTypes');
 
 /**
@@ -49,8 +50,20 @@ module.exports = function changesFactory(entityType, EntityModel) {
    * Create new change record for existing or non-existing entity
    */
   router.post(`/changes/${entityType}/:entityId?`, async (req, res) => {
+    if (req.params.entityId) {
+      const isAlreadyChanged = await Change.findOne({
+        entityType,
+        entity: req.params.entityId,
+        approved: null
+      }).lean();
+
+      if (isAlreadyChanged) {
+        throw new AlreadyChangedError();
+      }
+    }
+
     const changeRecord = new Change({
-      entityType: entityType,
+      entityType,
       user: res.locals.user._id,
       ...(req.params.entityId && { entity: req.params.entityId }),
       deleted: req.body.deleted,

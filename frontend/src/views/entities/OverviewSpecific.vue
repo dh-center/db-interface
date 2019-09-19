@@ -176,11 +176,21 @@
             return;
           }
         } else {
-          // Create new changes record
-          this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, {
-            changedEntity: this.changedEntity.data,
-            deleted: this.deleted
-          });
+          try {
+            // Create new changes record
+            this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, {
+              changedEntity: this.changedEntity.data,
+              deleted: this.deleted
+            });
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
+
+            return;
+          }
         }
 
         notifier.show({
