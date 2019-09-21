@@ -64,7 +64,11 @@
     },
     computed: {
       isUserCanEditThisEntity() {
-        return this.loaded && (this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true);
+        if (!this.loaded) return false;
+
+        if (this.$store.state.auth.user.isAdmin) return true;
+
+        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
       }
     },
     async mounted() {
@@ -87,17 +91,26 @@
       },
 
       async saveEntity() {
-        this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, {
-          changedEntity: this.entity.data
-        });
-
-        this.$router.push({
-          name: `${this.model.entityType}-create`,
-          params: {
-            changeRecordId: this.changesRecord._id
+        if (this.$route.params.changeRecordId) {
+          try {
+            await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, { changedEntity: this.entity.data });
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
+            return;
           }
-        });
-
+        } else {
+          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
+          this.$router.push({
+            name: `${this.model.entityType}-create`,
+            params: {
+              changeRecordId: this.changesRecord._id
+            }
+          });
+        }
         notifier.show({
           message: this.$t('notifications.savedSuccessfully'),
           time: 2000
