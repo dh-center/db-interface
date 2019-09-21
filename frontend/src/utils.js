@@ -39,7 +39,7 @@ export function defineMultilingualProperties(to, from, propNames) {
  * Defines getter and setter with specified property name
  * @param {Object} to - object to assign property
  * @param {Object} from - where to get the value
- * @param {String[]} props - property names to define
+ * @param {Array<string, object>} props - property names to define
  */
 export function defineStandardProperties(to, from, props) {
   const propsWithDescriptors = {};

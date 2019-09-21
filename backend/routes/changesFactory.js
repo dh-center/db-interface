@@ -91,7 +91,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
 
     const isAuthor = res.locals.user._id.toString() !== changeRecord.user.toString();
 
-    if (!res.locals.user.isAdmin || !isAuthor) {
+    if (!res.locals.user.isAdmin && !isAuthor) {
       throw new ChangesPatchingForbiddenError();
     }
 
