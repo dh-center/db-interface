@@ -22,15 +22,20 @@ export default class Location extends BaseModel {
 
     defineMultilingualProperties(this, this.data, [
       'name',
-      'architects',
       'description'
     ]);
 
     defineStandardProperties(this, this.data, [
       'constructionDate',
       'demolitionDate',
-      'locationTypeId',
-      'addressesId',
+      {
+        name: 'locationTypeId',
+        default: null
+      },
+      {
+        name: 'addressesId',
+        default: []
+      },
       'wikiLink',
       'photoLinks',
       'mainPhotoLink',

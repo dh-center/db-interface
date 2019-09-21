@@ -39,26 +39,37 @@ export function defineMultilingualProperties(to, from, propNames) {
  * Defines getter and setter with specified property name
  * @param {Object} to - object to assign property
  * @param {Object} from - where to get the value
- * @param {String[]} propNames - property names to define
+ * @param {String[]} props - property names to define
  */
-export function defineStandardProperties(to, from, propNames) {
-  const props = {};
+export function defineStandardProperties(to, from, props) {
+  const propsWithDescriptors = {};
 
-  propNames.forEach(propName => {
-    if (!from[propName]) {
-      from[propName] = '';
+  props.forEach(property => {
+    let propertyName;
+
+    let defaultValue = '';
+
+    if (typeof property === 'object') {
+      propertyName = property.name;
+      defaultValue = property.default;
+    } else {
+      propertyName = property;
     }
 
-    props[propName] = {
+    if (!from[propertyName]) {
+      from[propertyName] = defaultValue;
+    }
+
+    propsWithDescriptors[propertyName] = {
       set(value) {
-        from[propName] = value;
+        from[propertyName] = value;
       },
       get() {
-        return from[propName];
+        return from[propertyName];
       }
     };
   });
-  Object.defineProperties(to, props);
+  Object.defineProperties(to, propsWithDescriptors);
 }
 
 /**

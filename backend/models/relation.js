@@ -7,17 +7,14 @@ const RelationType = require('./relationType');
 
 const relationSchema = new Schema({
   locationId: {
-    required: true,
     type: Schema.Types.ObjectId,
     ref: 'locations'
   },
   relationId: {
-    required: true,
     type: Schema.Types.ObjectId,
     ref: 'relationTypes'
   },
   personId: {
-    required: true,
     type: Schema.Types.ObjectId,
     ref: 'persons'
   },
