@@ -62,7 +62,7 @@
     "address": "Address",
     "constructionDate": "Construction date",
     "demolitionDate": "Demolition date",
-    "locationTypeName": "Building type",
+    "locationTypesId": "Building type",
     "description": "Description",
     "wikiLink": "Wiki link",
     "photoLinks": "Photo links",
