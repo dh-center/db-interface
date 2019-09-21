@@ -75,6 +75,18 @@
     <div class="entity-info__section">
       <label
         class="entity-info__label"
+        :for="$id('profession')"
+      >{{ $t('persons.profession') }}</label>
+      <input
+        :id="$id('profession')"
+        v-model="entity.profession"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
         :for="$id('description')"
       >{{ $t('persons.description') }}</label>
       <textarea
