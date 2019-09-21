@@ -20,7 +20,13 @@ export default class Relation extends BaseModel {
 
     if (typeof this.data.personId !== 'string') {
       this.person = new PersonModel(this.data.personId);
+    }
+
+    if (typeof this.data.locationId !== 'string') {
       this.location = new LocationModel(this.data.locationId);
+    }
+
+    if (typeof this.data.relationId !== 'string') {
       this.relation = new RelationTypeModel(this.data.relationId);
     }
 
