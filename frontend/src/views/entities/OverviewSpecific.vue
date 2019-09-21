@@ -146,6 +146,16 @@
         if (entityData.lastChangesRecord) {
           this.lastChangesRecord = entityData.lastChangesRecord;
           delete entityData.lastChangesRecord;
+
+          if (this.lastChangesRecord.isCreated) {
+            this.$router.push({
+              name: `${this.model.entityType}-create`,
+              params: {
+                changeRecordId: this.lastChangesRecord._id
+              }
+            });
+          }
+
           this.deleted = this.lastChangesRecord.deleted;
 
           this.changedEntity = new this.model(jsonpatch.applyPatch(cloneDeep(entityData), this.lastChangesRecord.changeList).newDocument);

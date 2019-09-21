@@ -29,9 +29,18 @@ export default class Relation extends BaseModel {
     ]);
 
     defineStandardProperties(this, this.data, [
-      'personId',
-      'locationId',
-      'relationId'
+      {
+        name: 'personId',
+        default: null
+      },
+      {
+        name: 'locationId',
+        default: null
+      },
+      {
+        name: 'relationId',
+        default: null
+      }
     ]);
   }
 

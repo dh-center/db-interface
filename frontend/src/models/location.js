@@ -29,8 +29,14 @@ export default class Location extends BaseModel {
     defineStandardProperties(this, this.data, [
       'constructionDate',
       'demolitionDate',
-      'locationTypesId',
-      'addressesId',
+      {
+        name: 'locationTypesId',
+        default: []
+      },
+      {
+        name: 'addressesId',
+        default: []
+      },
       'wikiLink',
       'photoLinks',
       'mainPhotoLink',
