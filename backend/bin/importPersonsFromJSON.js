@@ -1,5 +1,5 @@
 const persons = require('./data/peopleDetails');
-const asyncForEach = require('./parserFromGSheets/asyncForEach');
+const asyncForEach = require('./asyncForEach');
 const path = require('path');
 
 /**

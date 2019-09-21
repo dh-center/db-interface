@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const getChangesListPlugin = require('./getChangesListPlugin');
-const LocationType = require('./locationType');
 
 const locationSchema = new Schema({
   name: {
@@ -18,10 +17,10 @@ const locationSchema = new Schema({
   },
   constructionDate: String,
   demolitionDate: String,
-  locationTypeId: {
+  locationTypesId: [ {
     type: Schema.Types.ObjectId,
     ref: 'locationTypes'
-  },
+  } ],
   description: {
     type: String,
     intl: true
@@ -34,26 +33,5 @@ const locationSchema = new Schema({
 });
 
 locationSchema.plugin(getChangesListPlugin);
-
-/**
- * Get all locations with all their data
- * @param {Object} query - mongodb query
- * @returns {Object}
- */
-locationSchema.statics.fetchAll = function (query) {
-  return this.find(query)
-    .populate('locationTypeId');
-};
-
-/**
- * Process changed entity before give a response to the client
- * @param {Object} changedEntity
- * @returns {Promise<void>}
- */
-locationSchema.statics.processChangedEntity = async function (changedEntity) {
-  if (changedEntity.locationTypeId) {
-    changedEntity.locationTypeId = await LocationType.findById(changedEntity.locationTypeId);
-  }
-};
 
 module.exports = mongoose.model('locations', locationSchema);

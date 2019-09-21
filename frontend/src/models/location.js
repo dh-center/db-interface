@@ -22,6 +22,7 @@ export default class Location extends BaseModel {
 
     defineMultilingualProperties(this, this.data, [
       'name',
+      'architects',
       'description'
     ]);
 
@@ -29,8 +30,8 @@ export default class Location extends BaseModel {
       'constructionDate',
       'demolitionDate',
       {
-        name: 'locationTypeId',
-        default: null
+        name: 'locationTypesId',
+        default: []
       },
       {
         name: 'addressesId',
@@ -62,6 +63,23 @@ export default class Location extends BaseModel {
   }
 
   /**
+   * Inserts new locationType to the end of list
+   */
+  insertNewLocationType() {
+    this.data.locationTypesId.push('');
+  }
+
+  /**
+   * Delete locationType
+   * @param {LocationType} locationType - locationType to delete
+   */
+  deleteLocationType(locationType) {
+    const index = this.data.locationTypesId.findIndex(_locationTypeId => locationType === _locationTypeId);
+
+    this.data.locationTypesId.splice(index, 1);
+  }
+
+  /**
    * Return entity name
    * @return {String}
    */
@@ -74,7 +92,7 @@ export default class Location extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'locationTypeName', 'description'];
+    return ['name', 'architects', 'constructionDate', 'demolitionDate', 'description'];
   }
 
   /**
@@ -92,13 +110,5 @@ export default class Location extends BaseModel {
    */
   search(searchString) {
     return this.name.toLowerCase().includes(searchString.toLowerCase());
-  }
-
-  /**
-   * Location name to display in the table
-   * @returns {String}
-   */
-  get locationTypeName() {
-    return this.locationType && this.locationType.name;
   }
 }

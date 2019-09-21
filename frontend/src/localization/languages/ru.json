@@ -62,7 +62,7 @@
     "architects": "Архитекторы",
     "constructionDate": "Дата постройки",
     "demolitionDate": "Дата сноса",
-    "locationTypeName": "Тип строения",
+    "locationTypesId": "Тип строения",
     "description": "Описание",
     "wikiLink": "Ссылка на Википедию",
     "photoLinks": "Ссылки на фото",
