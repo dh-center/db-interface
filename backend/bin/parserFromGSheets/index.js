@@ -1,7 +1,7 @@
 const { google } = require('googleapis');
 const credentials = require('./credentials');
 const path = require('path');
-const asyncForEach = require('./asyncForEach');
+const asyncForEach = require('../asyncForEach');
 
 /**
  * Read environment settings
