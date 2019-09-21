@@ -79,7 +79,7 @@
         if (changeRecordId) {
           this.changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
 
-          this.entity = new this.model(jsonpatch.applyPatch({}, this.changeRecord.changeList).newDocument);
+          this.entity = new this.model(jsonpatch.applyPatch(this.changeRecord.entity, this.changeRecord.changeList).newDocument);
         } else {
           this.entity = new this.model();
         }
@@ -87,12 +87,14 @@
       },
 
       async saveEntity() {
-        this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
+        this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, {
+          changedEntity: this.entity.data
+        });
 
         this.$router.push({
-          name: `${this.model.entityType}-overview-specific`,
+          name: `${this.model.entityType}-create`,
           params: {
-            entityId: this.changesRecord.entity
+            changeRecordId: this.changesRecord._id
           }
         });
 

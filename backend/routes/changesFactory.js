@@ -51,11 +51,13 @@ module.exports = function changesFactory(entityType, EntityModel) {
    */
   router.post(`/changes/${entityType}/:entityId?`, async (req, res) => {
     let entityId = req.params.entityId;
+    let isCreated = false;
 
     if (!entityId) {
       const createdEntity = await (new EntityModel(req.body.changedEntity).save());
 
       entityId = createdEntity._id;
+      isCreated = true;
     } else {
       const isAlreadyChanged = await Change.findOne({
         entityType,
@@ -73,6 +75,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
       user: res.locals.user._id,
       entity: entityId,
       deleted: req.body.deleted,
+      isCreated,
       changeList: await EntityModel.getChangesList(entityId, req.body.changedEntity)
     });
     const result = await changeRecord.save();
@@ -92,6 +95,10 @@ module.exports = function changesFactory(entityType, EntityModel) {
 
     if (changeRecord.approved) {
       throw new SavingApprovedChangesError();
+    }
+
+    if (changeRecord.isCreated) {
+      await EntityModel.updateOne({ _id: mongoose.Types.ObjectId(changeRecord.entity._id) }, req.body.changedEntity);
     }
 
     changeRecord.changeList = await EntityModel.getChangesList(changeRecord.entity, req.body.changedEntity);
@@ -142,6 +149,10 @@ module.exports = function changesFactory(entityType, EntityModel) {
     // if user is not admin or author
     if (!res.locals.user.isAdmin && !isAuthor) {
       throw new RejectForbiddenError();
+    }
+
+    if (changeRecord.isCreated) {
+      await EntityModel.deleteOne({ _id: mongoose.Types.ObjectId(changeRecord.entity._id) });
     }
 
     changeRecord.approved = false;
