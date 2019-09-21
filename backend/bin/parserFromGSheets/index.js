@@ -181,11 +181,13 @@ async function importLocations(cl) {
     let locationType = await LocationType.findOne({ 'name.ru': { $regex: locationRow[4], $options: 'i' } });
 
     if (locationType) {
-      location.locationTypeId = locationType._id;
+      location.locationTypesId = [];
+      location.locationTypesId.push(locationType._id);
     } else {
       locationType = new LocationType({ 'name.ru': locationRow[4] });
       locationType = await locationType.save();
-      location.locationTypeId = locationType._id;
+      location.locationTypesId = [];
+      location.locationTypesId.push(locationType._id);
       console.log(`LocationType ${locationType.name} was saved!`);
       locationType = null;
     }
