@@ -21,10 +21,6 @@ const locationSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'locationTypes'
   } ],
-  locationTypeId: {
-    type: Schema.Types.ObjectId,
-    ref: 'locationTypes'
-  },
   description: {
     type: String,
     intl: true
