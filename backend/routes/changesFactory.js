@@ -50,10 +50,16 @@ module.exports = function changesFactory(entityType, EntityModel) {
    * Create new change record for existing or non-existing entity
    */
   router.post(`/changes/${entityType}/:entityId?`, async (req, res) => {
-    if (req.params.entityId) {
+    let entityId = req.params.entityId;
+
+    if (!entityId) {
+      const createdEntity = await (new EntityModel(req.body.changedEntity).save());
+
+      entityId = createdEntity._id;
+    } else {
       const isAlreadyChanged = await Change.findOne({
         entityType,
-        entity: req.params.entityId,
+        entity: entityId,
         approved: null
       }).lean();
 
@@ -65,9 +71,9 @@ module.exports = function changesFactory(entityType, EntityModel) {
     const changeRecord = new Change({
       entityType,
       user: res.locals.user._id,
-      ...(req.params.entityId && { entity: req.params.entityId }),
+      entity: entityId,
       deleted: req.body.deleted,
-      changeList: await EntityModel.getChangesList(req.params.entityId, req.body.changedEntity)
+      changeList: await EntityModel.getChangesList(entityId, req.body.changedEntity)
     });
     const result = await changeRecord.save();
 
@@ -117,15 +123,12 @@ module.exports = function changesFactory(entityType, EntityModel) {
 
       await EntityModel.updateOne({ _id: mongoose.Types.ObjectId(changeRecord.entity._id) }, updatedDocument);
 
-      // @todo make request to the api for updating item
-
       changeRecord.approved = true;
       await changeRecord.save();
     } else {
       const entity = new EntityModel(jsonpatch.applyPatch({}, changeRecord.changeList).newDocument);
 
       changeRecord.approved = true;
-      // @todo make request to the api for creating item
 
       await Promise.all([entity.save(), changeRecord.save()]);
     }

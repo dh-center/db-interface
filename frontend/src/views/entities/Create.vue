@@ -87,28 +87,14 @@
       },
 
       async saveEntity() {
-        if (this.$route.params.changeRecordId) {
-          try {
-            await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, { changedEntity: this.entity.data });
-          } catch (e) {
-            notifier.show({
-              message: e.message,
-              style: 'error',
-              time: 2000
-            });
+        this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
 
-            return;
+        this.$router.push({
+          name: `${this.model.entityType}-overview-specific`,
+          params: {
+            entityId: this.changesRecord.entity
           }
-        } else {
-          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
-
-          this.$router.push({
-            name: `${this.model.entityType}-create`,
-            params: {
-              changeRecordId: this.changesRecord._id
-            }
-          });
-        }
+        });
 
         notifier.show({
           message: this.$t('notifications.savedSuccessfully'),
