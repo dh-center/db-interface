@@ -38,7 +38,7 @@
         v-model="entity.locationTypeId"
         :disabled="!editable"
         :options="locationTypesList"
-        :label="$t('locations.locationTypeId')"
+        :label="$t('locations.locationTypeName')"
       />
     </div>
     <div class="entity-info__section">
