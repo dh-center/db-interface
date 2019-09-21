@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>№</th>
-        <th>Actions</th>
+        <th>{{ $t('entities.actions') }}</th>
         <th
           v-for="(fieldName, index) in model.fields"
           :key="index"

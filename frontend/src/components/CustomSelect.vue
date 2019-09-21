@@ -51,7 +51,7 @@
       },
       value: {
         type: String,
-        required: true
+        default: null
       },
       label: {
         type: String,

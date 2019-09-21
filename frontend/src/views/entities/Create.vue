@@ -64,7 +64,11 @@
     },
     computed: {
       isUserCanEditThisEntity() {
-        return this.loaded && (this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true);
+        if (!this.loaded) return false;
+
+        if (this.$store.state.auth.user.isAdmin) return true;
+
+        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
       }
     },
     async mounted() {
@@ -79,7 +83,7 @@
         if (changeRecordId) {
           this.changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
 
-          this.entity = new this.model(jsonpatch.applyPatch({}, this.changeRecord.changeList).newDocument);
+          this.entity = new this.model(jsonpatch.applyPatch(this.changeRecord.entity, this.changeRecord.changeList).newDocument);
         } else {
           this.entity = new this.model();
         }
@@ -96,12 +100,10 @@
               style: 'error',
               time: 2000
             });
-
             return;
           }
         } else {
           this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
-
           this.$router.push({
             name: `${this.model.entityType}-create`,
             params: {
@@ -109,7 +111,6 @@
             }
           });
         }
-
         notifier.show({
           message: this.$t('notifications.savedSuccessfully'),
           time: 2000

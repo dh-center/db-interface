@@ -62,7 +62,7 @@
     },
     methods: {
       openView() {
-        if (this.changeRecord.entity) {
+        if (!this.changeRecord.isCreated) {
           this.$router.push({ name: `${this.model.entityType}-overview-specific`, params: { entityId: this.changeRecord.entity._id } });
         } else {
           this.$router.push({ name: `${this.model.entityType}-create`, params: { changeRecordId: this.changeRecord._id } });
