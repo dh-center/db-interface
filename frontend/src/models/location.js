@@ -49,7 +49,7 @@ export default class Location extends BaseModel {
    * Inserts new address to the end of list
    */
   insertNewAddress() {
-    this.data.addressesId.push('');
+    this.data.addressesId.push(null);
   }
 
   /**
@@ -66,7 +66,7 @@ export default class Location extends BaseModel {
    * Inserts new locationType to the end of list
    */
   insertNewLocationType() {
-    this.data.locationTypesId.push('');
+    this.data.locationTypesId.push(null);
   }
 
   /**
