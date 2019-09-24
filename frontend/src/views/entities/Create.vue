@@ -81,9 +81,22 @@
         const { changeRecordId } = this.$route.params;
 
         if (changeRecordId) {
-          this.changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
+          try {
+            this.changeRecord = await axios.get(`/changes/${this.model.entityType}/${changeRecordId}`);
+            this.entity = new this.model(jsonpatch.applyPatch(this.changeRecord.entity, this.changeRecord.changeList).newDocument);
+          } catch (e) {
+            notifier.show({
+              message: e.message,
+              style: 'error',
+              time: 2000
+            });
 
-          this.entity = new this.model(jsonpatch.applyPatch(this.changeRecord.entity, this.changeRecord.changeList).newDocument);
+            this.$router.push({
+              name: `${this.model.entityType}-overview`
+            });
+
+            return;
+          }
         } else {
           this.entity = new this.model();
         }
@@ -91,30 +104,29 @@
       },
 
       async saveEntity() {
-        if (this.$route.params.changeRecordId) {
-          try {
+        try {
+          if (this.$route.params.changeRecordId) {
             await axios.patch(`/changes/${this.model.entityType}/${this.$route.params.changeRecordId}`, { changedEntity: this.entity.data });
-          } catch (e) {
-            notifier.show({
-              message: e.message,
-              style: 'error',
-              time: 2000
+          } else {
+            this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
+            this.$router.push({
+              name: `${this.model.entityType}-create`,
+              params: {
+                changeRecordId: this.changesRecord._id
+              }
             });
-            return;
           }
-        } else {
-          this.changesRecord = await axios.post(`/changes/${this.model.entityType}`, { changedEntity: this.entity.data });
-          this.$router.push({
-            name: `${this.model.entityType}-create`,
-            params: {
-              changeRecordId: this.changesRecord._id
-            }
+          notifier.show({
+            message: this.$t('notifications.savedSuccessfully'),
+            time: 2000
+          });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
           });
         }
-        notifier.show({
-          message: this.$t('notifications.savedSuccessfully'),
-          time: 2000
-        });
       }
     }
   };

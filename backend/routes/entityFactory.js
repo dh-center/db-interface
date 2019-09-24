@@ -22,7 +22,17 @@ module.exports = function changesFactory(entityType, EntityModel) {
   });
 
   router.get(`/${entityType}/:entityId`, async (req, res) => {
-    const entity = await EntityModel.findById(req.params.entityId).lean();
+    let entity;
+
+    try {
+      entity = await EntityModel.findById(req.params.entityId).lean();
+    } catch (e) {
+      return res.sendStatus(400);
+    }
+
+    if (!entity) {
+      return res.sendStatus(404);
+    }
 
     if (req.query.withLastChanges) {
       const change = await Change.findOne({ entityType: entityType, approved: null, entity: entity._id }).lean();
