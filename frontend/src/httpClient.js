@@ -1,9 +1,7 @@
 import axios from 'axios';
 import i18n from './localization/i18next';
-import Vue from 'vue';
 
 axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT || 'http://localhost:3000';
-Vue.prototype.$API_ENDPOINT = axios.defaults.baseURL;
 
 /**
  * Translates error messages from API server
@@ -11,12 +9,22 @@ Vue.prototype.$API_ENDPOINT = axios.defaults.baseURL;
 axios.interceptors.response.use(
   response => response.data.payload,
   async error => {
-    if (!error.response) throw error;
-    const apiError = error.response.data.error;
+    if (!error.response || !error.response.data.error) throw new Error(error);
 
-    if (!apiError) throw error;
-
-    apiError.message = i18n.t(['apiErrorTypes.' + apiError.code, 'apiErrorTypes.SOMETHING_WENT_WRONG']);
-    throw apiError;
+    throw new ApiError(error.response.data.error.code);
   }
 );
+
+/**
+ * Class for throwing error from api
+ */
+class ApiError extends Error {
+  /**
+   * Error constructor
+   * @param {String} code - error code from API
+   */
+  constructor(code) {
+    super();
+    this.message = i18n.t(['apiErrorTypes.' + code, 'apiErrorTypes.SOMETHING_WENT_WRONG']);
+  }
+}

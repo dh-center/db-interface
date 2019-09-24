@@ -136,11 +136,27 @@
       async fetchData() {
         this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
 
-        const entityData = await axios.get(`/${this.model.entityType}/${this.$route.params.entityId}`, {
-          params: {
-            withLastChanges: true
-          }
-        });
+        let entityData;
+
+        try {
+          entityData = await axios.get(`/${this.model.entityType}/${this.$route.params.entityId}`, {
+            params: {
+              withLastChanges: true
+            }
+          });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
+
+          this.$router.push({
+            name: `${this.model.entityType}-overview`
+          });
+
+          return;
+        }
 
         // If entity was modified
         if (entityData.lastChangesRecord) {
@@ -169,44 +185,31 @@
       },
 
       async saveEntity() {
-        if (this.lastChangesRecord) {
-          // Update existing changes record
-          try {
+        try {
+          if (this.lastChangesRecord) {
+            // Update existing changes record
             await axios.patch(`/changes/${this.model.entityType}/${this.lastChangesRecord._id}`, {
               changedEntity: this.changedEntity.data,
               deleted: this.deleted
             });
-          } catch (e) {
-            notifier.show({
-              message: e.message,
-              style: 'error',
-              time: 2000
-            });
-
-            return;
-          }
-        } else {
-          try {
+          } else {
             // Create new changes record
             this.lastChangesRecord = await axios.post(`/changes/${this.model.entityType}/${this.originalEntity.id}`, {
               changedEntity: this.changedEntity.data,
               deleted: this.deleted
             });
-          } catch (e) {
-            notifier.show({
-              message: e.message,
-              style: 'error',
-              time: 2000
-            });
-
-            return;
           }
+          notifier.show({
+            message: this.$t('notifications.savedSuccessfully'),
+            time: 2000
+          });
+        } catch (e) {
+          notifier.show({
+            message: e.message,
+            style: 'error',
+            time: 2000
+          });
         }
-
-        notifier.show({
-          message: this.$t('notifications.savedSuccessfully'),
-          time: 2000
-        });
       }
     }
   };
