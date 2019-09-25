@@ -35,7 +35,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
     }
 
     if (req.query.withLastChanges) {
-      const change = await Change.findOne({ entityType: entityType, approved: null, entity: entity._id }).lean();
+      const change = await Change.findOne({ entityType: entityType, approved: null, entity: entity._id }).populate('user').lean();
 
       if (change) {
         entity.lastChangesRecord = change;

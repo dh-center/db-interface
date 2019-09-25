@@ -17,10 +17,11 @@
         v-if="changeRecord"
         :change-record-id="changeRecord._id"
         :entity-type="model.entityType"
-        :user-id="changeRecord.user"
+        :user-id="changeRecord.user._id"
         @success="$emit('successfulApprove')"
       />
     </td>
+    <td>{{ changeRecord.user.username }}</td>
     <td
       v-for="(fieldName, index) in model.fields"
       :key="index"
