@@ -42,7 +42,8 @@ module.exports = function changesFactory(entityType, EntityModel) {
   router.get(`/changes/${entityType}/:changesRecordId`, async (req, res) => {
     const changeRecord = await Change
       .findById(req.params.changesRecordId)
-      .populate('entity');
+      .populate('entity')
+      .populate('user');
 
     return res.status(200).json({ payload: changeRecord });
   });

@@ -36,11 +36,17 @@
     />
     <RejectButton
       v-if="lastChangesRecord"
-      :user-id="lastChangesRecord.user"
+      :user-id="lastChangesRecord.user._id"
       :change-record-id="lastChangesRecord._id"
       :entity-type="model.entityType"
       @success="$router.push({ name: `${model.entityType}-overview` })"
     />
+    <span
+      v-if="lastChangesRecord"
+      class="entities-overview-specific__changes-author"
+    >
+      {{ $t('entities.changesAuthor') }}: {{ lastChangesRecord.user.username }}
+    </span>
     <div class="entities-overview-specific__container">
       <div>
         <h2 v-if="isChangedEntityShowed">
@@ -116,7 +122,11 @@
       },
 
       isUserCanEditThisEntity() {
-        return this.loaded && (this.lastChangesRecord ? this.$store.state.auth.user.id === this.lastChangesRecord.user : true);
+        if (!this.loaded) return false;
+
+        if (this.$store.state.auth.user.isAdmin) return true;
+
+        return this.lastChangesRecord ? (this.$store.state.auth.user.id === this.lastChangesRecord.user._id) : true;
       }
     },
     async mounted() {
@@ -219,6 +229,10 @@
   .entities-overview-specific {
     .button {
       margin-left: 5px;
+    }
+
+    &__changes-author {
+      float: right;
     }
 
     &__container {

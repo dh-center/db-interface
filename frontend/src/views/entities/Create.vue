@@ -15,11 +15,17 @@
     />
     <RejectButton
       v-if="changeRecord"
-      :user-id="changeRecord.user"
+      :user-id="changeRecord.user._id"
       :change-record-id="changeRecord._id"
       :entity-type="model.entityType"
       @success="$router.push({ name: `${model.entityType}-overview` })"
     />
+    <span
+      v-if="changeRecord"
+      class="entities-overview-create__changes-author"
+    >
+      {{ $t('entities.changesAuthor') }}: {{ changeRecord.user.username }}
+    </span>
     <div class="entities-overview-create__info-wrapper">
       <component
         :is="infoComponent"
@@ -68,7 +74,7 @@
 
         if (this.$store.state.auth.user.isAdmin) return true;
 
-        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user) : true;
+        return this.changeRecord ? (this.$store.state.auth.user.id === this.changeRecord.user._id) : true;
       }
     },
     async mounted() {
@@ -137,6 +143,10 @@
 
     .button {
       margin-left: 5px;
+    }
+
+    &__changes-author {
+      float: right;
     }
 
     &__info-wrapper {
