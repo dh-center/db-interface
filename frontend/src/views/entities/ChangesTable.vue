@@ -10,6 +10,9 @@
         >
           {{ $t(`${model.entityType}.${fieldName}`) }}
         </th>
+        <th>
+          {{ $t('entities.changed') }}
+        </th>
       </tr>
     </thead>
     <tbody>

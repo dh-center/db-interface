@@ -35,7 +35,8 @@
     "deletedMessage": "Сущность помечена для удаления",
     "actions": "Действия",
     "view": "Обзор",
-    "approve": "Подтвердить"
+    "approve": "Подтвердить",
+    "changed": "Изменено"
   },
   "persons": {
     "linkTitle": "Персоны",

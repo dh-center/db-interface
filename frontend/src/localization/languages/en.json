@@ -35,7 +35,8 @@
     "markForDeletion": "Mark for deletion",
     "cancelDeletion": "Cancel deletion",
     "deletedMessage": "Entity marked as deleted",
-    "approve": "Approve"
+    "approve": "Approve",
+    "changed": "Changed"
   },
   "persons": {
     "linkTitle": "Persons",

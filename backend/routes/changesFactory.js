@@ -25,6 +25,7 @@ module.exports = function changesFactory(entityType, EntityModel) {
     const changes = await Change
       .find({ entityType: entityType, approved: null })
       .populate('entity')
+      .populate('user')
       .lean();
 
     await Promise.all(changes.map(async changeRecord => {

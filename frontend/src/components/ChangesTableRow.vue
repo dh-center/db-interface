@@ -17,7 +17,7 @@
         v-if="changeRecord"
         :change-record-id="changeRecord._id"
         :entity-type="model.entityType"
-        :user-id="changeRecord.user"
+        :user-id="changeRecord.user._id"
         @success="$emit('successfulApprove')"
       />
     </td>
@@ -26,6 +26,9 @@
       :key="index"
     >
       {{ entity[fieldName] }}
+    </td>
+    <td>
+      {{ changeRecord.user.username }}
     </td>
   </tr>
 </template>
