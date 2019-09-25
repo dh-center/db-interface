@@ -11,7 +11,7 @@
           {{ $t(`${model.entityType}.${fieldName}`) }}
         </th>
         <th>
-          {{ $t('entities.changed') }}
+          {{ $t('entities.changesAuthor') }}
         </th>
       </tr>
     </thead>

@@ -36,7 +36,7 @@
     "actions": "Действия",
     "view": "Обзор",
     "approve": "Подтвердить",
-    "changed": "Изменено"
+    "changesAuthor": "Автор"
   },
   "persons": {
     "linkTitle": "Персоны",

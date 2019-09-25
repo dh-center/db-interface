@@ -36,7 +36,7 @@
     "cancelDeletion": "Cancel deletion",
     "deletedMessage": "Entity marked as deleted",
     "approve": "Approve",
-    "changed": "Changed"
+    "changesAuthor": "Author"
   },
   "persons": {
     "linkTitle": "Persons",
