@@ -21,14 +21,12 @@
         @success="$emit('successfulApprove')"
       />
     </td>
+    <td>{{ changeRecord.user.username }}</td>
     <td
       v-for="(fieldName, index) in model.fields"
       :key="index"
     >
       {{ entity[fieldName] }}
-    </td>
-    <td>
-      {{ changeRecord.user.username }}
     </td>
   </tr>
 </template>

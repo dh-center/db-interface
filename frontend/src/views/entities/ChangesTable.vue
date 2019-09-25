@@ -4,14 +4,12 @@
       <tr>
         <th>№</th>
         <th>{{ $t('entities.actions') }}</th>
+        <th>{{ $t('entities.changesAuthor') }}</th>
         <th
           v-for="(fieldName, index) in model.fields"
           :key="index"
         >
           {{ $t(`${model.entityType}.${fieldName}`) }}
-        </th>
-        <th>
-          {{ $t('entities.changesAuthor') }}
         </th>
       </tr>
     </thead>
