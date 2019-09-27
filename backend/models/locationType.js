@@ -6,7 +6,6 @@ const locationTypeSchema = new Schema({
   sqlId: Number,
   name: {
     type: String,
-    required: true,
     intl: true
   }
 });
