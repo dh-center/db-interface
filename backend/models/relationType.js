@@ -6,7 +6,6 @@ const relationSynonymSchema = new Schema({
   sqlId: Number,
   name: {
     type: String,
-    required: true,
     intl: true
   }
 });
@@ -15,7 +14,6 @@ const relationTypeSchema = new Schema({
   sqlId: Number,
   name: {
     type: String,
-    required: true,
     intl: true
   },
   synonyms: {
