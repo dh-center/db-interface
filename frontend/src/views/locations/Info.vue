@@ -50,7 +50,7 @@
                 :label="(index + 1).toString()"
               />
             </td>
-            <td>
+            <td v-if="editable">
               <button
                 v-if="editable"
                 class="locations-info__address-delete-button"
@@ -87,7 +87,7 @@
                 :label="(index + 1).toString()"
               />
             </td>
-            <td>
+            <td v-if="editable">
               <button
                 v-if="editable"
                 class="locations-info__address-delete-button"
