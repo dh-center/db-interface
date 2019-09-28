@@ -29,7 +29,7 @@
                 :disabled="!editable"
               >
             </td>
-            <td>
+            <td v-if="editable">
               <button
                 v-if="editable"
                 class="relation-types-info__synonym-delete-button"

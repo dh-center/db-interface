@@ -5,17 +5,19 @@
     :class="{'custom-select--opened': isOpened}"
     @click="isOpened = !isOpened"
   >
-    <label class="custom-select__label">
-      {{ label }}
-    </label>
-    <div
-      class="input custom-select__select"
-    >
-      <input
-        v-model="searchQuery"
-        type="text"
-        @input="isOpened = true"
+    <div class="custom-select__flex-wrapper">
+      <label class="custom-select__label">
+        {{ label }}
+      </label>
+      <div
+        class="input custom-select__select"
       >
+        <input
+          v-model="searchQuery"
+          type="text"
+          @input="isOpened = true"
+        >
+      </div>
     </div>
     <transition name="options-appear">
       <div
@@ -104,20 +106,39 @@
     position: relative;
     padding: 0;
     border: 0;
+    margin-right: 0;
     user-select: none;
 
+    &__flex-wrapper {
+      display: flex;
+      flex-flow: row wrap;
+    }
+
     &__label {
-      display: block;
-      margin-bottom: 9px;
-      color: black;
-      font-weight: bold;
-      font-size: 12px;
-      text-transform: uppercase;
+      margin-right: 5px;
     }
 
     &__select {
-      position: relative;
+      flex: 90%;
+      cursor: pointer;
       z-index: 1;
+
+      input {
+        width: 100%;
+      }
+
+      &::after {
+        display: inline-block;
+        position: absolute;
+        content: '';
+        bottom: 5px;
+        right: 3px;
+        width: 12px;
+        height: 12px;
+        background: url('../images/search-image.png') no-repeat;
+        background-size: cover;
+        opacity: .60;
+      }
     }
 
     &__options-wrapper {
@@ -146,7 +167,7 @@
       }
     }
 
-    &__option, &__select {
+    &__option {
       display: flex;
       align-items: center;
       width: 100%;
