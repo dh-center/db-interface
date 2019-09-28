@@ -1,14 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const notifier = require('./routes/notifier');
+const summary = require('./routes/summary');
 const Person = require('./models/person');
 const Location = require('./models/location');
 const RelationType = require('./models/relationType');
 const Address = require('./models/address');
 const Relation = require('./models/relation');
 const LocationType = require('./models/locationType');
-
-router.use('/summary', notifier);
 
 /**
  * Auth routes
@@ -18,6 +16,11 @@ const loginRoute = require('./routes/auth/login');
 
 router.use(signUpRoute);
 router.use(loginRoute);
+
+/**
+ * Route for sending users statistics to the chat
+ */
+router.use('/summary', summary);
 
 /**
  * Entity routes

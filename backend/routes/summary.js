@@ -1,17 +1,11 @@
-const path = require('path');
 const axios = require('axios');
-
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
-require('../modules/db');
-
 const Change = require('../models/change');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-/**
- * Send notification with user stats to the Telegram
- * @returns {Promise<void>}
- */
-async function main() {
+module.exports = async function (req, res) {
+  /**
+   * List of users to watch them
+   */
   const users = [
     ['5d84dbb7ff41d87b293b330e', 'SPB_Art18'],
     ['5d84e6acff41d813a93b3311', 'SPB_Art19'],
@@ -24,8 +18,8 @@ async function main() {
   const usersMap = new Map(users);
   const entitiesToWatch = ['locations', 'persons', 'relations'];
 
-  const result = await Promise.all(Array.from(usersMap.keys()).map(async userId => {
-    const values = await Promise.all(entitiesToWatch.map(async entityType => {
+  const usersResults = await Promise.all(Array.from(usersMap.keys()).map(async userId => {
+    const userResults = await Promise.all(entitiesToWatch.map(async entityType => {
       const newCount = await Change.find({
         user: ObjectId(userId),
         entityType,
@@ -53,16 +47,15 @@ async function main() {
 
     return {
       user: usersMap.get(userId),
-      values
+      values: userResults
     };
   }));
 
-  result.sort(sortUsers);
+  usersResults.sort((record1, record2) => calculateScore(record2) - calculateScore(record1));
 
-  const fullNotification = result.map((record, index) => {
-    // language=HTML
-    const medali = ['🥇', '🥈', '🥉'];
-    let message = `<b>${record.user}</b>${medali[index] || ''}\n`;
+  const fullNotification = usersResults.map((record, index) => {
+    const medals = ['🥇', '🥈', '🥉'];
+    let message = `<b>${record.user}</b>${medals[index] || ''}\n`;
 
     record.values.forEach(value => {
       message += `\t\t\t${value.newCount} new ${value.entityType} and ${value.editedCount} edited\n`;
@@ -76,19 +69,8 @@ async function main() {
     url: process.env.NOTIFY_URL,
     data: 'message=' + '<b>Summary</b>\n' + fullNotification + '&parse_mode=HTML'
   });
-}
-
-// main().then(() => process.exit());
-
-/**
- * User's sorting function
- * @param record1
- * @param record2
- * @returns {number}
- */
-function sortUsers(record1, record2) {
-  return calculateScore(record2) - calculateScore(record1);
-}
+  res.sendStatus(200);
+};
 
 /**
  * Calculate user score for sorting
@@ -106,5 +88,3 @@ function calculateScore(record) {
 
   return newCount + 0.5 * editedCount;
 }
-
-module.exports = main;
