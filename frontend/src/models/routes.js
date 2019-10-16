@@ -47,7 +47,7 @@ export default class Routes extends BaseModel {
 
   /**
    * Delete location from list
-   * @param {string} locationId - address to delete
+   * @param {string} locationId - location to delete
    */
   deleteLocation(locationId) {
     const index = this.data.locationIds.findIndex(_locationId => locationId === _locationId);
