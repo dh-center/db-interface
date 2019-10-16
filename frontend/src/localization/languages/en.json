@@ -98,6 +98,14 @@
     "addNew": "Add new location type",
     "name": "Name"
   },
+  "routes": {
+    "linkTitle": "Routes",
+    "addNew": "Add new route",
+    "name": "Name",
+    "description": "Description",
+    "locationIds": "Locations list",
+    "photoLink": "Photo link"
+  },
   "form": {
     "header": "Form",
     "person": "Person",

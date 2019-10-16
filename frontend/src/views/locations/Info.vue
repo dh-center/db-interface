@@ -53,7 +53,6 @@
             <td v-if="editable">
               <button
                 v-if="editable"
-                class="locations-info__address-delete-button"
                 @click="entity.deleteLocationType(locationType)"
               >
                 -

@@ -49,6 +49,12 @@
       >
         {{ $t('locationTypes.linkTitle') }}
       </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'routes-overview'}"
+      >
+        {{ $t('routes.linkTitle') }}
+      </router-link>
       <DataLanguageSelect class="app__data-language-select" />
     </header>
     <router-view :key="$route.fullPath" />

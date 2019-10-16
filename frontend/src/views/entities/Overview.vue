@@ -23,6 +23,7 @@
   import AddressModel from '../../models/address';
   import RelationModel from '../../models/relation';
   import LocationTypeModel from '../../models/locationTypes';
+  import RoutesModel from '../../models/routes';
 
   export default {
     name: 'EntitiesOverview',
@@ -53,6 +54,9 @@
         break;
       case 'locationTypes':
         EntityModel = LocationTypeModel;
+        break;
+      case 'routes':
+        EntityModel = RoutesModel;
         break;
       }
 
