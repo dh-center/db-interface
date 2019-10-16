@@ -18,16 +18,6 @@ const routeSchema = new Schema({
   travelTime: Number
 });
 
-/**
- * Get all persons without description
- * @param {Object} query - mongodb query
- * @returns {Object}
- */
-// routeSchema.statics.fetchAll = function (query) {
-//   return this.find(query)
-//     .select('-description');
-// };
-
 routeSchema.plugin(getChangesListPlugin);
 
 module.exports = mongoose.model('routes', routeSchema);

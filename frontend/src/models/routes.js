@@ -42,7 +42,7 @@ export default class Routes extends BaseModel {
    * @return {Array}
    */
   static get fields() {
-    return [ 'name' ];
+    return ['name', 'description'];
   }
 
   /**
