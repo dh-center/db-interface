@@ -63,8 +63,11 @@ jobs:
           docker logout
 
   deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
     needs: [build_api, build_frontend]
     steps:
+      - uses: actions/checkout@v1
       - name: Deploy stage
         if: github.ref == 'refs/heads/stage'
         uses: garygrossgarten/github-action-ssh@v0.3.0
