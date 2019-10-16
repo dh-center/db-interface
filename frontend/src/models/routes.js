@@ -5,12 +5,12 @@ import {
 import BaseModel from './base';
 
 /**
- * Class representing address
+ * Class representing route
  */
 export default class Routes extends BaseModel {
   /**
-   * Address constructor
-   * @param {Address} routeData
+   * Route constructor
+   * @param {Route} routeData
    */
   constructor(routeData) {
     super(routeData);
@@ -56,7 +56,7 @@ export default class Routes extends BaseModel {
   }
 
   /**
-   * Inserts new locationType to the end of list
+   * Inserts new location to the end of list
    */
   insertNewLocation() {
     this.data.locationIds.push(null);
