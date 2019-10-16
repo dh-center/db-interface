@@ -37,11 +37,11 @@ jobs:
 
       - name: Add stage api endpoint to ./frontend/.env
         if: github.ref == 'refs/heads/stage'
-        run: echo "VUE_APP_API_ENDPOINT=http://api.stage.db.st-retrospect.dh-center.ru" > ./frontend/.env
+        run: echo "VUE_APP_API_ENDPOINT=https://api.stage.db.st-retrospect.dh-center.ru" > ./frontend/.env
 
       - name: Add prod api endpoint to ./frontend/.env
         if: github.ref == 'refs/heads/prod'
-        run: echo "VUE_APP_API_ENDPOINT=http://api.db.st-retrospect.dh-center.ru" > ./frontend/.env
+        run: echo "VUE_APP_API_ENDPOINT=https://api.db.st-retrospect.dh-center.ru" > ./frontend/.env
 
       - name: Build docker image
         run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
