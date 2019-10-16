@@ -34,8 +34,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Add env to ./frontend/.env
-        run: echo "VUE_APP_API_ENDPOINT=http://5.53.124.45:3000" > ./frontend/.env
+
+      - name: Add stage api endpoint to ./frontend/.env
+        if: github.ref == 'refs/heads/stage'
+        run: echo "VUE_APP_API_ENDPOINT=http://api.stage.db.st-retrospect.dh-center.ru" > ./frontend/.env
+
+      - name: Add prod api endpoint to ./frontend/.env
+        if: github.ref == 'refs/heads/prod'
+        run: echo "VUE_APP_API_ENDPOINT=http://api.db.st-retrospect.dh-center.ru" > ./frontend/.env
+
       - name: Build docker image
         run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
 
@@ -56,7 +63,8 @@ jobs:
           docker logout
 
   deploy:
-      needs: [build_api, build_frontend]
+    needs: [build_api, build_frontend]
+    steps:
       - name: Deploy stage
         if: github.ref == 'refs/heads/stage'
         uses: garygrossgarten/github-action-ssh@v0.3.0
