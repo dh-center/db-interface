@@ -1,0 +1,100 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build_api:
+    name: Build API image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build docker image
+        run: docker image build -t db-interface-api -f backend/docker/Dockerfile.prod .
+
+      - name: Push to Docker hub if stage
+        if: github.ref == 'refs/heads/stage'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag db-interface-api dhcenter/db-interface-api:stage
+          docker push dhcenter/db-interface-api:stage
+          docker logout
+
+      - name: Push to Docker hub if prod
+        if: github.ref == 'refs/heads/prod'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag db-interface-api dhcenter/db-interface-api:prod
+          docker push dhcenter/db-interface-api:prod
+          docker logout
+
+  build_frontend:
+    name: Build frontend image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Add stage api endpoint to ./frontend/.env
+        if: github.ref == 'refs/heads/stage'
+        run: echo "VUE_APP_API_ENDPOINT=https://api.stage.db.st-retrospect.dh-center.ru" > ./frontend/.env
+
+      - name: Add prod api endpoint to ./frontend/.env
+        if: github.ref == 'refs/heads/prod'
+        run: echo "VUE_APP_API_ENDPOINT=https://api.db.st-retrospect.dh-center.ru" > ./frontend/.env
+
+      - name: Build docker image
+        run: docker image build -t db-interface-frontend -f frontend/docker/Dockerfile.prod .
+
+      - name: Push to Docker hub if stage
+        if: github.ref == 'refs/heads/stage'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag db-interface-frontend dhcenter/db-interface-frontend:stage
+          docker push dhcenter/db-interface-frontend:stage
+          docker logout
+
+      - name: Push to Docker hub if prod
+        if: github.ref == 'refs/heads/prod'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker tag db-interface-frontend dhcenter/db-interface-frontend:prod
+          docker push dhcenter/db-interface-frontend:prod
+          docker logout
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [build_api, build_frontend]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy stage
+        if: github.ref == 'refs/heads/stage'
+        uses: garygrossgarten/github-action-ssh@v0.3.0
+        with:
+          command: cd ~/st-retrospect/stage/db-interface/ && ./deploy.sh
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          privateKey: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Deploy prod
+        if: github.ref == 'refs/heads/prod'
+        uses: garygrossgarten/github-action-ssh@v0.3.0
+        with:
+          command: cd ~/st-retrospect/prod/db-interface/ && ./deploy.sh
+          host: ${{ secrets.SERVER_HOST }}
+          username: root
+          privateKey: ${{ secrets.PRIVATE_KEY }}
+
+  check_eslint:
+    name: Check ESLint problems
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install ESLint and plugins
+      run: npm install eslint github:codex-team/eslint-config babel-eslint eslint-plugin-vue
+    - name: Start ESlint
+      uses: stefanoeb/eslint-action@master
+      with:
+        args: . --ext .js --ext .vue
