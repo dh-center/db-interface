@@ -9,26 +9,61 @@
     >
       <router-link
         class="app__header-link"
-        to="/"
+        :to="{name: 'home'}"
       >
-        Home
+        {{ $t('home.linkTitle') }}
       </router-link>
       <router-link
         class="app__header-link"
         :to="{name: 'persons-overview'}"
       >
-        Persons
+        {{ $t('persons.linkTitle') }}
       </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'locations-overview'}"
+      >
+        {{ $t('locations.linkTitle') }}
+      </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'relations-overview'}"
+      >
+        {{ $t('relations.linkTitle') }}
+      </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'addresses-overview'}"
+      >
+        {{ $t('addresses.linkTitle') }}
+      </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'relationTypes-overview'}"
+      >
+        {{ $t('relationTypes.linkTitle') }}
+      </router-link>
+      <router-link
+        class="app__header-link"
+        :to="{name: 'locationTypes-overview'}"
+      >
+        {{ $t('locationTypes.linkTitle') }}
+      </router-link>
+      <DataLanguageSelect class="app__data-language-select" />
     </header>
-    <router-view />
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
 <script>
   import axios from 'axios';
+  import DataLanguageSelect from './components/DataLanguageSelect';
 
   export default {
     name: 'App',
+    components: {
+      DataLanguageSelect
+    },
     created() {
       if (this.$store.state.auth.accessToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.$store.state.auth.accessToken}`;
@@ -43,6 +78,16 @@
           } else {
             axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
           }
+        }
+      );
+
+      this.$store.watch(
+        state => state.app.interfaceLanguage,
+        newLang => {
+          this.$i18n.i18next.changeLanguage(newLang);
+        },
+        {
+          immediate: true
         }
       );
     }
@@ -64,6 +109,14 @@
       color: blue;
       margin-left: 20px;
       text-decoration: none;
+    }
+
+    &__data-language-select {
+      margin-left: auto;
+    }
+
+    .router-link-active {
+      text-decoration: underline;
     }
   }
 </style>

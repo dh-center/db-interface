@@ -9,13 +9,19 @@ const changeSchema = new Schema({
   approved: Schema.Types.Boolean,
   user: {
     required: true,
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   },
   entity: {
     type: Schema.Types.ObjectId,
     refPath: 'entityType'
   },
-  changes: {
+  isCreated: Boolean,
+  deleted: {
+    type: Boolean,
+    default: false
+  },
+  changeList: {
     required: true,
     type: Schema.Types.Mixed
   }

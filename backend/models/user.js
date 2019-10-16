@@ -9,6 +9,7 @@ const userSchema = new Schema({
     unique: true,
     required: 'Username is required'
   },
+  isAdmin: Boolean,
   hashedPassword: {
     type: String,
     required: 'Password is required'
@@ -45,7 +46,8 @@ userSchema.methods.comparePassword = function (password) {
  */
 userSchema.methods.generateJWT = function (cb) {
   return jwt.sign({
-    id: this.id
+    id: this.id,
+    isAdmin: this.isAdmin
   },
   process.env.JWT_SECRET_STRING,
   cb);

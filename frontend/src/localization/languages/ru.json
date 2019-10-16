@@ -12,13 +12,64 @@
     "login": "Войти",
     "logout": "Выйти"
   },
+  "home": {
+    "linkTitle": "Главная",
+    "interfaceLanguage": "Язык интерфейса"
+  },
+  "notifications": {
+    "savedSuccessfully": "Успешно сохранено",
+    "areYouSure": "Вы уверены?"
+  },
+  "entities": {
+    "viewChanges": "Посмотреть изменения",
+    "save": "Сохранить",
+    "reject": "Удалить изменения",
+    "deleteChanges": "Удалить изменения",
+    "successfulApprove": "Изменения успешно подтверждены",
+    "successfulReject": "Успешно удалено",
+    "markForDeletion": "Пометить для удаления",
+    "cancelDeletion": "Отменить удаление",
+    "beforeChanges": "До изменений",
+    "afterChanges": "После изменений",
+    "edit": "Редактировать",
+    "deletedMessage": "Сущность помечена для удаления",
+    "actions": "Действия",
+    "view": "Обзор",
+    "approve": "Подтвердить",
+    "changesAuthor": "Автор"
+  },
   "persons": {
+    "linkTitle": "Персоны",
+    "addNew": "Добавить новую персону",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "patronymic": "Отчество",
     "pseudonym": "Псевдоним",
     "profession": "Профессия",
-    "description": "Описание"
+    "description": "Описание",
+    "source": "Источник",
+    "wikiLink": "Ссылка на Википедию",
+    "photoLinks": "Ссылки на фото",
+    "mainPhotoLink": "Ссылка на главное фото",
+    "birthDate": "Дата рождения",
+    "deathDate": "Дата смерти"
+  },
+  "locations": {
+    "linkTitle": "Локации",
+    "addNew": "Добавить новую локацию",
+    "name": "Имя",
+    "addressesId": "Адреса",
+    "address": "Адрес",
+    "architects": "Архитекторы",
+    "constructionDate": "Дата постройки",
+    "demolitionDate": "Дата сноса",
+    "locationTypesId": "Тип строения",
+    "description": "Описание",
+    "wikiLink": "Ссылка на Википедию",
+    "photoLinks": "Ссылки на фото",
+    "mainPhotoLink": "Ссылка на главное фото",
+    "coordinateX": "Координата X",
+    "coordinateY": "Координата Y"
   },
   "form": {
     "header": "Форма",
@@ -30,10 +81,42 @@
     "quotes": "Цитата и ссылка на издание",
     "save": "Сохранить"
   },
+  "relations": {
+    "addNew": "Добавить новую связь",
+    "linkTitle": "Связи",
+    "locationName": "Название локации",
+    "personName": "Имя персоны",
+    "relationName": "Название связи"
+  },
+  "addresses": {
+    "addNew": "Добавить новый адрес",
+    "linkTitle": "Адреса",
+    "street": "Улица",
+    "homeNumber": "Номер дома",
+    "housing": "Корпус",
+    "build": "Строение",
+    "link": "Ссылка"
+  },
+  "relationTypes": {
+    "linkTitle": "Типы связей",
+    "addNew": "Добавить новый тип",
+    "name": "Название",
+    "synonyms": "Синонимы"
+  },
+  "locationTypes": {
+    "linkTitle": "Типы локаций",
+    "addNew": "Добавить новый тип",
+    "name": "Название"
+  },
   "apiErrorTypes": {
     "USERNAME_DUPLICATION": "Пользователь с таким именем уже существует",
+    "APPROVE_FORBIDDEN": "Вы не можете подтвержать изменения, так как вы не админ",
+    "REJECT_FORBIDDEN": "Вы не можете удалять изменения, так как вы не админ или вы не являетесь автором изменений",
+    "CHANGES_PATCHING_FORBIDDEN": "Вы не можете изменять эту сущность, потому что её изменял другой пользователь и изменения не подтверждены",
+    "SAVING_APPROVED_CHANGES": "Изменения были одобрены администратором. Пожалуйста, обновите страницу.",
     "WRONG_USER_PASSWORD": "Неверный пароль",
     "NO_USER_WITH_SUCH_USERNAME": "Не существует пользователя с таким именем",
-    "SOMETHING_WENT_WRONG": "Что-то пошло не так"
+    "SOMETHING_WENT_WRONG": "Что-то пошло не так",
+    "ALREADY_CHANGED": "Эта сущность уже была изменена другим пользователем. Пожалуйста, перезагрузите страницу."
   }
 }

@@ -1,59 +1,69 @@
-import Model from '../lib/model';
-import schemaTypes from '../lib/schema/types';
-import Schema from '../lib/schema';
+import {
+  defineStandardProperties,
+  defineMultilingualProperties
+} from '../utils';
+import BaseModel from './base';
 
 /**
- * Class representing a person's data structure
+ * Class representing person
  */
-export default class Person extends Model {
+export default class Person extends BaseModel {
   /**
-   * Create Person model instance
-   * @param {Object} personData - initial person data
-   * @param {String} language - initial language for person's data
+   * Person constructor
+   * @param {Person} _personData
    */
-  constructor(personData, language) {
-    super(Person.schema);
-    this.data = Person.schema.assign(personData);
-    this.language = language;
+  constructor(_personData) {
+    super(_personData);
+
+    defineMultilingualProperties(this, this.data, [
+      'firstName',
+      'lastName',
+      'patronymic',
+      'pseudonym',
+      'profession',
+      'description'
+    ]);
+
+    defineStandardProperties(this, this.data, [
+      'birthDate',
+      'deathDate',
+      'wikiLink',
+      'photoLinks',
+      'source',
+      'mainPhotoLink'
+    ]);
   }
 
   /**
-   * Persons schema
-   * @return {Schema}
+   * Return entity name
+   * @return {String}
    */
-  static get schema() {
-    return new Schema({
-      firstName: schemaTypes.MultilingualString,
-      lastName: schemaTypes.MultilingualString,
-      patronymic: schemaTypes.MultilingualString,
-      description: schemaTypes.MultilingualString,
-      profession: schemaTypes.MultilingualString,
-      birthDate: schemaTypes.String,
-      deathDate: schemaTypes.String
-    });
+  static get entityType() {
+    return 'persons';
   }
 
   /**
-   * Returns full user name
+   * Return entity fields
+   * @return {Array}
+   */
+  static get fields() {
+    return ['lastName', 'firstName', 'patronymic', 'pseudonym', 'birthDate', 'deathDate', 'profession'];
+  }
+
+  /**
+   * String to display on select component
    * @return {string}
    */
-  get name() {
-    const firstName = this.firstName;
-    const lastName = this.lastName;
-    const patronymic = this.patronymic;
-
-    return `${firstName} ${lastName} ${patronymic}`.trim();
+  get searchName() {
+    return (this.lastName + ' ' + this.firstName + ' ' + this.patronymic).trim();
   }
 
   /**
-   * Sets full user name
-   * @param {String} value - new name
+   * Returns true if search string satisfies the entity
+   * @param {String} searchString
+   * @return {boolean}
    */
-  set name(value) {
-    const [firstName, lastName, ...patronymic] = value.split(' ');
-
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.patronymic = patronymic.join(' ');
+  search(searchString) {
+    return this.searchName.toLowerCase().includes(searchString.toLowerCase());
   }
 }

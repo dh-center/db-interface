@@ -1,30 +1,50 @@
 <template>
-  <select
-    :value="dataLanguage"
-    @input="changeDataLanguage"
-  >
-    <option value="ru">
-      Russian
-    </option>
-    <option value="en">
-      English
-    </option>
-  </select>
+  <div class="data-language-select">
+    <div>
+      <label for="radioButtonRu">ru</label>
+      <input
+        id="radioButtonRu"
+        v-model="dataLanguage"
+        type="radio"
+        name="dataLang"
+        value="ru"
+      >
+    </div>
+    <div>
+      <label for="radioButtonEn">en</label>
+      <input
+        id="radioButtonEn"
+        v-model="dataLanguage"
+        type="radio"
+        name="dataLang"
+        value="en"
+      >
+    </div>
+  </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import { CHANGE_DATA_LANG } from '../store/modules/app/actionTypes';
 
   export default {
     name: 'DataLanguageSelect',
-    computed: mapState({
-      dataLanguage: state => state.app.dataLanguage
-    }),
-    methods: {
-      changeDataLanguage(e) {
-        this.$store.dispatch(CHANGE_DATA_LANG, e.target.value);
+    computed: {
+      dataLanguage: {
+        get() {
+          return this.$store.state.app.dataLanguage;
+        },
+        set(value) {
+          this.$store.dispatch(CHANGE_DATA_LANG, value);
+        }
       }
     }
   };
 </script>
+
+<style>
+  .data-language-select {
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+  }
+</style>

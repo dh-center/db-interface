@@ -9,35 +9,9 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'form',
-      component: () => import(/* webpackChunkName: 'form' */ './views/Form.vue')
-    },
-    {
-      path: '/persons',
-      component: () => import('./views/persons/Overview.vue'),
-      children: [
-        {
-          path: '',
-          name: 'persons-overview',
-          component: () => import('./views/persons/OverviewTable.vue')
-        },
-        {
-          path: 'changes',
-          name: 'persons-changes',
-          component: () => import('./views/persons/ChangesTable.vue')
-        },
-        {
-          path: 'create',
-          name: 'persons-create',
-          component: () => import('./views/persons/OverviewSpecific.vue')
-        },
-        {
-          path: ':personId/edit',
-          name: 'persons-edit',
-          component: () => import('./views/persons/OverviewSpecific.vue')
-        }
-      ]
+      path: '/home',
+      name: 'home',
+      component: () => import(/* webpackChunkName: 'home' */ './views/Home')
     },
     {
       path: '/sign-up',
@@ -48,6 +22,16 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: () => import('./views/auth/Login.vue')
+    },
+    generateRoutes('persons'),
+    generateRoutes('locations'),
+    generateRoutes('addresses'),
+    generateRoutes('relations'),
+    generateRoutes('relationTypes'),
+    generateRoutes('locationTypes'),
+    {
+      path: '*',
+      redirect: '/home'
     }
   ]
 });
@@ -66,5 +50,40 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
+
+/**
+ * Generate routes for entities by name
+ * @param {String} name - entities name
+ * @return {Object}
+ */
+function generateRoutes(name) {
+  return {
+    path: `/${name}`,
+    component: () => import('./views/entities/Overview.vue'),
+    props: { entityName: name },
+    children: [
+      {
+        path: '',
+        name: `${name}-overview`,
+        component: () => import('./views/entities/OverviewTable.vue')
+      },
+      {
+        path: 'changes',
+        name: `${name}-changes`,
+        component: () => import('./views/entities/ChangesTable.vue')
+      },
+      {
+        path: 'create/:changeRecordId?',
+        name: `${name}-create`,
+        component: () => import('./views/entities/Create.vue')
+      },
+      {
+        path: ':entityId/edit',
+        name: `${name}-overview-specific`,
+        component: () => import('./views/entities/OverviewSpecific.vue')
+      }
+    ]
+  };
+}
 
 export default router;

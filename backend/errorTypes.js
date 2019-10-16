@@ -54,9 +54,84 @@ class UsernameDuplicationError extends ApiError {
   }
 }
 
+/**
+ * Throws when non-admin user trying to approve changes
+ */
+class ApproveForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'APPROVE_FORBIDDEN';
+  }
+}
+
+/**
+ * Throws when non-admin user trying to approve changes
+ */
+class RejectForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'REJECT_FORBIDDEN';
+  }
+}
+
+/**
+ * Throws when user who did not create this change is trying to save the changes
+ */
+class ChangesPatchingForbiddenError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=403] - http code to send to user
+   */
+  constructor(httpCode = 403) {
+    super(httpCode);
+    this.code = 'CHANGES_PATCHING_FORBIDDEN';
+  }
+}
+
+/**
+ * Throws when user saves approved changes
+ */
+class SavingApprovedChangesError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=409] - http code to send to user
+   */
+  constructor(httpCode = 409) {
+    super(httpCode);
+    this.code = 'SAVING_APPROVED_CHANGES';
+  }
+}
+
+/**
+ * Throws when user saves entity that was already changed by other user
+ */
+class AlreadyChangedError extends ApiError {
+  /**
+   * Creates error instance
+   * @param {Number} [httpCode=409] - http code to send to user
+   */
+  constructor(httpCode = 409) {
+    super(httpCode);
+    this.code = 'ALREADY_CHANGED';
+  }
+}
+
 module.exports = {
   ApiError,
   NoUserWithSuchUsernameError,
   WrongUserPasswordError,
+  ApproveForbiddenError,
+  ChangesPatchingForbiddenError,
+  RejectForbiddenError,
+  SavingApprovedChangesError,
+  AlreadyChangedError,
   UsernameDuplicationError
 };

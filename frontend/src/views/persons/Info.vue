@@ -1,134 +1,159 @@
 <template>
-  <div class="person-info">
-    <h2
-      ref="name"
-      contenteditable
-      data-placeholder="full person name"
-      class="person-info__name"
-    />
-    <div class="person-info__mini">
-      <div class="person-info__lifetime">
-        <h3 class="person-info__mini-header">
-          годы жизни
-        </h3>
-        <span
-          ref="birthDate"
-          data-placeholder="dd.mm.yyyy"
-          contenteditable
-        />
-        &mdash;
-        <span
-          ref="deathDate"
-          data-placeholder="dd.mm.yyyy"
-          class="date-input"
-          contenteditable
-        />
-      </div>
-      <div class="person-info__profession">
-        <h3 class="person-info__mini-header">
-          деятельность
-        </h3>
-        <span
-          ref="profession"
-          contenteditable
-          data-placeholder="person's professions"
-        />
-      </div>
+  <div class="entity-info">
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('lastName')"
+      >{{ $t('persons.lastName') }}</label>
+      <input
+        :id="$id('lastName')"
+        v-model="entity.lastName"
+        type="text"
+        :disabled="!editable"
+      >
     </div>
-    <div
-      ref="description"
-      contenteditable
-      data-placeholder="person description"
-      class="person-info__description"
-    />
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('firstName')"
+      >{{ $t('persons.firstName') }}</label>
+      <input
+        :id="$id('firstName')"
+        v-model="entity.firstName"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('patronymic')"
+      >{{ $t('persons.patronymic') }}</label>
+      <input
+        :id="$id('patronymic')"
+        v-model="entity.patronymic"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('pseudonym')"
+      >{{ $t('persons.pseudonym') }}</label>
+      <input
+        :id="$id('pseudonym')"
+        v-model="entity.pseudonym"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('birthDate')"
+      >{{ $t('persons.birthDate') }}</label>
+      <input
+        :id="$id('birthDate')"
+        v-model="entity.birthDate"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('deathDate')"
+      >{{ $t('persons.deathDate') }}</label>
+      <input
+        :id="$id('deathDate')"
+        v-model="entity.deathDate"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('profession')"
+      >{{ $t('persons.profession') }}</label>
+      <input
+        :id="$id('profession')"
+        v-model="entity.profession"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label
+        class="entity-info__label"
+        :for="$id('description')"
+      >{{ $t('persons.description') }}</label>
+      <textarea
+        :id="$id('description')"
+        v-model="entity.description"
+        class="entity-info__description"
+        :disabled="!editable"
+      />
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('source')">
+        {{ $t('persons.source') }}
+      </label>
+      <input
+        :id="$id('source')"
+        v-model="entity.source"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('wikiLink')">
+        {{ $t('persons.wikiLink') }}
+      </label>
+      <input
+        :id="$id('wikiLink')"
+        v-model="entity.wikiLink"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('photoLinks')">
+        {{ $t('persons.photoLinks') }}
+      </label>
+      <textarea
+        :id="$id('photoLinks')"
+        v-model="entity.photoLinks"
+        class="entity-info__description"
+        :disabled="!editable"
+      />
+    </div>
+    <div class="entity-info__section">
+      <label :for="$id('mainPhotoLink')">
+        {{ $t('persons.mainPhotoLink') }}
+      </label>
+      <input
+        :id="$id('mainPhotoLink')"
+        v-model="entity.mainPhotoLink"
+        type="text"
+        :disabled="!editable"
+      >
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'PersonInfo',
+    name: 'PersonsInfo',
     props: {
-      person: {
+      entity: {
         type: Object,
         required: true
-      }
-    },
-    mounted() {
-      for (const ref in this.$refs) {
-        this.$refs[ref].addEventListener('input', event => {
-          this.person[ref] = event.target.innerText;
-        });
-      }
-
-      this.setData();
-    },
-    methods: {
-      setData() {
-        for (const ref in this.$refs) {
-          this.$refs[ref].innerText = this.person[ref];
-        }
-      }
+      },
+      editable: Boolean
     }
   };
 </script>
 
-<style>
-  .person-info {
-    max-width: 450px;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-
-    &__name {
-      font-family: 'Oranienbaum', serif;
-      font-size: 24px;
-      line-height: 28px;
-      margin-bottom: 10px;
-      color: #2d2d2d;
-    }
-
-    &__mini {
-      display: flex;
-      flex-wrap: wrap;
-      border-bottom: 1px solid rgba(0, 0, 0, .2);
-    }
-
-    &__mini-header {
-      font-family: 'Roboto', sans-serif;
-      font-size: 8px;
-      line-height: 9px;
-      display: block;
-      margin-bottom: 8px;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: #000;
-    }
-
-    &__lifetime,
-    &__profession {
-      flex-basis: 50%;
-      font-family: 'Roboto', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
-      line-height: 16px;
-      padding-left: 20px;
-      margin-bottom: 0;
-      color: #000;
-    }
-
-    &__lifetime {
-      padding-left: 0;
-      border-right: 1px solid rgba(0, 0, 0, .2);
-    }
-
-    &__description {
-      margin-top: 20px;
-    }
-  }
-
-  [contenteditable=true]:empty::before {
-    content: attr(data-placeholder);
-    opacity: 0.5;
-    display: inline;
-  }
-</style>
+<style src="../../styles/entity-info.css"></style>

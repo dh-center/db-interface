@@ -12,7 +12,6 @@ FROM node:10-alpine
 COPY --from=build-stage node_modules ./frontend/node_modules
 
 COPY frontend/ ./frontend/
-COPY backend/models/relationId.json ./backend/models/relationId.json
 
 WORKDIR frontend
 

@@ -12,3 +12,49 @@ body {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+.link {
+  display: inline-block;
+  padding: 3px 6px;
+  color: blue;
+  text-decoration: none;
+}
+
+body .cdx-notifies {
+  right: 20px;
+  color: #fff;
+  left: auto;
+  z-index: 100;
+  box-sizing: content-box;
+}
+
+body .cdx-notify {
+  font-size: 13px;
+  background-color: #716971 !important;
+  box-shadow: 0 6px 17px -4px #0000009c;
+
+  &__btns-wrapper {
+    margin-top: 8px;
+  }
+}
+
+.button {
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  padding: 2px 7px;
+  background-color: #F3A72E;
+  font-size: 15px;
+
+  &--primary {
+    background-color: #367BF5;
+  }
+
+  &--approve {
+    background-color: #19D938;
+  }
+
+  &--danger {
+    background-color: #FF0545;
+  }
+}
