@@ -15,7 +15,8 @@ const routeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'locations'
   } ],
-  travelTime: Number
+  travelTime: Number,
+  photoLink: String
 });
 
 routeSchema.plugin(getChangesListPlugin);
