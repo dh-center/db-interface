@@ -43,6 +43,20 @@
             </td>
             <td v-if="editable">
               <button
+                :disabled="index === 0"
+                @click="moveItem(entity.locationIds, index, index - 1)"
+              >
+                ↑
+              </button>
+              <button
+                :disabled="index === (entity.locationIds.length - 1)"
+                @click="moveItem(entity.locationIds, index, index + 1)"
+              >
+                ↓
+              </button>
+            </td>
+            <td v-if="editable">
+              <button
                 v-if="editable"
                 @click="entity.deleteLocation(address)"
               >
@@ -102,6 +116,9 @@
     methods: {
       async fetchData() {
         await axios.get('/locations').then(locations => (this.locationList = locations.map(location => new LocationModel(location))));
+      },
+      moveItem(array, from, to) {
+        array = array.splice(to, 0, array.splice(from, 1)[0]);
       }
     }
   };
