@@ -140,18 +140,39 @@
         :disabled="!editable"
       >
     </div>
+    <div>
+      <vueDropzone
+        :id="$id('dropzone')"
+        :options="dropzoneOptions"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+  import vueDropzone from 'vue2-dropzone';
+  import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
   export default {
     name: 'PersonsInfo',
+    components: {
+      vueDropzone
+    },
     props: {
       entity: {
         type: Object,
         required: true
       },
       editable: Boolean
+    },
+    data() {
+      return {
+        dropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/persons/images',
+          thumbnailWidth: 150,
+          maxFilesize: 10
+        }
+      };
     }
   };
 </script>
