@@ -50,7 +50,7 @@
     "source": "Source",
     "wikiLink": "Wiki link",
     "photoLinks": "Photo links",
-    "mainPhotoLink": "Main photo link",
+    "mainPhoto": "Main photo",
     "birthDate": "Date of birth",
     "deathDate": "Date of death"
   },
