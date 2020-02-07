@@ -164,13 +164,13 @@
 <script>
   import vueDropzone from 'vue2-dropzone';
   import 'vue2-dropzone/dist/vue2Dropzone.min.css';
-  import gallery from 'vue-gallery';
+  import { LightGallery } from 'vue-light-gallery';
 
   export default {
     name: 'PersonsInfo',
     components: {
       vueDropzone,
-      gallery
+      gallery: LightGallery
     },
     props: {
       entity: {

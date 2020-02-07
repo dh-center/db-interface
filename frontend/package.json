@@ -21,7 +21,7 @@
     "lodash.clonedeep": "^4.5.0",
     "postcss-nested": "^4.1.2",
     "vue": "^2.6.10",
-    "vue-gallery": "^2.0.1",
+    "vue-light-gallery": "^1.0.1",
     "vue-router": "^3.1.2",
     "vue-template-compiler": "^2.6.10",
     "vue-unique-id": "^2.0.0",
