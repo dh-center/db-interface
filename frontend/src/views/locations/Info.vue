@@ -141,14 +141,32 @@
     </div>
     <div class="entity-info__section">
       <label :for="$id('mainPhotoLink')">
-        {{ $t('locations.mainPhotoLink') }}
+        {{ $t('locations.mainPhoto') }}
       </label>
-      <input
-        :id="$id('mainPhotoLink')"
-        v-model="entity.mainPhotoLink"
-        type="text"
-        :disabled="!editable"
+      <gallery
+        :id="$id('mainPhotoGallery')"
+        :images="[entity.mainPhotoLink]"
+        :index="mainPhotoIndex"
+        @close="mainPhotoIndex = null"
+      />
+      <img
+        class="entity-info__main-photo"
+        :src="entity.mainPhotoLink"
+        @click="mainPhotoIndex = 0"
       >
+      <button
+        v-if="editable"
+        @click="entity.mainPhotoLink = null"
+      >
+        Remove image
+      </button>
+      <vueDropzone
+        v-if="editable"
+        :id="$id('mainPhotoDropzone')"
+        ref="mainPhotoDropzone"
+        :options="mainPhotoDropzoneOptions"
+        @vdropzone-success="onMainPhotoSuccessUpload"
+      />
     </div>
     <div class="entity-info__section">
       <label :for="$id('coordinateX')">
@@ -180,11 +198,16 @@
   import CustomSelect from '../../components/CustomSelect';
   import LocationTypeModel from '../../models/locationTypes';
   import AddressModel from '../../models/address';
+  import vueDropzone from 'vue2-dropzone';
+  import { LightGallery } from 'vue-light-gallery';
 
   export default {
     name: 'LocationsInfo',
     components: {
+      vueDropzone,
+      gallery: LightGallery,
       CustomSelect
+
     },
     props: {
       entity: {
@@ -196,7 +219,27 @@
     data() {
       return {
         locationTypesList: [],
-        addressesList: []
+        addressesList: [],
+        mainPhotoIndex: null,
+        mainPhotoDropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/locations/images',
+          thumbnailWidth: 150,
+          headers: {
+            Authorization: 'Bearer ' + this.$store.state.auth.accessToken
+          },
+          maxFiles: 1,
+          paramName: 'images',
+          maxFilesize: 10
+        },
+        photosDropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/locations/images',
+          thumbnailWidth: 150,
+          headers: {
+            Authorization: 'Bearer ' + this.$store.state.auth.accessToken
+          },
+          paramName: 'images',
+          maxFilesize: 10
+        }
       };
     },
     async created() {
@@ -206,6 +249,9 @@
       async fetchData() {
         await axios.get('/locationTypes').then(locationTypes => (this.locationTypesList = locationTypes.map(locationType => new LocationTypeModel(locationType))));
         await axios.get('/addresses').then(addresses => (this.addressesList = addresses.map(address => new AddressModel(address))));
+      },
+      onMainPhotoSuccessUpload(file, response) {
+        this.entity.mainPhotoLink = response.payload.urls[0];
       }
     }
   };

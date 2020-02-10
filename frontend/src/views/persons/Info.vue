@@ -204,7 +204,7 @@
     },
     methods: {
       onMainPhotoSuccessUpload(file, response) {
-        this.entity.mainPhotoLink = response.payload.url;
+        this.entity.mainPhotoLink = response.payload.urls[0];
       }
     }
   };

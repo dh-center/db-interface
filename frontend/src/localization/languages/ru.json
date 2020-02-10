@@ -66,8 +66,8 @@
     "locationTypesId": "Тип строения",
     "description": "Описание",
     "wikiLink": "Ссылка на Википедию",
-    "photoLinks": "Ссылки на фото",
-    "mainPhotoLink": "Ссылка на главное фото",
+    "photos": "Фотографии",
+    "mainPhoto": "Главное фото",
     "coordinateX": "Координата X",
     "coordinateY": "Координата Y"
   },

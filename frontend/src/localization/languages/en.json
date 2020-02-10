@@ -66,8 +66,8 @@
     "locationTypesId": "Building type",
     "description": "Description",
     "wikiLink": "Wiki link",
-    "photoLinks": "Photo links",
-    "mainPhotoLink": "Main photo link",
+    "photos": "Other photos",
+    "mainPhoto": "Main photo",
     "coordinateX": "Coordinate X",
     "coordinateY": "Coordinate Y"
   },

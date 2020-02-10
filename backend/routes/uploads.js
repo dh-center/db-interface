@@ -49,37 +49,33 @@ function getUploadMiddleware(folder) {
 }
 
 /**
- * Upload images for persons
+ * Returns array of uploaded images
+ * @param {Request} req - Express request for processing
+ * @param {Response} res - file info to upload
  */
-router.post('/persons/images', getUploadMiddleware('persons').single('image'), (req, res) => {
-  const requestForImage = {
-    bucket: 'st-retrospect-images',
-    key: req.file.key
-  };
-
+function filesProcessMiddleware(req, res) {
   res.json({
     payload: {
-      fileKey: req.file.key,
-      url: process.env.IMAGE_HOSTING_ENDPOINT + Buffer.from(JSON.stringify(requestForImage)).toString('base64')
+      urls: req.files.map(file => {
+        const requestForImage = {
+          bucket: 'st-retrospect-images',
+          key: file.key
+        };
+
+        return process.env.IMAGE_HOSTING_ENDPOINT + Buffer.from(JSON.stringify(requestForImage)).toString('base64');
+      })
     }
   });
-});
+}
 
 /**
- * Upload images for persons
+ * Upload persons images
  */
-router.post('/locations/images', getUploadMiddleware('locations').single('image'), (req, res) => {
-  const requestForImage = {
-    bucket: 'st-retrospect-images',
-    key: req.file.key
-  };
+router.post('/persons/images', getUploadMiddleware('persons').array('images'), filesProcessMiddleware);
 
-  res.json({
-    payload: {
-      fileKey: req.file.key,
-      url: process.env.IMAGE_HOSTING_ENDPOINT + Buffer.from(JSON.stringify(requestForImage)).toString('base64')
-    }
-  });
-});
+/**
+ * Upload locations images
+ */
+router.post('/locations/images', getUploadMiddleware('locations').array('images'), filesProcessMiddleware);
 
 module.exports = router;
