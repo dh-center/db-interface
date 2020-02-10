@@ -65,4 +65,21 @@ router.post('/persons/images', getUploadMiddleware('persons').single('image'), (
   });
 });
 
+/**
+ * Upload images for persons
+ */
+router.post('/locations/images', getUploadMiddleware('locations').single('image'), (req, res) => {
+  const requestForImage = {
+    bucket: 'st-retrospect-images',
+    key: req.file.key
+  };
+
+  res.json({
+    payload: {
+      fileKey: req.file.key,
+      url: process.env.IMAGE_HOSTING_ENDPOINT + Buffer.from(JSON.stringify(requestForImage)).toString('base64')
+    }
+  });
+});
+
 module.exports = router;
