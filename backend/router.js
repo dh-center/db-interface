@@ -49,4 +49,8 @@ router.use(changesFactory('relationTypes', RelationType));
 router.use(changesFactory('locationTypes', LocationType));
 router.use(changesFactory('routes', Route));
 
+const uploads = require('./routes/uploads');
+
+router.use(uploads);
+
 module.exports = router;

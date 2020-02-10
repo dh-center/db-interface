@@ -103,6 +103,8 @@
 <style src="./styles/base.css"></style>
 
 <style>
+  @import "~vue2-dropzone/dist/vue2Dropzone.min.css";
+
   .app {
     &__header {
       display: flex;

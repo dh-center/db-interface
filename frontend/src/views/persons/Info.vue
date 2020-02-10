@@ -130,28 +130,82 @@
       />
     </div>
     <div class="entity-info__section">
-      <label :for="$id('mainPhotoLink')">
-        {{ $t('persons.mainPhotoLink') }}
+      <label :for="$id('mainPhoto')">
+        {{ $t('persons.mainPhoto') }}
       </label>
-      <input
-        :id="$id('mainPhotoLink')"
-        v-model="entity.mainPhotoLink"
-        type="text"
-        :disabled="!editable"
+      <gallery
+        :id="$id('mainPhotoGallery')"
+        :images="[entity.mainPhotoLink]"
+        :index="mainPhotoIndex"
+        @close="mainPhotoIndex = null"
+      />
+      <img
+        class="entity-info__main-photo"
+        :src="entity.mainPhotoLink"
+        @click="mainPhotoIndex = 0"
       >
+      <button
+        v-if="editable"
+        @click="entity.mainPhotoLink = null"
+      >
+        Remove image
+      </button>
+      <vueDropzone
+        v-if="editable"
+        :id="$id('mainPhotoDropzone')"
+        ref="mainPhotoDropzone"
+        :options="mainPhotoDropzoneOptions"
+        @vdropzone-success="onMainPhotoSuccessUpload"
+      />
     </div>
   </div>
 </template>
 
 <script>
+  import vueDropzone from 'vue2-dropzone';
+  import { LightGallery } from 'vue-light-gallery';
+
   export default {
     name: 'PersonsInfo',
+    components: {
+      vueDropzone,
+      gallery: LightGallery
+    },
     props: {
       entity: {
         type: Object,
         required: true
       },
       editable: Boolean
+    },
+    data() {
+      return {
+        mainPhotoIndex: null,
+        mainPhotoDropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/persons/images',
+          thumbnailWidth: 150,
+          headers: {
+            Authorization: 'Bearer ' + this.$store.state.auth.accessToken
+          },
+          maxFiles: 1,
+          paramName: 'image',
+          maxFilesize: 10
+        },
+        photosDropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/persons/images',
+          thumbnailWidth: 150,
+          headers: {
+            Authorization: 'Bearer ' + this.$store.state.auth.accessToken
+          },
+          paramName: 'image',
+          maxFilesize: 10
+        }
+      };
+    },
+    methods: {
+      onMainPhotoSuccessUpload(file, response) {
+        this.entity.mainPhotoLink = response.payload.url;
+      }
     }
   };
 </script>
