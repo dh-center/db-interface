@@ -264,7 +264,7 @@
 
     &__original-entity-container,
     &__changed-entity-container {
-      width: 50%;
+      width: 45%;
     }
   }
 </style>

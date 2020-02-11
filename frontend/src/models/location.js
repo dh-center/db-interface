@@ -38,7 +38,10 @@ export default class Location extends BaseModel {
         default: []
       },
       'wikiLink',
-      'photoLinks',
+      {
+        name: 'photoLinks',
+        default: []
+      },
       'mainPhotoLink',
       'coordinateX',
       'coordinateY'
