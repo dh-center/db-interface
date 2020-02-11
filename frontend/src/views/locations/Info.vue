@@ -228,7 +228,7 @@
             Authorization: 'Bearer ' + this.$store.state.auth.accessToken
           },
           maxFiles: 1,
-          paramName: 'images',
+          paramName: 'image',
           maxFilesize: 10
         },
         photosDropzoneOptions: {
@@ -237,7 +237,7 @@
           headers: {
             Authorization: 'Bearer ' + this.$store.state.auth.accessToken
           },
-          paramName: 'images',
+          paramName: 'image',
           maxFilesize: 10
         }
       };

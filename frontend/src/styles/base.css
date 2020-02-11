@@ -58,3 +58,28 @@ body .cdx-notify {
     background-color: #FF0545;
   }
 }
+
+
+.close-icon {
+  background: #1a1d26;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.8;
+  align-items: center;
+
+  &::before {
+    content: 'x';
+    font-size: 20px;
+    color: #fff;
+    font-weight: 900;
+    font-family: Arial, sans-serif;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}

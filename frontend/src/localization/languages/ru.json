@@ -49,7 +49,7 @@
     "description": "Описание",
     "source": "Источник",
     "wikiLink": "Ссылка на Википедию",
-    "photoLinks": "Ссылки на фото",
+    "photos": "Фотографии",
     "mainPhoto": "Главное фото",
     "birthDate": "Дата рождения",
     "deathDate": "Дата смерти"

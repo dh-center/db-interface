@@ -49,7 +49,7 @@
     "description": "Description",
     "source": "Source",
     "wikiLink": "Wiki link",
-    "photoLinks": "Photo links",
+    "photos": "Other photos",
     "mainPhoto": "Main photo",
     "birthDate": "Date of birth",
     "deathDate": "Date of death"

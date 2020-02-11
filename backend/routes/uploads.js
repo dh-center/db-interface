@@ -54,16 +54,14 @@ function getUploadMiddleware(folder) {
  * @param {Response} res - file info to upload
  */
 function filesProcessMiddleware(req, res) {
+  const requestForImage = {
+    bucket: 'st-retrospect-images',
+    key: req.file.key
+  };
+
   res.json({
     payload: {
-      urls: req.files.map(file => {
-        const requestForImage = {
-          bucket: 'st-retrospect-images',
-          key: file.key
-        };
-
-        return process.env.IMAGE_HOSTING_ENDPOINT + Buffer.from(JSON.stringify(requestForImage)).toString('base64');
-      })
+      url: process.env.IMAGE_HOSTING_ENDPOINT + Buffer.from(JSON.stringify(requestForImage)).toString('base64')
     }
   });
 }
@@ -71,11 +69,11 @@ function filesProcessMiddleware(req, res) {
 /**
  * Upload persons images
  */
-router.post('/persons/images', getUploadMiddleware('persons').array('images'), filesProcessMiddleware);
+router.post('/persons/images', getUploadMiddleware('persons').single('image'), filesProcessMiddleware);
 
 /**
  * Upload locations images
  */
-router.post('/locations/images', getUploadMiddleware('locations').array('images'), filesProcessMiddleware);
+router.post('/locations/images', getUploadMiddleware('locations').single('image'), filesProcessMiddleware);
 
 module.exports = router;
