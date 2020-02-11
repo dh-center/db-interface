@@ -149,6 +149,7 @@
             @click="photoIndex = index"
           >
           <span
+            v-if="editable"
             class="close-icon"
             @click="deleteImage(index)"
           />
@@ -181,6 +182,7 @@
           @click="mainPhotoIndex = 0"
         >
         <span
+          v-if="editable"
           class="close-icon"
           @click="entity.mainPhotoLink = null"
         />
