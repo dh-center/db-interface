@@ -130,13 +130,36 @@
     </div>
     <div class="entity-info__section">
       <label :for="$id('photoLinks')">
-        {{ $t('locations.photoLinks') }}
+        {{ $t('locations.photos') }}
       </label>
-      <textarea
-        :id="$id('photoLinks')"
-        v-model="entity.photoLinks"
-        class="entity-info__description"
-        :disabled="!editable"
+      <gallery
+        :id="$id('photoGallery')"
+        :images="entity.photoLinks"
+        :index="photoIndex"
+        @close="photoIndex = null"
+      />
+      <div class="entity-info__images-list">
+        <div
+          v-for="(link, index) in entity.photoLinks"
+          :key="index"
+          class="entity-info__image-container"
+        >
+          <img
+            :src="link"
+            @click="photoIndex = index"
+          >
+          <span
+            class="close-icon"
+            @click="deleteImage(index)"
+          />
+        </div>
+      </div>
+      <vueDropzone
+        v-if="editable"
+        :id="$id('mainPhotoDropzone')"
+        ref="mainPhotoDropzone"
+        :options="photosDropzoneOptions"
+        @vdropzone-success="onPhotoSuccessUpload"
       />
     </div>
     <div class="entity-info__section">
@@ -149,11 +172,19 @@
         :index="mainPhotoIndex"
         @close="mainPhotoIndex = null"
       />
-      <img
-        class="entity-info__main-photo"
-        :src="entity.mainPhotoLink"
-        @click="mainPhotoIndex = 0"
+      <div
+        v-if="entity.mainPhotoLink"
+        class="entity-info__image-container"
       >
+        <img
+          :src="entity.mainPhotoLink"
+          @click="mainPhotoIndex = 0"
+        >
+        <span
+          class="close-icon"
+          @click="entity.mainPhotoLink = null"
+        />
+      </div>
       <button
         v-if="editable"
         @click="entity.mainPhotoLink = null"
@@ -221,6 +252,7 @@
         locationTypesList: [],
         addressesList: [],
         mainPhotoIndex: null,
+        photoIndex: null,
         mainPhotoDropzoneOptions: {
           url: process.env.VUE_APP_API_ENDPOINT + '/locations/images',
           thumbnailWidth: 150,
@@ -251,7 +283,14 @@
         await axios.get('/addresses').then(addresses => (this.addressesList = addresses.map(address => new AddressModel(address))));
       },
       onMainPhotoSuccessUpload(file, response) {
-        this.entity.mainPhotoLink = response.payload.urls[0];
+        this.entity.mainPhotoLink = response.payload.url;
+      },
+      onPhotoSuccessUpload(file, response) {
+        this.entity.photoLinks.push(response.payload.url);
+      },
+
+      deleteImage(index) {
+        this.entity.photoLinks.splice(index, 1);
       }
     }
   };
