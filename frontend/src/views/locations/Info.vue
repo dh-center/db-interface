@@ -187,12 +187,6 @@
           @click="entity.mainPhotoLink = null"
         />
       </div>
-      <button
-        v-if="editable"
-        @click="entity.mainPhotoLink = null"
-      >
-        Remove image
-      </button>
       <vueDropzone
         v-if="editable"
         :id="$id('mainPhotoDropzone')"
