@@ -82,7 +82,7 @@
     },
     methods: {
       async fetchData() {
-        this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
+        this.infoComponent = (await import('../' + this.model.entityType + '/Info')).default;
 
         const { changeRecordId } = this.$route.params;
 

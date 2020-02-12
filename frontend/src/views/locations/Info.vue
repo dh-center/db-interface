@@ -130,25 +130,70 @@
     </div>
     <div class="entity-info__section">
       <label :for="$id('photoLinks')">
-        {{ $t('locations.photoLinks') }}
+        {{ $t('locations.photos') }}
       </label>
-      <textarea
-        :id="$id('photoLinks')"
-        v-model="entity.photoLinks"
-        class="entity-info__description"
-        :disabled="!editable"
+      <gallery
+        :id="$id('photoGallery')"
+        :images="entity.photoLinks"
+        :index="photoIndex"
+        @close="photoIndex = null"
+      />
+      <div class="entity-info__images-list">
+        <div
+          v-for="(link, index) in entity.photoLinks"
+          :key="index"
+          class="entity-info__image-container"
+        >
+          <img
+            :src="link"
+            @click="photoIndex = index"
+          >
+          <span
+            v-if="editable"
+            class="close-icon"
+            @click="deleteImage(index)"
+          />
+        </div>
+      </div>
+      <vueDropzone
+        v-if="editable"
+        :id="$id('mainPhotoDropzone')"
+        ref="mainPhotoDropzone"
+        :options="photosDropzoneOptions"
+        @vdropzone-success="onPhotoSuccessUpload"
       />
     </div>
     <div class="entity-info__section">
       <label :for="$id('mainPhotoLink')">
-        {{ $t('locations.mainPhotoLink') }}
+        {{ $t('locations.mainPhoto') }}
       </label>
-      <input
-        :id="$id('mainPhotoLink')"
-        v-model="entity.mainPhotoLink"
-        type="text"
-        :disabled="!editable"
+      <gallery
+        :id="$id('mainPhotoGallery')"
+        :images="[entity.mainPhotoLink]"
+        :index="mainPhotoIndex"
+        @close="mainPhotoIndex = null"
+      />
+      <div
+        v-if="entity.mainPhotoLink"
+        class="entity-info__image-container"
       >
+        <img
+          :src="entity.mainPhotoLink"
+          @click="mainPhotoIndex = 0"
+        >
+        <span
+          v-if="editable"
+          class="close-icon"
+          @click="entity.mainPhotoLink = null"
+        />
+      </div>
+      <vueDropzone
+        v-if="editable"
+        :id="$id('mainPhotoDropzone')"
+        ref="mainPhotoDropzone"
+        :options="mainPhotoDropzoneOptions"
+        @vdropzone-success="onMainPhotoSuccessUpload"
+      />
     </div>
     <div class="entity-info__section">
       <label :for="$id('coordinateX')">
@@ -180,11 +225,16 @@
   import CustomSelect from '../../components/CustomSelect';
   import LocationTypeModel from '../../models/locationTypes';
   import AddressModel from '../../models/address';
+  import vueDropzone from 'vue2-dropzone';
+  import { LightGallery } from 'vue-light-gallery';
 
   export default {
     name: 'LocationsInfo',
     components: {
+      vueDropzone,
+      gallery: LightGallery,
       CustomSelect
+
     },
     props: {
       entity: {
@@ -196,7 +246,28 @@
     data() {
       return {
         locationTypesList: [],
-        addressesList: []
+        addressesList: [],
+        mainPhotoIndex: null,
+        photoIndex: null,
+        mainPhotoDropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/locations/images',
+          thumbnailWidth: 150,
+          headers: {
+            Authorization: 'Bearer ' + this.$store.state.auth.accessToken
+          },
+          maxFiles: 1,
+          paramName: 'image',
+          maxFilesize: 10
+        },
+        photosDropzoneOptions: {
+          url: process.env.VUE_APP_API_ENDPOINT + '/locations/images',
+          thumbnailWidth: 150,
+          headers: {
+            Authorization: 'Bearer ' + this.$store.state.auth.accessToken
+          },
+          paramName: 'image',
+          maxFilesize: 10
+        }
       };
     },
     async created() {
@@ -206,6 +277,16 @@
       async fetchData() {
         await axios.get('/locationTypes').then(locationTypes => (this.locationTypesList = locationTypes.map(locationType => new LocationTypeModel(locationType))));
         await axios.get('/addresses').then(addresses => (this.addressesList = addresses.map(address => new AddressModel(address))));
+      },
+      onMainPhotoSuccessUpload(file, response) {
+        this.entity.mainPhotoLink = response.payload.url;
+      },
+      onPhotoSuccessUpload(file, response) {
+        this.entity.photoLinks.push(response.payload.url);
+      },
+
+      deleteImage(index) {
+        this.entity.photoLinks.splice(index, 1);
       }
     }
   };

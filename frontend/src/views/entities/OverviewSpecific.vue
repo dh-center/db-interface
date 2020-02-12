@@ -48,7 +48,7 @@
       {{ $t('entities.changesAuthor') }}: {{ lastChangesRecord.user.username }}
     </span>
     <div class="entities-overview-specific__container">
-      <div>
+      <div class="entities-overview-specific__original-entity-container">
         <h2 v-if="isChangedEntityShowed">
           {{ $t('entities.beforeChanges') }}
         </h2>
@@ -63,7 +63,10 @@
         v-if="isChangedEntityShowed"
         class="entities-overview-specific__delimiter"
       />
-      <div v-if="isChangedEntityShowed">
+      <div
+        v-if="isChangedEntityShowed"
+        class="entities-overview-specific__changed-entity-container"
+      >
         <h2>{{ $t('entities.afterChanges') }}</h2>
         <div
           v-if="deleted"
@@ -144,7 +147,7 @@
       },
 
       async fetchData() {
-        this.infoComponent = (await import(`../${this.model.entityType}/Info`)).default;
+        this.infoComponent = (await import('../' + this.model.entityType + '/Info')).default;
 
         let entityData;
 
@@ -237,6 +240,7 @@
 
     &__container {
       margin-top: 10px;
+      overflow: hidden;
       display: flex;
       justify-content: space-around;
     }
@@ -256,6 +260,11 @@
       padding: 5px;
       margin: 5px;
       background-color: rgba(255, 32, 0, 0.63);
+    }
+
+    &__original-entity-container,
+    &__changed-entity-container {
+      width: 45%;
     }
   }
 </style>

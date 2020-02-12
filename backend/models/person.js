@@ -32,7 +32,7 @@ const personSchema = new Schema({
   },
   source: String,
   wikiLink: String,
-  photoLinks: String,
+  photoLinks: [ String ],
   mainPhotoLink: String
 });
 
