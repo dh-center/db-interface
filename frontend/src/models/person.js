@@ -28,7 +28,10 @@ export default class Person extends BaseModel {
       'birthDate',
       'deathDate',
       'wikiLink',
-      'photoLinks',
+      {
+        name: 'photoLinks',
+        default: []
+      },
       'source',
       'mainPhotoLink'
     ]);
